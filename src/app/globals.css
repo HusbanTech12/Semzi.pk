@@ -1,26 +1,76 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: #FFFCF8;
+  --color-foreground: #2C1810;
+  --color-primary: #8B7355;
+  --color-primary-light: #D4B896;
+  --color-secondary: #3D5A3C;
+  --color-accent: #C4956A;
+  --color-accent-light: #E8D5C4;
+  --color-muted: #8B7355/60;
+  --color-card: #FFFFFF;
+  --color-border: #E8D5C4;
   --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-serif: var(--font-playfair);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.gradient-hero {
+  background: linear-gradient(135deg, #FFFCF8 0%, #F5EDE4 40%, #E8D5C4 100%);
+}
+
+.gradient-cta {
+  background: linear-gradient(135deg, #3D5A3C 0%, #2C1810 100%);
+}
+
+.text-shadow {
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.card-hover {
+  transition: all 0.3s ease;
+}
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(139, 115, 85, 0.15);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.animate-fade-in-up-delay-1 {
+  animation-delay: 0.1s;
+}
+
+.animate-fade-in-up-delay-2 {
+  animation-delay: 0.2s;
+}
+
+.animate-fade-in-up-delay-3 {
+  animation-delay: 0.3s;
+}
+
+.animate-fade-in-up-delay-4 {
+  animation-delay: 0.4s;
 }
