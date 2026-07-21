@@ -1,3 +1,8 @@
+"use client";
+
+import { motion } from "framer-motion";
+import Reveal from "./Reveal";
+
 const features = [
   {
     title: "100% Natural",
@@ -73,11 +78,27 @@ const features = [
   },
 ];
 
+const container = {
+  hidden: {},
+  show: {
+    transition: { staggerChildren: 0.12, delayChildren: 0.2 },
+  },
+};
+
+const cardItem = {
+  hidden: { opacity: 0, y: 40 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] as const },
+  },
+};
+
 export default function Features() {
   return (
     <section id="story" className="py-24 lg:py-32 bg-accent-light/20">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="text-center mb-16 space-y-4">
+        <Reveal className="text-center mb-16 space-y-4">
           <span className="text-sm tracking-[0.2em] uppercase text-primary">
             Why Choose Us
           </span>
@@ -88,26 +109,38 @@ export default function Features() {
             We believe in the power of nature combined with the art of
             traditional craftsmanship.
           </p>
-        </div>
+        </Reveal>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-60px" }}
+          className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8"
+        >
           {features.map((feature) => (
-            <div
+            <motion.div
               key={feature.title}
+              variants={cardItem}
+              whileHover={{ y: -6, boxShadow: "0 12px 40px rgba(139,115,85,0.12)" }}
               className="text-center space-y-4 p-8 rounded-2xl bg-background/80 hover:bg-background transition-all card-hover"
             >
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary-light/30 text-primary">
+              <motion.div
+                whileHover={{ rotate: [0, -10, 10, -5, 0] }}
+                transition={{ duration: 0.5 }}
+                className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary-light/30 text-primary"
+              >
                 {feature.icon}
-              </div>
+              </motion.div>
               <h3 className="font-serif text-xl text-foreground">
                 {feature.title}
               </h3>
               <p className="text-sm text-foreground/60 leading-relaxed">
                 {feature.description}
               </p>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

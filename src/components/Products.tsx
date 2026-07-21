@@ -1,4 +1,8 @@
+"use client";
+
+import { motion } from "framer-motion";
 import Image from "next/image";
+import Reveal from "./Reveal";
 
 const products = [
   {
@@ -51,11 +55,27 @@ const products = [
   },
 ];
 
+const container = {
+  hidden: {},
+  show: {
+    transition: { staggerChildren: 0.1, delayChildren: 0.2 },
+  },
+};
+
+const cardItem = {
+  hidden: { opacity: 0, y: 40 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] as const },
+  },
+};
+
 export default function Products() {
   return (
     <section id="products" className="py-24 lg:py-32 bg-background">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="text-center mb-16 space-y-4">
+        <Reveal className="text-center mb-16 space-y-4">
           <span className="text-sm tracking-[0.2em] uppercase text-primary">
             Our Collection
           </span>
@@ -66,12 +86,21 @@ export default function Products() {
             Each product is meticulously crafted using time-honored techniques
             and the purest ingredients nature has to offer.
           </p>
-        </div>
+        </Reveal>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {products.map((product) => (
-            <article
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-60px" }}
+          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
+          {products.map((product, i) => (
+            <motion.article
               key={product.name}
+              variants={cardItem}
+              whileHover={{ y: -8 }}
+              transition={{ duration: 0.3 }}
               className="group cursor-pointer card-hover"
             >
               <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-accent-light/30 mb-5">
@@ -82,9 +111,14 @@ export default function Products() {
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 />
-                <div className="absolute top-4 left-4 px-3 py-1.5 bg-background/90 backdrop-blur-sm rounded-full text-xs tracking-wider uppercase text-foreground">
+                <motion.div
+                  initial={{ opacity: 0, x: -10 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.3 + i * 0.1 }}
+                  className="absolute top-4 left-4 px-3 py-1.5 bg-background/90 backdrop-blur-sm rounded-full text-xs tracking-wider uppercase text-foreground"
+                >
                   {product.badge}
-                </div>
+                </motion.div>
                 <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/10 transition-colors" />
               </div>
               <div className="space-y-1">
@@ -98,15 +132,19 @@ export default function Products() {
                   {product.price}
                 </div>
               </div>
-            </article>
+            </motion.article>
           ))}
-        </div>
+        </motion.div>
 
-        <div className="text-center mt-16">
-          <button className="px-10 py-4 border-2 border-primary text-primary text-sm tracking-wider uppercase rounded-full hover:bg-primary hover:text-background transition-all">
+        <Reveal delay={0.3} className="text-center mt-16">
+          <motion.button
+            whileHover={{ scale: 1.05, backgroundColor: "#8B7355", color: "#FFFCF8" }}
+            whileTap={{ scale: 0.95 }}
+            className="px-10 py-4 border-2 border-primary text-primary text-sm tracking-wider uppercase rounded-full transition-all"
+          >
             View All Products
-          </button>
-        </div>
+          </motion.button>
+        </Reveal>
       </div>
     </section>
   );
