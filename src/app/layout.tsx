@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
-import { Geist, Playfair_Display } from "next/font/google";
+import { DM_Sans, Playfair_Display } from "next/font/google";
+import { ClerkProvider } from "@clerk/nextjs";
+import { CartProvider } from "@/context/cart-context";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
   subsets: ["latin"],
 });
 
@@ -14,16 +16,16 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   title: {
-    default: "LUXE | Premium Soap & Shampoo",
-    template: "%s | LUXE",
+    default: "Semzi | Natural Soap. Nothing Harsh.",
+    template: "%s | Semzi",
   },
   description:
-    "Handcrafted premium soaps and shampoos made with natural, organic ingredients. Experience the art of luxurious bathing.",
-  metadataBase: new URL("https://luxe.soap"),
+    "Handmade natural soap crafted in small batches. Full INCI ingredient transparency, seasonal collections, and gift-worthy packaging.",
+  metadataBase: new URL("https://semzi.com"),
   openGraph: {
-    title: "LUXE | Premium Soap & Shampoo",
+    title: "Semzi | Natural Soap. Nothing Harsh.",
     description:
-      "Handcrafted premium soaps and shampoos made with natural, organic ingredients.",
+      "Handmade natural soap crafted in small batches with full ingredient transparency.",
     images: ["/og-image.jpg"],
   },
 };
@@ -34,11 +36,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${playfair.variable} antialiased`}
-    >
-      <body className="min-h-full">{children}</body>
-    </html>
+    <ClerkProvider>
+      <html
+        lang="en"
+        className={`${dmSans.variable} ${playfair.variable} antialiased`}
+      >
+        <body className="min-h-full">
+          <CartProvider>{children}</CartProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

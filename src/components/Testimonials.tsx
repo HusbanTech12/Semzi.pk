@@ -1,7 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { Star } from "lucide-react";
 import Reveal from "./Reveal";
+import { useAnimations } from "@/lib/animations";
 
 const testimonials = [
   {
@@ -15,7 +17,7 @@ const testimonials = [
     name: "James Carter",
     role: "Barber & Stylist",
     content:
-      "I&apos;ve recommended LUXE to all my clients. The shampoo leaves hair silky smooth without any harsh chemicals. Truly premium quality.",
+      "I've recommended Semzi to all my clients. The shampoo leaves hair silky smooth without any harsh chemicals. Truly premium quality.",
     rating: 5,
   },
   {
@@ -27,85 +29,53 @@ const testimonials = [
   },
 ];
 
-const container = {
-  hidden: {},
-  show: {
-    transition: { staggerChildren: 0.15, delayChildren: 0.2 },
-  },
-};
-
-const cardItem = {
-  hidden: { opacity: 0, y: 40 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] as const },
-  },
-};
-
 export default function Testimonials() {
+  const { staggerContainer, scaleIn } = useAnimations();
+
   return (
-    <section
-      id="testimonials"
-      className="py-24 lg:py-32 bg-secondary text-background"
-    >
+    <section className="py-24 lg:py-32 bg-foreground text-background">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <Reveal className="text-center mb-16 space-y-4">
-          <span className="text-sm tracking-[0.2em] uppercase text-primary-light">
+          <span className="text-sm tracking-[0.2em] uppercase text-accent-subtle">
             Testimonials
           </span>
-          <h2 className="font-serif text-4xl md:text-5xl text-background">
+          <h2 className="font-serif text-4xl md:text-5xl">
             Loved by Thousands
           </h2>
-          <p className="text-background/60 max-w-2xl mx-auto">
-            Hear from our community of customers who have made LUXE part of
+          <p className="text-foreground-muted max-w-2xl mx-auto">
+            Hear from our community of customers who have made Semzi part of
             their daily ritual.
           </p>
         </Reveal>
 
         <motion.div
-          variants={container}
-          initial="hidden"
-          whileInView="show"
+          variants={staggerContainer}
+          initial="initial"
+          whileInView="animate"
           viewport={{ once: true, margin: "-60px" }}
           className="grid md:grid-cols-3 gap-8"
         >
           {testimonials.map((testimonial) => (
             <motion.div
               key={testimonial.name}
-              variants={cardItem}
-              whileHover={{ y: -6, scale: 1.01 }}
-              className="bg-background/5 backdrop-blur-sm rounded-2xl p-8 space-y-6 border border-background/10"
+              {...scaleIn}
+              whileHover={{ y: -4 }}
+              className="bg-white/5 backdrop-blur-sm rounded-lg p-8 space-y-6 border border-white/10"
             >
-              <motion.div
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ delay: 0.3 }}
-                className="flex gap-1"
-              >
+              <div className="flex gap-1">
                 {Array.from({ length: testimonial.rating }).map((_, i) => (
-                  <motion.svg
+                  <Star
                     key={i}
-                    initial={{ opacity: 0, scale: 0 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.4 + i * 0.1, type: "spring" }}
-                    width="18"
-                    height="18"
-                    viewBox="0 0 18 18"
-                    fill="#D4B896"
-                  >
-                    <path d="M9 1l2.2 4.5L16 6.2l-3.5 3.4.8 4.9L9 12.5l-4.3 2 .8-4.9L2 6.2l4.8-.7L9 1z" />
-                  </motion.svg>
+                    className="w-4 h-4 fill-accent-subtle text-accent-subtle"
+                  />
                 ))}
-              </motion.div>
+              </div>
               <p className="text-background/80 leading-relaxed">
                 &ldquo;{testimonial.content}&rdquo;
               </p>
               <div>
-                <div className="font-semibold text-background">
-                  {testimonial.name}
-                </div>
-                <div className="text-sm text-background/50">
+                <div className="font-semibold">{testimonial.name}</div>
+                <div className="text-sm text-foreground-muted">
                   {testimonial.role}
                 </div>
               </div>

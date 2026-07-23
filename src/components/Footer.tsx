@@ -1,110 +1,125 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Link from "next/link";
-import Reveal from "./Reveal";
+import { Globe, ChevronRight } from "lucide-react";
+import { useAnimations } from "@/lib/animations";
+import { motion } from "framer-motion";
 
 const footerLinks = {
-  Shop: ["All Products", "Soaps", "Shampoos", "Gift Sets", "Sale"],
-  Company: ["Our Story", "Sustainability", "Blog", "Careers", "Press"],
-  Support: ["FAQ", "Shipping", "Returns", "Contact", "Size Guide"],
-};
-
-const linkVariants = {
-  hidden: { opacity: 0, x: -10 },
-  show: (i: number) => ({
-    opacity: 1,
-    x: 0,
-    transition: { delay: i * 0.05, duration: 0.3 },
-  }),
+  Shop: [
+    { label: "All Products", href: "/shop" },
+    { label: "Soaps", href: "/shop?category=soaps" },
+    { label: "Shampoos", href: "/shop?category=shampoos" },
+    { label: "Gift Sets", href: "/shop?category=gift-sets" },
+  ],
+  Company: [
+    { label: "Our Story", href: "/about" },
+    { label: "Sustainability", href: "/about#sustainability" },
+    { label: "Ingredient Glossary", href: "/ingredients" },
+    { label: "Press", href: "/press" },
+  ],
+  Support: [
+    { label: "FAQ", href: "/faq" },
+    { label: "Shipping & Returns", href: "/shipping" },
+    { label: "Contact", href: "/contact" },
+    { label: "Size Guide", href: "/size-guide" },
+  ],
 };
 
 export default function Footer() {
-  return (
-    <footer className="bg-foreground text-background py-16 lg:py-24">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-12">
-          <Reveal direction="left" delay={0.1} className="lg:col-span-2 space-y-6">
-            <motion.div whileHover={{ scale: 1.02 }}>
-              <Link href="/" className="flex items-center gap-2">
-                <motion.span
-                  animate={{ rotate: [0, 10, 0] }}
-                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                  className="w-8 h-8 rounded-full bg-primary-light"
-                />
-                <span className="font-serif text-2xl tracking-wide">LUXE</span>
-              </Link>
-            </motion.div>
-            <p className="text-background/50 max-w-sm leading-relaxed">
-              Handcrafted premium soaps and shampoos made with love and the
-              finest natural ingredients nature has to offer.
-            </p>
-            <div className="flex gap-4">
-              {["Instagram", "Twitter", "Pinterest", "TikTok"].map(
-                (social, i) => (
-                  <motion.div
-                    key={social}
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 + i * 0.1 }}
-                    whileHover={{ y: -2 }}
-                  >
-                    <Link
-                      href="#"
-                      className="text-sm text-background/40 hover:text-primary-light transition-colors"
-                    >
-                      {social}
-                    </Link>
-                  </motion.div>
-                )
-              )}
-            </div>
-          </Reveal>
+  const { fadeUp } = useAnimations();
 
-          {Object.entries(footerLinks).map(([category, links], catIdx) => (
-            <Reveal
-              key={category}
-              direction="right"
-              delay={0.2 + catIdx * 0.1}
-              className="space-y-4"
-            >
-              <h4 className="text-sm tracking-wider uppercase text-background/60">
+  return (
+    <footer className="bg-foreground text-background pt-16 lg:pt-24">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <motion.div
+          {...fadeUp}
+          className="grid sm:grid-cols-2 lg:grid-cols-6 gap-12"
+        >
+          <div className="lg:col-span-2 space-y-6">
+            <Link href="/" className="inline-block">
+              <span className="font-serif text-2xl italic">Semzi</span>
+            </Link>
+            <p className="text-foreground-muted max-w-sm leading-relaxed text-sm">
+              Handmade natural soap crafted in small batches. Nothing harsh.
+              Nothing synthetic. Just honest ingredients you can trust.
+            </p>
+
+            <div className="space-y-4">
+              <p className="text-xs tracking-widest uppercase text-foreground-muted">
+                Join the Journal
+              </p>
+              <div className="flex gap-2 max-w-sm">
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  className="flex-1 px-4 py-2.5 bg-white/5 border border-white/10 rounded-sm text-sm text-background placeholder:text-foreground-muted/50 focus:outline-none focus:border-accent/50"
+                />
+                <button className="px-4 py-2.5 bg-accent text-background rounded-sm hover:bg-accent-strong transition-colors">
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+
+            <div className="flex gap-4">
+              <Link href="#" aria-label="Instagram" className="text-xs tracking-widest uppercase text-foreground-muted hover:text-accent transition-colors">
+                Instagram
+              </Link>
+              <Link href="#" aria-label="Twitter" className="text-xs tracking-widest uppercase text-foreground-muted hover:text-accent transition-colors">
+                Twitter
+              </Link>
+              <Link href="#" aria-label="Pinterest" className="text-xs tracking-widest uppercase text-foreground-muted hover:text-accent transition-colors">
+                Pinterest
+              </Link>
+            </div>
+          </div>
+
+          {Object.entries(footerLinks).map(([category, links]) => (
+            <div key={category} className="space-y-4">
+              <h4 className="text-xs tracking-widest uppercase text-foreground-muted">
                 {category}
               </h4>
               <ul className="space-y-3">
-                {links.map((link, linkIdx) => (
-                  <motion.li
-                    key={link}
-                    custom={linkIdx}
-                    variants={linkVariants}
-                    initial="hidden"
-                    whileInView="show"
-                    viewport={{ once: true }}
-                  >
+                {links.map((link) => (
+                  <li key={link.label}>
                     <Link
-                      href="#"
-                      className="text-sm text-background/70 hover:text-primary-light transition-colors"
+                      href={link.href}
+                      className="text-sm text-foreground-muted/80 hover:text-accent transition-colors"
                     >
-                      {link}
+                      {link.label}
                     </Link>
-                  </motion.li>
+                  </li>
                 ))}
               </ul>
-            </Reveal>
+            </div>
           ))}
-        </div>
+        </motion.div>
 
-        <Reveal delay={0.4} className="mt-16 pt-8 border-t border-background/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-background/30">
-          <p>&copy; 2026 LUXE. All rights reserved.</p>
-          <div className="flex gap-6">
-            <Link href="#" className="hover:text-background/50 transition-colors">
+        <motion.div
+          {...fadeUp}
+          className="mt-16 pt-8 pb-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4"
+        >
+          <p className="text-xs text-foreground-muted/50">
+            &copy; 2026 Semzi. All rights reserved.
+          </p>
+          <div className="flex gap-6 text-xs text-foreground-muted/50">
+            <Link href="#" className="hover:text-accent transition-colors">
               Privacy Policy
             </Link>
-            <Link href="#" className="hover:text-background/50 transition-colors">
+            <Link href="#" className="hover:text-accent transition-colors">
               Terms of Service
             </Link>
           </div>
-        </Reveal>
+        </motion.div>
+
+        <div className="pb-8 text-center">
+          <p className="text-[10px] tracking-[0.15em] uppercase text-foreground-muted/30 max-w-xl mx-auto leading-relaxed">
+            Semzi products are handmade in small batches using natural ingredients.
+            Our ingredient lists follow INCI labelling standards for full transparency.
+            Always perform a patch test before use. Store in a cool, dry place.
+            For external use only.
+          </p>
+        </div>
       </div>
     </footer>
   );
