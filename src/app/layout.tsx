@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DM_Sans, Playfair_Display } from "next/font/google";
+import { DM_Sans, Playfair_Display, Instrument_Serif } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { CartProvider } from "@/context/cart-context";
 import "./globals.css";
@@ -12,6 +12,13 @@ const dmSans = DM_Sans({
 const playfair = Playfair_Display({
   variable: "--font-playfair",
   subsets: ["latin"],
+});
+
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-instrument-serif",
+  subsets: ["latin"],
+  weight: "400",
+  style: "italic",
 });
 
 export const metadata: Metadata = {
@@ -39,7 +46,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html
         lang="en"
-        className={`${dmSans.variable} ${playfair.variable} antialiased`}
+        className={`${dmSans.variable} ${playfair.variable} ${instrumentSerif.variable} antialiased`}
       >
         <body className="min-h-full">
           <CartProvider>{children}</CartProvider>

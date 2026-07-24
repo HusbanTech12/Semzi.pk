@@ -59,24 +59,7 @@ const products = [
 ];
 
 function formatPrice(cents: number) {
-  return `$${(cents / 100).toFixed(0)}.00`;
-}
-
-function Stars({ rating = 5 }: { rating?: number }) {
-  return (
-    <div className="flex gap-0.5">
-      {Array.from({ length: 5 }).map((_, i) => (
-        <svg
-          key={i}
-          className={`w-3 h-3 ${i < rating ? "text-accent" : "text-border"}`}
-          fill="currentColor"
-          viewBox="0 0 20 20"
-        >
-          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-        </svg>
-      ))}
-    </div>
-  );
+  return `$${(cents / 100).toFixed(2)}`;
 }
 
 export default function Products() {
@@ -91,24 +74,20 @@ export default function Products() {
   return (
     <section className="py-24 lg:py-32 bg-background">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <Reveal className="text-center mb-16 space-y-4">
-          <span className="text-sm tracking-[0.2em] uppercase text-accent">
+        <Reveal className="text-center mb-14 space-y-3">
+          <span className="text-[11px] tracking-[0.25em] uppercase text-accent font-medium">
             Best Sellers
           </span>
-          <h2 className="font-serif text-4xl md:text-5xl text-foreground">
+          <h2 className="font-serif text-3xl md:text-4xl text-foreground">
             Featured Products
           </h2>
-          <p className="text-foreground-muted max-w-2xl mx-auto">
-            Each product is meticulously crafted using time-honored techniques
-            and the purest ingredients nature has to offer.
-          </p>
         </Reveal>
 
         <motion.div
           initial="initial"
           whileInView="animate"
           viewport={{ once: true, margin: "-60px" }}
-          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14"
+          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
         >
           {products.map((product, idx) => {
             const isHovered = hoveredIdx === idx;
@@ -117,7 +96,7 @@ export default function Products() {
             return (
               <motion.div
                 key={product.name}
-                initial={{ opacity: 0, y: 24 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: idx * 0.08, ease: [0.22, 1, 0.36, 1] }}
@@ -126,22 +105,34 @@ export default function Products() {
                 onMouseLeave={() => setHoveredIdx(null)}
               >
                 <Link href="/shop" className="block">
-                  <div className="relative aspect-[4/5] rounded-lg overflow-hidden bg-surface-muted mb-5 shadow-sm transition-shadow duration-500 group-hover:shadow-xl">
+                  <div className="relative aspect-[4/5] rounded-xl overflow-hidden bg-surface-muted">
                     <Image
                       src={isHovered ? product.imageHover : product.image}
                       alt={product.name}
                       fill
-                      className="object-cover transition-all duration-700 group-hover:scale-105"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
 
-                    <div className="absolute top-4 left-4 px-3 py-1.5 bg-surface/90 backdrop-blur-sm rounded text-[10px] tracking-[0.15em] uppercase text-foreground font-medium">
+                    <div className="absolute top-3 left-3 px-2.5 py-1 bg-background/80 backdrop-blur-sm rounded-md text-[10px] tracking-[0.12em] uppercase text-foreground font-medium">
                       {product.badge}
                     </div>
 
+                    <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-foreground/60 via-foreground/20 to-transparent">
+                      <p className="text-[10px] tracking-[0.2em] uppercase text-white/70 mb-0.5">
+                        {product.category}
+                      </p>
+                      <h3 className="font-serif text-lg text-white leading-tight">
+                        {product.name}
+                      </h3>
+                      <span className="block text-sm text-white font-mono mt-1">
+                        {formatPrice(product.priceCents)}
+                      </span>
+                    </div>
+
                     <div
-                      className={`absolute inset-0 flex items-center justify-center gap-3 transition-all duration-300 ${
-                        isHovered ? "bg-foreground/15 opacity-100" : "opacity-0"
+                      className={`absolute inset-x-0 bottom-0 flex items-center justify-center gap-3 p-5 transition-all duration-300 ${
+                        isHovered ? "bg-foreground/20 backdrop-blur-sm opacity-100 translate-y-0" : "opacity-0 translate-y-3"
                       }`}
                     >
                       <span
@@ -149,64 +140,42 @@ export default function Products() {
                           e.preventDefault();
                           handleQuickAdd(idx);
                         }}
-                        className="p-3 bg-surface/90 backdrop-blur-sm rounded-full text-foreground hover:bg-accent hover:text-background transition-colors cursor-pointer"
-                        aria-label="Quick add to cart"
+                        className="flex items-center gap-2 px-5 py-2.5 bg-background text-foreground text-xs tracking-wider uppercase rounded-full hover:bg-accent hover:text-background transition-colors cursor-pointer"
                       >
                         {isAdded ? (
-                          <Check className="w-5 h-5" />
+                          <>
+                            <Check className="w-3.5 h-3.5" />
+                            Added
+                          </>
                         ) : (
-                          <ShoppingBag className="w-5 h-5" />
+                          <>
+                            <ShoppingBag className="w-3.5 h-3.5" />
+                            Quick Add
+                          </>
                         )}
                       </span>
-                      <span className="p-3 bg-surface/90 backdrop-blur-sm rounded-full text-foreground hover:bg-accent hover:text-background transition-colors cursor-pointer">
-                        <Eye className="w-5 h-5" />
+                      <span className="p-2.5 bg-background/90 backdrop-blur-sm rounded-full text-foreground hover:bg-accent hover:text-background transition-colors cursor-pointer">
+                        <Eye className="w-4 h-4" />
                       </span>
                     </div>
-
-                    {isAdded && (
-                      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 bg-accent text-background text-xs tracking-wider uppercase rounded-full shadow-lg">
-                        Added to Cart
-                      </div>
-                    )}
                   </div>
                 </Link>
-
-                <div className="space-y-2 px-1">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[10px] tracking-[0.2em] uppercase text-accent font-medium">
-                      {product.category}
-                    </span>
-                    <Stars />
-                  </div>
-                  <h3 className="font-serif text-lg text-foreground group-hover:text-accent transition-colors leading-tight">
-                    {product.name}
-                  </h3>
-                  <div className="h-px bg-border/50" />
-                  <div className="flex items-center justify-between pt-1">
-                    <span className="text-base text-foreground font-mono tracking-tight">
-                      {formatPrice(product.priceCents)}
-                    </span>
-                    <span className="text-[10px] text-foreground-muted tracking-wider uppercase">
-                      + Quick Add
-                    </span>
-                  </div>
-                </div>
               </motion.div>
             );
           })}
         </motion.div>
 
-        <Reveal delay={0.3} className="text-center mt-16">
+        <div className="sm:hidden text-center mt-12">
           <Link
             href="/shop"
-            className="inline-flex items-center gap-2 px-10 py-4 bg-accent text-background text-sm tracking-wider uppercase rounded-lg hover:bg-accent-strong transition-all"
+            className="inline-flex items-center gap-2 px-8 py-3 bg-accent text-background text-sm tracking-wider uppercase rounded-lg hover:bg-accent-strong transition-all"
           >
             View All Products
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
           </Link>
-        </Reveal>
+        </div>
       </div>
     </section>
   );

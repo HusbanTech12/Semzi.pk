@@ -1,74 +1,63 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { Sparkles, Heart, Leaf, Package } from "lucide-react";
 import Reveal from "./Reveal";
-import { useAnimations } from "@/lib/animations";
 
 const features = [
   {
+    icon: Sparkles,
     title: "100% Natural",
     description:
-      "Every ingredient is sourced from nature. No synthetic additives, parabens, or sulfates.",
-    icon: Sparkles,
+      "Every ingredient is sourced from nature. No synthetic additives, parabens, or sulfates. Full INCI transparency on every product.",
   },
   {
+    icon: Heart,
     title: "Handcrafted",
     description:
       "Small-batch production ensures quality and attention to detail in every single bar and bottle.",
-    icon: Heart,
   },
   {
-    title: "Cruelty Free",
-    description:
-      "We never test on animals. Our products are certified cruelty-free and vegan friendly.",
     icon: Leaf,
+    title: "Cruelty-Free",
+    description:
+      "We never test on animals. Certified cruelty-free and vegan friendly. Kind to your skin and the planet.",
   },
   {
+    icon: Package,
     title: "Eco Packaging",
     description:
-      "Our packaging is 100% biodegradable and made from recycled materials.",
-    icon: Package,
+      "100% biodegradable packaging made from recycled materials. Because what wraps your soap matters too.",
   },
 ];
 
 export default function Features() {
-  const { scaleIn, staggerContainer } = useAnimations();
-
   return (
     <section className="py-24 lg:py-32 bg-surface-muted">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <Reveal className="text-center mb-16 space-y-4">
-          <span className="text-sm tracking-[0.2em] uppercase text-accent">
-            Why Choose Us
+        <Reveal className="text-center max-w-xl mx-auto mb-16 space-y-4">
+          <span className="text-[11px] tracking-[0.25em] uppercase text-accent font-medium">
+            Our Promise
           </span>
-          <h2 className="font-serif text-4xl md:text-5xl text-foreground">
-            Crafted with Care
+          <h2 className="font-serif text-3xl md:text-4xl text-foreground">
+            Crafted with Care,
+            <br />
+            Backed by Nature
           </h2>
-          <p className="text-foreground-muted max-w-2xl mx-auto">
-            We believe in the power of nature combined with the art of
-            traditional craftsmanship.
-          </p>
         </Reveal>
 
-        <motion.div
-          variants={staggerContainer}
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: true, margin: "-60px" }}
-          className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8"
-        >
-          {features.map((feature) => {
+        <div className="grid md:grid-cols-2 gap-0 border border-border/60 rounded-xl overflow-hidden bg-surface">
+          {features.map((feature, idx) => {
             const Icon = feature.icon;
             return (
-              <motion.div
+              <Reveal
                 key={feature.title}
-                {...scaleIn}
-                whileHover={{ y: -4 }}
-                className="text-center space-y-4 p-8 rounded-lg bg-surface hover:shadow-lg transition-all"
+                delay={idx * 0.1}
+                className={`p-10 lg:p-12 space-y-4 ${
+                  idx < 2 ? "border-b border-border/60" : ""
+                } ${idx % 2 === 0 ? "md:border-r md:border-border/60" : ""}`}
               >
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-lg bg-accent-subtle text-accent">
-                  <Icon className="w-8 h-8" />
+                <div className="w-10 h-10 rounded-full bg-accent-subtle flex items-center justify-center">
+                  <Icon className="w-5 h-5 text-accent" strokeWidth={1.5} />
                 </div>
                 <h3 className="font-serif text-xl text-foreground">
                   {feature.title}
@@ -76,10 +65,10 @@ export default function Features() {
                 <p className="text-sm text-foreground-muted leading-relaxed">
                   {feature.description}
                 </p>
-              </motion.div>
+              </Reveal>
             );
           })}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
