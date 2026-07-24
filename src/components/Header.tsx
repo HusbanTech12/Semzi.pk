@@ -25,51 +25,62 @@ export default function Navbar() {
     <>
       <motion.header
         {...fadeUp}
-        className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-md border-b border-border/50"
+        className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-lg border-b border-border/30"
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
-            <Link href="/" className="flex items-center gap-2">
-              <span className="font-serif text-2xl italic text-foreground">
+            <Link href="/" className="relative group">
+              <span className="font-serif text-3xl italic text-foreground tracking-tight">
                 Semzi
               </span>
+              <span className="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-accent group-hover:w-full transition-all duration-300" />
             </Link>
 
-            <nav className="hidden md:flex items-center gap-10">
+            <nav className="hidden md:flex items-center gap-12">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-sm tracking-wider uppercase text-foreground-muted hover:text-accent transition-colors"
+                  className="relative group text-sm tracking-[0.15em] uppercase text-foreground-muted hover:text-foreground transition-colors"
                 >
                   {link.label}
+                  <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-accent group-hover:w-full transition-all duration-300" />
                 </Link>
               ))}
             </nav>
 
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
               <button
                 aria-label="Search"
-                className="p-2 text-foreground-muted hover:text-accent transition-colors"
+                className="p-2.5 text-foreground-muted hover:text-accent hover:bg-accent-subtle/50 rounded-full transition-all"
               >
-                <Search className="w-5 h-5" />
+                <Search className="w-4 h-4" />
               </button>
               <button
                 onClick={() => setCartOpen(true)}
                 aria-label="Cart"
-                className="relative p-2 text-foreground-muted hover:text-accent transition-colors"
+                className="relative p-2.5 text-foreground-muted hover:text-accent hover:bg-accent-subtle/50 rounded-full transition-all"
               >
-                <ShoppingBag className="w-5 h-5" />
-                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-accent text-background text-[10px] font-mono flex items-center justify-center">
-                  {totalItems}
-                </span>
+                <ShoppingBag className="w-4 h-4" />
+                {totalItems > 0 && (
+                  <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-accent text-background text-[9px] font-mono flex items-center justify-center font-medium">
+                    {totalItems}
+                  </span>
+                )}
               </button>
+              <div className="hidden md:block w-px h-6 bg-border/50 mx-1" />
+              <Link
+                href="/sign-in"
+                className="hidden md:inline-flex text-sm tracking-[0.15em] uppercase text-foreground-muted hover:text-accent transition-colors"
+              >
+                Sign In
+              </Link>
               <button
                 onClick={() => setMobileOpen(!mobileOpen)}
-                className="md:hidden p-2 text-foreground-muted"
+                className="md:hidden p-2.5 text-foreground-muted hover:text-accent hover:bg-accent-subtle/50 rounded-full transition-all"
                 aria-label="Toggle menu"
               >
-                {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+                {mobileOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
               </button>
             </div>
           </div>
@@ -81,19 +92,28 @@ export default function Navbar() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              className="border-t border-border/50 bg-background overflow-hidden"
+              className="border-t border-border/30 bg-background overflow-hidden"
             >
-              <div className="px-6 py-6 space-y-4">
+              <div className="px-6 py-8 space-y-6">
                 {navLinks.map((link) => (
                   <Link
                     key={link.href}
                     href={link.href}
                     onClick={() => setMobileOpen(false)}
-                    className="block text-sm tracking-wider uppercase text-foreground-muted hover:text-accent transition-colors"
+                    className="block text-sm tracking-[0.15em] uppercase text-foreground-muted hover:text-accent transition-colors"
                   >
                     {link.label}
                   </Link>
                 ))}
+                <div className="pt-4 border-t border-border/30">
+                  <Link
+                    href="/sign-in"
+                    onClick={() => setMobileOpen(false)}
+                    className="block text-sm tracking-[0.15em] uppercase text-accent hover:text-accent-strong transition-colors"
+                  >
+                    Sign In
+                  </Link>
+                </div>
               </div>
             </motion.div>
           )}
