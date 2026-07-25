@@ -52,15 +52,17 @@ export default function Features() {
               <Reveal
                 key={feature.title}
                 delay={idx * 0.1}
-                className="group p-8 rounded-2xl border border-border/50 bg-surface hover:border-accent/30 hover:shadow-[0_8px_32px_-8px_rgba(43,33,24,0.1),0_0_24px_-6px_rgba(199,154,86,0.08)] transition-all duration-500"
+                className="group relative p-8 rounded-2xl border border-border/50 bg-surface overflow-hidden hover:border-accent/40 hover:shadow-[0_8px_40px_-8px_rgba(43,33,24,0.12),0_0_32px_-4px_rgba(199,154,86,0.15)] transition-all duration-500 cursor-default"
               >
-                <div className="w-12 h-12 rounded-xl bg-accent-subtle flex items-center justify-center mb-5 group-hover:bg-accent/10 group-hover:shadow-[0_0_20px_-4px_rgba(199,154,86,0.2)] transition-all duration-500">
-                  <Icon className="w-5 h-5 text-accent" strokeWidth={1.5} />
+                <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-accent/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-b from-accent/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                <div className="relative w-12 h-12 rounded-xl bg-accent-subtle flex items-center justify-center mb-5 group-hover:bg-accent/15 group-hover:shadow-[0_0_24px_-2px_rgba(199,154,86,0.35)] transition-all duration-500">
+                  <Icon className="w-5 h-5 text-accent group-hover:scale-110 transition-transform duration-300" strokeWidth={1.5} />
                 </div>
-                <h3 className="font-serif text-lg text-foreground mb-3 group-hover:text-accent-strong transition-colors duration-300">
+                <h3 className="relative font-serif text-lg text-foreground mb-3 group-hover:text-accent-strong transition-colors duration-300">
                   {feature.title}
                 </h3>
-                <p className="text-[13px] text-foreground-muted/70 leading-relaxed">
+                <p className="relative text-[13px] text-foreground-muted/70 leading-relaxed">
                   {feature.description}
                 </p>
               </Reveal>
