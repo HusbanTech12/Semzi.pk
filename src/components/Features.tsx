@@ -45,24 +45,22 @@ export default function Features() {
           </h2>
         </Reveal>
 
-        <div className="grid md:grid-cols-2 gap-0 border border-border/60 rounded-xl overflow-hidden bg-surface">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
           {features.map((feature, idx) => {
             const Icon = feature.icon;
             return (
               <Reveal
                 key={feature.title}
                 delay={idx * 0.1}
-                className={`p-10 lg:p-12 space-y-4 ${
-                  idx < 2 ? "border-b border-border/60" : ""
-                } ${idx % 2 === 0 ? "md:border-r md:border-border/60" : ""}`}
+                className="group p-8 rounded-2xl border border-border/50 bg-surface hover:border-accent/30 hover:shadow-[0_8px_32px_-8px_rgba(43,33,24,0.1),0_0_24px_-6px_rgba(199,154,86,0.08)] transition-all duration-500"
               >
-                <div className="w-10 h-10 rounded-full bg-accent-subtle flex items-center justify-center">
+                <div className="w-12 h-12 rounded-xl bg-accent-subtle flex items-center justify-center mb-5 group-hover:bg-accent/10 group-hover:shadow-[0_0_20px_-4px_rgba(199,154,86,0.2)] transition-all duration-500">
                   <Icon className="w-5 h-5 text-accent" strokeWidth={1.5} />
                 </div>
-                <h3 className="font-serif text-xl text-foreground">
+                <h3 className="font-serif text-lg text-foreground mb-3 group-hover:text-accent-strong transition-colors duration-300">
                   {feature.title}
                 </h3>
-                <p className="text-sm text-foreground-muted leading-relaxed">
+                <p className="text-[13px] text-foreground-muted/70 leading-relaxed">
                   {feature.description}
                 </p>
               </Reveal>
