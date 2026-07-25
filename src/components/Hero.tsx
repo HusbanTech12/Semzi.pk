@@ -18,10 +18,10 @@ export default function Hero() {
 
       <div className="absolute inset-0 bg-gradient-to-b from-foreground/40 via-foreground/20 to-foreground/50" />
 
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-8 min-h-screen flex items-center">
-        <div className="max-w-2xl space-y-8">
+      <div className="relative max-w-7xl mx-auto px-6 lg:px-8 min-h-screen flex items-center justify-center">
+        <div className="max-w-2xl space-y-8 text-center">
           <Reveal delay={0.2}>
-            <p className="flex items-center gap-3 text-accent text-[11px] tracking-[0.3em] uppercase">
+            <p className="inline-flex items-center gap-3 text-accent text-[11px] tracking-[0.3em] uppercase mx-auto">
               <span className="w-8 h-px bg-accent" />
               Beach Collection 2026
             </p>
@@ -41,13 +41,13 @@ export default function Hero() {
           </Reveal>
 
           <Reveal delay={0.6}>
-            <p className="text-base md:text-lg text-white/70 max-w-md leading-relaxed">
+            <p className="text-base md:text-lg text-white/70 max-w-md mx-auto leading-relaxed">
               Handmade in small batches with ingredients you can trust.
               Full INCI transparency. Nothing synthetic.
             </p>
           </Reveal>
 
-          <Reveal delay={0.8} className="flex flex-wrap items-center gap-5 pt-2">
+          <Reveal delay={0.8} className="flex flex-wrap items-center justify-center gap-5 pt-2">
             <Link
               href="/shop"
               className="px-10 py-4 bg-accent text-background text-sm tracking-[0.15em] uppercase rounded-lg hover:bg-accent-strong transition-all font-medium"
@@ -56,14 +56,12 @@ export default function Hero() {
             </Link>
             <Link
               href="/about"
-              className="group flex items-center gap-3 text-white/80 text-sm tracking-[0.15em] uppercase hover:text-white transition-colors"
+              className="group inline-flex items-center gap-2 px-10 py-4 border border-accent/40 text-accent text-sm tracking-[0.15em] uppercase font-medium rounded-lg transition-all duration-300 hover:bg-accent hover:text-background hover:border-accent hover:shadow-[0_0_30px_-4px_rgba(199,154,86,0.35)]"
             >
-              <span className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center group-hover:border-white/50 transition-colors">
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </span>
               Our Story
+              <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
             </Link>
           </Reveal>
         </div>
