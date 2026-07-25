@@ -27,6 +27,7 @@ export const products = pgTable("products", {
   howToUse: text("how_to_use"),
   collectionId: integer("collection_id").references(() => collections.id),
   isActive: boolean("is_active").default(true).notNull(),
+  isFeatured: boolean("is_featured").default(false).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 

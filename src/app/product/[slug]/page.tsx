@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, use } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -22,7 +22,7 @@ type Tab = "description" | "ingredients" | "how-to-use";
 export default function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const { fadeUp } = useAnimations();
 
-  const resolved = params instanceof Promise ? { slug: "" } : params;
+  const resolved = use(params);
   const slug = resolved?.slug ?? "";
   const { product, loading } = useProduct(slug);
   const { products: allProducts } = useProducts();

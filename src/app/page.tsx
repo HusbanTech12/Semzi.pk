@@ -1,7 +1,7 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import ShopByCategory from "@/components/ShopByCategory";
-import Products from "@/components/Products";
+import FeaturedProducts from "@/components/store/home/FeaturedProducts";
 import BrandStory from "@/components/BrandStory";
 import Features from "@/components/Features";
 import Testimonials from "@/components/Testimonials";
@@ -15,7 +15,7 @@ export default function Home() {
       <main>
         <Hero />
         <ShopByCategory />
-        <Products />
+        <FeaturedProducts />
         <BrandStory />
         <Features />
         <Testimonials />

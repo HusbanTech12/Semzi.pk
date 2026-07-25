@@ -30,20 +30,11 @@ export interface OrderResult {
 }
 
 export async function getAllProducts(): Promise<ProductResult[]> {
-  const rows = await db
-    .select({
-      product: products,
-      image: productImages,
-      variant: productVariants,
-      collection: collections,
-    })
-    .from(products)
-    .leftJoin(productImages, eq(productImages.productId, products.id))
-    .leftJoin(productVariants, eq(productVariants.productId, products.id))
-    .leftJoin(collections, eq(collections.id, products.collectionId))
-    .where(eq(products.isActive, true))
-    .orderBy(asc(products.id));
+  const rows = await getAllProductsRaw();
+  return Array.from(buildProductMap(rows).values());
+}
 
+function buildProductMap(rows: Awaited<ReturnType<typeof getAllProductsRaw>>): Map<number, ProductResult> {
   const map = new Map<number, ProductResult>();
 
   for (const row of rows) {
@@ -77,7 +68,69 @@ export async function getAllProducts(): Promise<ProductResult[]> {
     }
   }
 
-  return Array.from(map.values());
+  return map;
+}
+
+type AwaitedAllProductsRaw = {
+  product: typeof products.$inferSelect;
+  image: typeof productImages.$inferSelect | null;
+  variant: typeof productVariants.$inferSelect | null;
+  collection: typeof collections.$inferSelect | null;
+}[];
+
+async function getAllProductsRaw() {
+  return db
+    .select({
+      product: products,
+      image: productImages,
+      variant: productVariants,
+      collection: collections,
+    })
+    .from(products)
+    .leftJoin(productImages, eq(productImages.productId, products.id))
+    .leftJoin(productVariants, eq(productVariants.productId, products.id))
+    .leftJoin(collections, eq(collections.id, products.collectionId))
+    .where(eq(products.isActive, true))
+    .orderBy(asc(products.id));
+}
+
+export async function getFeaturedProducts(): Promise<ProductResult[]> {
+  const rows = await db
+    .select({
+      product: products,
+      image: productImages,
+      variant: productVariants,
+      collection: collections,
+    })
+    .from(products)
+    .leftJoin(productImages, eq(productImages.productId, products.id))
+    .leftJoin(productVariants, eq(productVariants.productId, products.id))
+    .leftJoin(collections, eq(collections.id, products.collectionId))
+    .where(and(eq(products.isActive, true), eq(products.isFeatured, true)))
+    .orderBy(asc(products.id));
+
+  return Array.from(buildProductMap(rows).values());
+}
+
+export async function getRecentProducts(
+  limit: number = 8
+): Promise<ProductResult[]> {
+  const rows = await db
+    .select({
+      product: products,
+      image: productImages,
+      variant: productVariants,
+      collection: collections,
+    })
+    .from(products)
+    .leftJoin(productImages, eq(productImages.productId, products.id))
+    .leftJoin(productVariants, eq(productVariants.productId, products.id))
+    .leftJoin(collections, eq(collections.id, products.collectionId))
+    .where(eq(products.isActive, true))
+    .orderBy(desc(products.createdAt))
+    .limit(limit);
+
+  return Array.from(buildProductMap(rows).values());
 }
 
 export async function getProductBySlug(slug: string): Promise<ProductResult | undefined> {
