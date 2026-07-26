@@ -22,7 +22,7 @@ export default function BrandStory() {
           <Reveal direction="left">
             <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-surface-muted">
               <Image
-                src="https://images.pexels.com/photos/4041402/pexels-photo-4041402.jpeg?auto=compress&cs=tinysrgb&w=800"
+                src="/images/Our-Story-img.jpeg"
                 alt="Natural soap ingredients and handmade process"
                 fill
                 className="object-cover"
