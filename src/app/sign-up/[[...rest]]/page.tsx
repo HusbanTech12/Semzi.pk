@@ -12,7 +12,7 @@ export default function SignUpPage() {
         <SignUp
           routing="hash"
           signInUrl="/sign-in"
-          afterSignUpUrl="/"
+          fallbackRedirectUrl="/"
         />
         <p className="text-center text-sm text-foreground-muted">
           Already have an account?{" "}
