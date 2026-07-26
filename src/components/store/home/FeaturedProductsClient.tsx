@@ -68,7 +68,7 @@ export default function FeaturedProductsClient({
         <motion.div {...fadeUp} className="text-center mt-12">
           <Link
             href="/shop"
-            className="inline-flex items-center gap-2 text-accent hover:text-accent-strong transition-colors text-sm tracking-wide"
+            className="inline-flex items-center gap-2 px-8 py-3 border border-foreground/20 text-foreground text-sm tracking-wider uppercase rounded-lg hover:border-accent hover:text-accent hover:shadow-[0_0_20px_-4px_rgba(199,154,86,0.3)] transition-all duration-300"
           >
             View All Products
             <ArrowRight className="w-4 h-4" />
