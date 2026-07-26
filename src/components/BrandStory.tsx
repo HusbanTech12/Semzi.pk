@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import Reveal from "./Reveal";
@@ -20,15 +21,20 @@ export default function BrandStory() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           <Reveal direction="left">
-            <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-surface-muted">
+            <motion.div
+              className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-surface-muted"
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            >
               <Image
                 src="/images/Our-Story-img.jpeg"
                 alt="Natural soap ingredients and handmade process"
                 fill
-                className="object-cover"
+                className="object-cover transition-transform duration-700 hover:scale-110"
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
-            </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-foreground/20 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500" />
+            </motion.div>
           </Reveal>
 
           <div className="space-y-8">
@@ -50,18 +56,20 @@ export default function BrandStory() {
             </Reveal>
 
             <Reveal delay={0.15}>
-              <div className="p-6 rounded-xl bg-surface-muted border border-border/40">
+              <div className="p-6 rounded-xl bg-surface-muted border border-border/40 hover:border-accent/30 transition-colors duration-300">
                 <p className="text-[10px] tracking-[0.2em] uppercase text-accent font-medium mb-3">
                   Ingredient Transparency
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {ingredients.map((ing) => (
-                    <span
+                    <motion.span
                       key={ing}
-                      className="px-3 py-1.5 text-[10px] tracking-wider uppercase bg-surface border border-border/50 rounded-md text-foreground-muted"
+                      whileHover={{ scale: 1.05, y: -2 }}
+                      transition={{ duration: 0.2 }}
+                      className="px-3 py-1.5 text-[10px] tracking-wider uppercase bg-surface border border-border/50 rounded-md text-foreground-muted hover:border-accent/40 hover:text-foreground hover:shadow-[0_4px_12px_-2px_rgba(199,154,86,0.15)] transition-all duration-300 cursor-default"
                     >
                       {ing}
-                    </span>
+                    </motion.span>
                   ))}
                 </div>
               </div>
@@ -70,12 +78,19 @@ export default function BrandStory() {
             <Reveal delay={0.25}>
               <Link
                 href="/about"
-                className="inline-flex items-center gap-2 text-sm text-foreground-muted hover:text-foreground tracking-[0.1em] uppercase transition-colors"
+                className="group inline-flex items-center gap-2 text-sm text-foreground-muted hover:text-accent-strong tracking-[0.1em] uppercase transition-colors duration-300"
               >
                 Read Our Full Story
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <motion.svg
+                  className="w-4 h-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  whileHover={{ x: 4 }}
+                  transition={{ duration: 0.2 }}
+                >
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
+                </motion.svg>
               </Link>
             </Reveal>
           </div>

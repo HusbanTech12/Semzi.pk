@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { Leaf, HandHeart, Rabbit, Truck } from "lucide-react";
 import Reveal from "./Reveal";
 
@@ -18,9 +19,14 @@ export default function TrustBar() {
           {items.map((item, idx) => {
             const Icon = item.icon;
             return (
-              <Reveal key={item.label} delay={idx * 0.1} className="flex items-center justify-center gap-3 lg:px-8">
-                <Icon className="w-5 h-5 text-accent shrink-0" strokeWidth={1.5} />
-                <span className="text-[11px] tracking-[0.15em] uppercase text-foreground-muted">
+              <Reveal key={item.label} delay={idx * 0.1} className="flex items-center justify-center gap-3 lg:px-8 group">
+                <motion.div
+                  whileHover={{ rotate: [0, -10, 10, 0] }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <Icon className="w-5 h-5 text-accent group-hover:text-accent-strong transition-colors duration-300 shrink-0" strokeWidth={1.5} />
+                </motion.div>
+                <span className="text-[11px] tracking-[0.15em] uppercase text-foreground-muted group-hover:text-foreground transition-colors duration-300">
                   {item.label}
                 </span>
               </Reveal>

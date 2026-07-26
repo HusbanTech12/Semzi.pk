@@ -64,18 +64,31 @@ export default function Testimonials() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: idx * 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className="bg-surface p-10 lg:p-12 space-y-6 rounded-2xl shadow-lg shadow-foreground/5 relative overflow-hidden group hover:shadow-xl hover:shadow-accent-strong/10 transition-shadow duration-300"
+              whileHover={{ y: -8, scale: 1.02 }}
+              className="bg-surface p-10 lg:p-12 space-y-6 rounded-2xl shadow-lg shadow-foreground/5 relative overflow-hidden group cursor-default"
             >
               <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-accent-strong via-accent to-accent-strong" />
-              
-              <Quote className="w-8 h-8 text-accent-strong/60 group-hover:text-accent-strong transition-colors duration-300" strokeWidth={1} />
+              <div className="absolute inset-0 bg-gradient-to-b from-accent/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+              <div className="absolute inset-0 rounded-2xl shadow-[0_12px_48px_-8px_rgba(199,154,86,0.2)] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
+              <motion.div
+                whileHover={{ rotate: [0, -5, 5, 0] }}
+                transition={{ duration: 0.4 }}
+              >
+                <Quote className="w-8 h-8 text-accent-strong/60 group-hover:text-accent-strong transition-colors duration-300" strokeWidth={1} />
+              </motion.div>
 
               <div className="flex gap-0.5">
                 {Array.from({ length: testimonial.rating }).map((_, i) => (
-                  <Star
+                  <motion.div
                     key={i}
-                    className="w-3.5 h-3.5 fill-accent-strong text-accent-strong"
-                  />
+                    whileHover={{ scale: 1.3, rotate: 15 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Star
+                      className="w-3.5 h-3.5 fill-accent-strong text-accent-strong group-hover:fill-accent group-hover:text-accent transition-colors duration-300"
+                    />
+                  </motion.div>
                 ))}
               </div>
 
@@ -83,7 +96,7 @@ export default function Testimonials() {
                 &ldquo;{testimonial.content}&rdquo;
               </p>
 
-              <div className="pt-4 border-t border-accent-strong/20">
+              <div className="pt-4 border-t border-accent-strong/20 group-hover:border-accent/40 transition-colors duration-300">
                 <p className="text-sm font-medium text-foreground">{testimonial.name}</p>
                 <p className="text-xs text-foreground-muted mt-0.5">
                   {testimonial.role}

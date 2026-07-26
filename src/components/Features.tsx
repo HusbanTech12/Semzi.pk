@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { Sparkles, Heart, Leaf, Package } from "lucide-react";
 import Reveal from "./Reveal";
 
@@ -49,22 +50,31 @@ export default function Features() {
           {features.map((feature, idx) => {
             const Icon = feature.icon;
             return (
-              <Reveal
-                key={feature.title}
-                delay={idx * 0.1}
-                className="group relative p-8 rounded-2xl border border-border/50 bg-surface overflow-hidden hover:border-accent/40 hover:shadow-[0_8px_40px_-8px_rgba(43,33,24,0.12),0_0_32px_-4px_rgba(199,154,86,0.15)] transition-all duration-500 cursor-default"
-              >
-                <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-accent/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="absolute inset-0 bg-gradient-to-b from-accent/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-                <div className="relative w-12 h-12 rounded-xl bg-accent-subtle flex items-center justify-center mb-5 group-hover:bg-accent/15 group-hover:shadow-[0_0_24px_-2px_rgba(199,154,86,0.35)] transition-all duration-500">
-                  <Icon className="w-5 h-5 text-accent group-hover:scale-110 transition-transform duration-300" strokeWidth={1.5} />
-                </div>
-                <h3 className="relative font-serif text-lg text-foreground mb-3 group-hover:text-accent-strong transition-colors duration-300">
-                  {feature.title}
-                </h3>
-                <p className="relative text-[13px] text-foreground-muted/70 leading-relaxed">
-                  {feature.description}
-                </p>
+              <Reveal key={feature.title} delay={idx * 0.1}>
+                <motion.div
+                  whileHover={{ y: -6, scale: 1.02 }}
+                  transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                  className="group relative p-8 rounded-2xl border border-border/50 bg-surface overflow-hidden cursor-default h-full"
+                >
+                  <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-accent/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="absolute inset-0 bg-gradient-to-b from-accent/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                  <div className="absolute inset-0 rounded-2xl shadow-[0_8px_40px_-8px_rgba(43,33,24,0.12),0_0_32px_-4px_rgba(199,154,86,0.15)] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
+                  <div className="relative w-12 h-12 rounded-xl bg-accent-subtle flex items-center justify-center mb-5 group-hover:bg-accent/15 transition-all duration-500">
+                    <motion.div
+                      whileHover={{ rotate: 360 }}
+                      transition={{ duration: 0.6, ease: "easeInOut" }}
+                    >
+                      <Icon className="w-5 h-5 text-accent group-hover:text-accent-strong transition-colors duration-300" strokeWidth={1.5} />
+                    </motion.div>
+                  </div>
+                  <h3 className="relative font-serif text-lg text-foreground mb-3 group-hover:text-accent-strong transition-colors duration-300">
+                    {feature.title}
+                  </h3>
+                  <p className="relative text-[13px] text-foreground-muted/70 leading-relaxed">
+                    {feature.description}
+                  </p>
+                </motion.div>
               </Reveal>
             );
           })}

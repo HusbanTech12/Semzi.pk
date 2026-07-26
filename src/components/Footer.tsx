@@ -1,9 +1,9 @@
 "use client";
 
+import { motion } from "framer-motion";
 import Link from "next/link";
 import { Globe, ChevronRight } from "lucide-react";
 import { useAnimations } from "@/lib/animations";
-import { motion } from "framer-motion";
 
 const footerLinks = {
   Shop: [
@@ -37,8 +37,8 @@ export default function Footer() {
           className="grid sm:grid-cols-2 lg:grid-cols-6 gap-12"
         >
           <div className="lg:col-span-2 space-y-6">
-            <Link href="/" className="inline-block">
-              <span className="font-serif text-2xl italic">Semzi</span>
+            <Link href="/" className="inline-block group">
+              <span className="font-serif text-2xl italic group-hover:text-accent transition-colors duration-300">Semzi</span>
             </Link>
             <p className="text-foreground-muted max-w-sm leading-relaxed text-sm">
               Handmade natural soap crafted in small batches. Nothing harsh.
@@ -53,24 +53,30 @@ export default function Footer() {
                 <input
                   type="email"
                   placeholder="Enter your email"
-                  className="flex-1 px-4 py-2.5 bg-white/5 border border-white/10 rounded-sm text-sm text-background placeholder:text-foreground-muted/50 focus:outline-none focus:border-accent/50"
+                  className="flex-1 px-4 py-2.5 bg-white/5 border border-white/10 rounded-sm text-sm text-background placeholder:text-foreground-muted/50 focus:outline-none focus:border-accent/50 focus:shadow-[0_0_20px_-4px_rgba(199,154,86,0.2)] transition-all duration-300"
                 />
-                <button className="px-4 py-2.5 bg-accent text-background rounded-sm hover:bg-accent-strong transition-colors">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-4 py-2.5 bg-accent text-background rounded-sm hover:bg-accent-strong transition-colors"
+                >
                   <ChevronRight className="w-4 h-4" />
-                </button>
+                </motion.button>
               </div>
             </div>
 
             <div className="flex gap-4">
-              <Link href="#" aria-label="Instagram" className="text-xs tracking-widest uppercase text-foreground-muted hover:text-accent transition-colors">
-                Instagram
-              </Link>
-              <Link href="#" aria-label="Twitter" className="text-xs tracking-widest uppercase text-foreground-muted hover:text-accent transition-colors">
-                Twitter
-              </Link>
-              <Link href="#" aria-label="Pinterest" className="text-xs tracking-widest uppercase text-foreground-muted hover:text-accent transition-colors">
-                Pinterest
-              </Link>
+              {["Instagram", "Twitter", "Pinterest"].map((platform) => (
+                <Link
+                  key={platform}
+                  href="#"
+                  aria-label={platform}
+                  className="text-xs tracking-widest uppercase text-foreground-muted hover:text-accent transition-colors duration-300 relative group"
+                >
+                  {platform}
+                  <span className="absolute -bottom-1 left-0 w-0 h-px bg-accent group-hover:w-full transition-all duration-300" />
+                </Link>
+              ))}
             </div>
           </div>
 
@@ -84,9 +90,10 @@ export default function Footer() {
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-sm text-foreground-muted/80 hover:text-accent transition-colors"
+                      className="text-sm text-foreground-muted/80 hover:text-accent transition-colors duration-300 relative group inline-block"
                     >
                       {link.label}
+                      <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-accent group-hover:w-full transition-all duration-300" />
                     </Link>
                   </li>
                 ))}
@@ -103,11 +110,13 @@ export default function Footer() {
             &copy; 2026 Semzi. All rights reserved.
           </p>
           <div className="flex gap-6 text-xs text-foreground-muted/50">
-            <Link href="#" className="hover:text-accent transition-colors">
+            <Link href="#" className="hover:text-accent transition-colors duration-300 relative group">
               Privacy Policy
+              <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-accent group-hover:w-full transition-all duration-300" />
             </Link>
-            <Link href="#" className="hover:text-accent transition-colors">
+            <Link href="#" className="hover:text-accent transition-colors duration-300 relative group">
               Terms of Service
+              <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-accent group-hover:w-full transition-all duration-300" />
             </Link>
           </div>
         </motion.div>
