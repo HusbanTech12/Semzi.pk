@@ -81,7 +81,8 @@ export default function CartPage() {
                 <motion.div
                   key={item.variantId}
                   layout
-                  className="flex gap-6 p-4 border border-border rounded-lg"
+                  whileHover={{ y: -2 }}
+                  className="flex gap-6 p-4 border border-border rounded-lg bg-surface hover:border-accent/30 hover:shadow-[0_4px_24px_-4px_rgba(199,154,86,0.12)] transition-all duration-300 group"
                 >
                   <Link
                     href={`/product/${item.productId}`}

@@ -99,15 +99,15 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                       key={i}
                       onClick={() => setSelectedImage(i)}
                       className={cn(
-                        "relative w-20 h-20 rounded-lg overflow-hidden bg-surface-muted border-2 transition-colors",
-                        i === selectedImage ? "border-accent" : "border-transparent"
+                        "relative w-20 h-20 rounded-lg overflow-hidden bg-surface-muted border-2 transition-all duration-300 hover:shadow-[0_0_16px_-2px_rgba(199,154,86,0.3)]",
+                        i === selectedImage ? "border-accent shadow-[0_0_16px_-2px_rgba(199,154,86,0.3)]" : "border-transparent hover:border-accent/50"
                       )}
                     >
                       <Image
                         src={img}
                         alt=""
                         fill
-                        className="object-cover"
+                        className="object-cover transition-transform duration-300 hover:scale-110"
                         sizes="80px"
                       />
                     </button>

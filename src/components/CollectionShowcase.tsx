@@ -18,7 +18,7 @@ export default function CollectionShowcase() {
         </Reveal>
 
         <Reveal delay={0.1}>
-          <Link href="/collections/beach" className="group block relative aspect-[21/9] rounded-2xl overflow-hidden bg-surface-muted">
+          <Link href="/collections/beach" className="group block relative aspect-[21/9] rounded-2xl overflow-hidden bg-surface-muted border border-border/50 hover:border-accent/30 hover:shadow-[0_8px_40px_-8px_rgba(199,154,86,0.2)] transition-all duration-500">
             <Image
               src="/images/soap-collection.jpg"
               alt="Beach Collection - Natural soap with ocean-inspired ingredients"
@@ -27,6 +27,7 @@ export default function CollectionShowcase() {
               sizes="100vw"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-foreground/70 via-foreground/30 to-transparent" />
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ background: "radial-gradient(circle at 30% 50%, rgba(199,154,86,0.08) 0%, transparent 60%)" }} />
 
             <div className="absolute inset-0 flex items-center">
               <div className="max-w-lg px-10 lg:px-16 space-y-5">

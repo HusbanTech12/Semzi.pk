@@ -53,7 +53,7 @@ export default function AccountPage() {
                     {recentOrders.map((order) => (
                       <div
                         key={order.id}
-                        className="flex items-center justify-between p-4 border border-border rounded-lg"
+                        className="flex items-center justify-between p-4 border border-border rounded-lg bg-surface hover:border-accent/30 hover:shadow-[0_4px_24px_-4px_rgba(199,154,86,0.12)] transition-all duration-300 group cursor-pointer"
                       >
                         <div className="space-y-1">
                           <p className="font-mono text-xs text-foreground-muted">{order.id}</p>
@@ -78,7 +78,7 @@ export default function AccountPage() {
             </div>
 
             <div className="space-y-6">
-              <div className="border border-border rounded-lg p-6 space-y-4">
+              <div className="border border-border rounded-lg p-6 space-y-4 bg-surface hover:border-accent/30 hover:shadow-[0_4px_24px_-4px_rgba(199,154,86,0.12)] transition-all duration-300">
                 <div className="flex items-center gap-3">
                   <MapPin className="w-5 h-5 text-accent" />
                   <h3 className="font-serif text-base text-foreground">Saved Addresses</h3>
@@ -89,7 +89,7 @@ export default function AccountPage() {
                 </button>
               </div>
 
-              <div className="border border-border rounded-lg p-6 space-y-4">
+              <div className="border border-border rounded-lg p-6 space-y-4 bg-surface hover:border-accent/30 hover:shadow-[0_4px_24px_-4px_rgba(199,154,86,0.12)] transition-all duration-300">
                 <div className="flex items-center gap-3">
                   <User className="w-5 h-5 text-accent" />
                   <h3 className="font-serif text-base text-foreground">Profile</h3>

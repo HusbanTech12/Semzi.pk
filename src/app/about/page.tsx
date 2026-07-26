@@ -112,12 +112,14 @@ export default function AboutPage() {
               {values.map((value) => {
                 const Icon = value.icon;
                 return (
-                  <Reveal key={value.title} className="text-center space-y-4 p-8 rounded-lg bg-surface">
-                    <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-accent-subtle text-accent">
-                      <Icon className="w-6 h-6" />
+                  <Reveal key={value.title}>
+                    <div className="text-center space-y-4 p-8 rounded-lg bg-surface border border-border/50 hover:border-accent/30 hover:shadow-[0_8px_40px_-8px_rgba(199,154,86,0.15)] transition-all duration-500 group">
+                      <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-accent-subtle text-accent group-hover:bg-accent/15 group-hover:shadow-[0_0_24px_-2px_rgba(199,154,86,0.35)] transition-all duration-500">
+                        <Icon className="w-6 h-6" />
+                      </div>
+                      <h3 className="font-serif text-lg text-foreground group-hover:text-accent-strong transition-colors duration-300">{value.title}</h3>
+                      <p className="text-sm text-foreground-muted leading-relaxed">{value.description}</p>
                     </div>
-                    <h3 className="font-serif text-lg text-foreground">{value.title}</h3>
-                    <p className="text-sm text-foreground-muted leading-relaxed">{value.description}</p>
                   </Reveal>
                 );
               })}

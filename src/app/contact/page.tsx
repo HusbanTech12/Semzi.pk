@@ -146,7 +146,7 @@ export default function ContactPage() {
                   </h3>
                   <div className="space-y-2">
                     {faqs.map((faq, i) => (
-                      <div key={i} className="border border-border rounded-lg overflow-hidden">
+                      <div key={i} className="border border-border rounded-lg overflow-hidden bg-surface hover:border-accent/30 hover:shadow-[0_4px_24px_-4px_rgba(199,154,86,0.12)] transition-all duration-300">
                         <button
                           onClick={() => setOpenFaq(openFaq === i ? null : i)}
                           className="w-full flex items-center justify-between px-4 py-3 text-sm text-left text-foreground hover:bg-surface-muted/50 transition-colors"

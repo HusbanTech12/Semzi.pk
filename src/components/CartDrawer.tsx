@@ -83,7 +83,8 @@ export default function CartDrawer({ open, onOpenChange }: CartDrawerProps) {
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: 20 }}
-                    className="flex gap-4"
+                    whileHover={{ x: -2 }}
+                    className="flex gap-4 p-2 rounded-lg hover:bg-surface-muted/50 transition-colors duration-300"
                   >
                     <div className="relative w-20 h-20 rounded-lg overflow-hidden bg-surface-muted shrink-0">
                       <Image src={item.image} alt={item.name} fill className="object-cover" sizes="80px" />
