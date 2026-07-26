@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Search, ShoppingBag, Menu, X } from "lucide-react";
+import { useUser } from "@clerk/nextjs";
 import { useAnimations } from "@/lib/animations";
 import { useCart } from "@/context/cart-context";
 import CartDrawer from "@/components/CartDrawer";
@@ -24,6 +25,7 @@ export default function Navbar() {
   const isHome = pathname === "/";
   const { totalItems } = useCart();
   const { fadeUp } = useAnimations();
+  const { isSignedIn } = useUser();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 60);
@@ -101,21 +103,55 @@ export default function Navbar() {
                   </span>
                 )}
               </button>
+              {isSignedIn && (
+                <>
+                  <div className={`hidden md:block w-px h-6 mx-1 transition-colors duration-300 ${
+                    transparent ? "bg-white/20" : "bg-border"
+                  }`} />
+                  <Link
+                    href="/admin"
+                    className={`hidden md:inline-flex text-sm tracking-[0.15em] uppercase transition-all duration-300 relative group ${
+                      transparent
+                        ? "text-white/70 hover:text-white"
+                        : "text-foreground-muted hover:text-accent"
+                    }`}
+                  >
+                    Admin
+                    <span className={`absolute -bottom-1 left-0 w-0 h-[2px] rounded-full group-hover:w-full transition-all duration-300 bg-accent`} />
+                    <span className={`absolute -bottom-1 left-0 w-0 h-[4px] blur-sm rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 bg-accent`} />
+                  </Link>
+                </>
+              )}
               <div className={`hidden md:block w-px h-6 mx-1 transition-colors duration-300 ${
                 transparent ? "bg-white/20" : "bg-border"
               }`} />
-              <Link
-                href="/sign-in"
-                className={`hidden md:inline-flex text-sm tracking-[0.15em] uppercase transition-all duration-300 relative group ${
-                  transparent
-                    ? "text-white/70 hover:text-white"
-                    : "text-foreground-muted hover:text-accent"
-                }`}
-              >
-                Sign In
-                <span className={`absolute -bottom-1 left-0 w-0 h-[2px] rounded-full group-hover:w-full transition-all duration-300 bg-accent`} />
-                <span className={`absolute -bottom-1 left-0 w-0 h-[4px] blur-sm rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 bg-accent`} />
-              </Link>
+              {isSignedIn ? (
+                <Link
+                  href="/account"
+                  className={`hidden md:inline-flex text-sm tracking-[0.15em] uppercase transition-all duration-300 relative group ${
+                    transparent
+                      ? "text-white/70 hover:text-white"
+                      : "text-foreground-muted hover:text-accent"
+                  }`}
+                >
+                  Account
+                  <span className={`absolute -bottom-1 left-0 w-0 h-[2px] rounded-full group-hover:w-full transition-all duration-300 bg-accent`} />
+                  <span className={`absolute -bottom-1 left-0 w-0 h-[4px] blur-sm rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 bg-accent`} />
+                </Link>
+              ) : (
+                <Link
+                  href="/sign-in"
+                  className={`hidden md:inline-flex text-sm tracking-[0.15em] uppercase transition-all duration-300 relative group ${
+                    transparent
+                      ? "text-white/70 hover:text-white"
+                      : "text-foreground-muted hover:text-accent"
+                  }`}
+                >
+                  Sign In
+                  <span className={`absolute -bottom-1 left-0 w-0 h-[2px] rounded-full group-hover:w-full transition-all duration-300 bg-accent`} />
+                  <span className={`absolute -bottom-1 left-0 w-0 h-[4px] blur-sm rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 bg-accent`} />
+                </Link>
+              )}
               <button
                 onClick={() => setMobileOpen(!mobileOpen)}
                 className={`md:hidden p-2.5 rounded-full transition-all duration-300 hover:shadow-[0_0_16px_-2px_rgba(199,154,86,0.4)] ${
@@ -158,17 +194,28 @@ export default function Navbar() {
                     {link.label}
                   </Link>
                 ))}
-                <div className={`pt-4 border-t ${
+                <div className={`pt-4 border-t space-y-4 ${
                   transparent ? "border-white/10" : "border-border"
                 }`}>
+                  {isSignedIn && (
+                    <Link
+                      href="/admin"
+                      onClick={() => setMobileOpen(false)}
+                      className={`block text-sm tracking-[0.15em] uppercase transition-colors duration-300 ${
+                        transparent ? "text-white/70 hover:text-white" : "text-foreground-muted hover:text-foreground"
+                      }`}
+                    >
+                      Admin
+                    </Link>
+                  )}
                   <Link
-                    href="/sign-in"
+                    href={isSignedIn ? "/account" : "/sign-in"}
                     onClick={() => setMobileOpen(false)}
                     className={`block text-sm tracking-[0.15em] uppercase transition-colors duration-300 ${
                       transparent ? "text-white" : "text-foreground"
                     }`}
                   >
-                    Sign In
+                    {isSignedIn ? "Account" : "Sign In"}
                   </Link>
                 </div>
               </div>
