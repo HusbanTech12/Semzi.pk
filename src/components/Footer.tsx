@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Globe, ChevronRight } from "lucide-react";
+import { Globe, ChevronRight, Instagram, Twitter, Facebook, MessageCircle } from "lucide-react";
 import { useAnimations } from "@/lib/animations";
 
 const footerLinks = {
@@ -65,18 +65,27 @@ export default function Footer() {
               </div>
             </div>
 
-            <div className="flex gap-4">
-              {["Instagram", "Twitter", "Pinterest"].map((platform) => (
-                <Link
-                  key={platform}
-                  href="#"
-                  aria-label={platform}
-                  className="text-xs tracking-widest uppercase text-foreground-muted hover:text-accent transition-colors duration-300 relative group"
-                >
-                  {platform}
-                  <span className="absolute -bottom-1 left-0 w-0 h-px bg-accent group-hover:w-full transition-all duration-300" />
-                </Link>
-              ))}
+            <div className="flex gap-3">
+              {[
+                { icon: Instagram, label: "Instagram", href: "https://instagram.com/semzi" },
+                { icon: Twitter, label: "Twitter", href: "https://twitter.com/semzi" },
+                { icon: Facebook, label: "Facebook", href: "https://facebook.com/semzi" },
+                { icon: MessageCircle, label: "WhatsApp", href: "https://wa.me/923000000000" },
+              ].map((social) => {
+                const Icon = social.icon;
+                return (
+                  <Link
+                    key={social.label}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={social.label}
+                    className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-foreground-muted hover:text-accent hover:border-accent/30 hover:bg-accent/10 hover:shadow-[0_0_16px_-2px_rgba(199,154,86,0.3)] transition-all duration-300"
+                  >
+                    <Icon className="w-4 h-4" />
+                  </Link>
+                );
+              })}
             </div>
           </div>
 
