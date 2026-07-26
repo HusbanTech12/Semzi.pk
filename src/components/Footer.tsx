@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Globe, ChevronRight, Instagram, Twitter, Facebook, MessageCircle } from "lucide-react";
+import { Globe, ChevronRight, Camera, MessageCircle, Heart, Send } from "lucide-react";
 import { useAnimations } from "@/lib/animations";
 
 const footerLinks = {
@@ -67,9 +67,9 @@ export default function Footer() {
 
             <div className="flex gap-3">
               {[
-                { icon: Instagram, label: "Instagram", href: "https://instagram.com/semzi" },
-                { icon: Twitter, label: "Twitter", href: "https://twitter.com/semzi" },
-                { icon: Facebook, label: "Facebook", href: "https://facebook.com/semzi" },
+                { icon: Camera, label: "Instagram", href: "https://instagram.com/semzi" },
+                { icon: Send, label: "Twitter", href: "https://twitter.com/semzi" },
+                { icon: Heart, label: "Facebook", href: "https://facebook.com/semzi" },
                 { icon: MessageCircle, label: "WhatsApp", href: "https://wa.me/923000000000" },
               ].map((social) => {
                 const Icon = social.icon;
