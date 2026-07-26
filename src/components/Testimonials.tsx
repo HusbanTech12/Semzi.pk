@@ -64,17 +64,17 @@ export default function Testimonials() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: idx * 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className="bg-surface p-10 lg:p-12 space-y-6 rounded-2xl shadow-lg shadow-foreground/5 relative overflow-hidden group hover:shadow-xl hover:shadow-accent/10 transition-shadow duration-300"
+              className="bg-surface p-10 lg:p-12 space-y-6 rounded-2xl shadow-lg shadow-foreground/5 relative overflow-hidden group hover:shadow-xl hover:shadow-accent-strong/10 transition-shadow duration-300"
             >
-              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-accent via-accent-strong to-accent" />
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-accent-strong via-accent to-accent-strong" />
               
-              <Quote className="w-8 h-8 text-accent/40 group-hover:text-accent/60 transition-colors duration-300" strokeWidth={1} />
+              <Quote className="w-8 h-8 text-accent-strong/60 group-hover:text-accent-strong transition-colors duration-300" strokeWidth={1} />
 
               <div className="flex gap-0.5">
                 {Array.from({ length: testimonial.rating }).map((_, i) => (
                   <Star
                     key={i}
-                    className="w-3.5 h-3.5 fill-accent text-accent"
+                    className="w-3.5 h-3.5 fill-accent-strong text-accent-strong"
                   />
                 ))}
               </div>
@@ -83,7 +83,7 @@ export default function Testimonials() {
                 &ldquo;{testimonial.content}&rdquo;
               </p>
 
-              <div className="pt-4 border-t border-accent/20">
+              <div className="pt-4 border-t border-accent-strong/20">
                 <p className="text-sm font-medium text-foreground">{testimonial.name}</p>
                 <p className="text-xs text-foreground-muted mt-0.5">
                   {testimonial.role}
