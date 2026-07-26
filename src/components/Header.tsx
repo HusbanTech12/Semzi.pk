@@ -74,6 +74,20 @@ export default function Navbar() {
                   <span className={`absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-[4px] blur-sm rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 bg-accent`} />
                 </Link>
               ))}
+              {isSignedIn && (
+                <Link
+                  href="/admin"
+                  className={`relative group text-sm tracking-[0.15em] uppercase transition-colors duration-300 ${
+                    transparent
+                      ? "text-white/70 hover:text-white"
+                      : "text-foreground-muted hover:text-foreground"
+                  }`}
+                >
+                  Admin
+                  <span className={`absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-[2px] rounded-full group-hover:w-full transition-all duration-300 bg-accent`} />
+                  <span className={`absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-[4px] blur-sm rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 bg-accent`} />
+                </Link>
+              )}
             </nav>
 
             <div className="flex items-center gap-3">
@@ -103,25 +117,6 @@ export default function Navbar() {
                   </span>
                 )}
               </button>
-              {isSignedIn && (
-                <>
-                  <div className={`hidden md:block w-px h-6 mx-1 transition-colors duration-300 ${
-                    transparent ? "bg-white/20" : "bg-border"
-                  }`} />
-                  <Link
-                    href="/admin"
-                    className={`hidden md:inline-flex text-sm tracking-[0.15em] uppercase transition-all duration-300 relative group ${
-                      transparent
-                        ? "text-white/70 hover:text-white"
-                        : "text-foreground-muted hover:text-accent"
-                    }`}
-                  >
-                    Admin
-                    <span className={`absolute -bottom-1 left-0 w-0 h-[2px] rounded-full group-hover:w-full transition-all duration-300 bg-accent`} />
-                    <span className={`absolute -bottom-1 left-0 w-0 h-[4px] blur-sm rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 bg-accent`} />
-                  </Link>
-                </>
-              )}
               <div className={`hidden md:block w-px h-6 mx-1 transition-colors duration-300 ${
                 transparent ? "bg-white/20" : "bg-border"
               }`} />
@@ -194,20 +189,20 @@ export default function Navbar() {
                     {link.label}
                   </Link>
                 ))}
-                <div className={`pt-4 border-t space-y-4 ${
+                {isSignedIn && (
+                  <Link
+                    href="/admin"
+                    onClick={() => setMobileOpen(false)}
+                    className={`block text-sm tracking-[0.15em] uppercase transition-colors duration-300 ${
+                      transparent ? "text-white/70 hover:text-white" : "text-foreground-muted hover:text-foreground"
+                    }`}
+                  >
+                    Admin
+                  </Link>
+                )}
+                <div className={`pt-4 border-t ${
                   transparent ? "border-white/10" : "border-border"
                 }`}>
-                  {isSignedIn && (
-                    <Link
-                      href="/admin"
-                      onClick={() => setMobileOpen(false)}
-                      className={`block text-sm tracking-[0.15em] uppercase transition-colors duration-300 ${
-                        transparent ? "text-white/70 hover:text-white" : "text-foreground-muted hover:text-foreground"
-                      }`}
-                    >
-                      Admin
-                    </Link>
-                  )}
                   <Link
                     href={isSignedIn ? "/account" : "/sign-in"}
                     onClick={() => setMobileOpen(false)}
