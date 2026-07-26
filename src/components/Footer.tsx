@@ -111,15 +111,6 @@ export default function Footer() {
             </Link>
           </div>
         </motion.div>
-
-        <div className="pb-8 text-center">
-          <p className="text-[10px] tracking-[0.15em] uppercase text-foreground-muted/30 max-w-xl mx-auto leading-relaxed">
-            Semzi products are handmade in small batches using natural ingredients.
-            Our ingredient lists follow INCI labelling standards for full transparency.
-            Always perform a patch test before use. Store in a cool, dry place.
-            For external use only.
-          </p>
-        </div>
       </div>
     </footer>
   );
