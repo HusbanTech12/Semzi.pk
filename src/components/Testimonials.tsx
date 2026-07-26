@@ -30,8 +30,9 @@ const testimonials = [
 
 export default function Testimonials() {
   return (
-    <section className="py-24 lg:py-32 bg-surface-muted overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+    <section className="py-24 lg:py-32 bg-accent-subtle overflow-hidden relative">
+      <div className="absolute inset-0 bg-gradient-to-b from-accent/5 via-transparent to-accent/5" />
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16 space-y-4">
           <Reveal>
             <span className="text-[11px] tracking-[0.25em] uppercase text-accent font-medium">
@@ -54,7 +55,7 @@ export default function Testimonials() {
           initial="initial"
           whileInView="animate"
           viewport={{ once: true, margin: "-60px" }}
-          className="grid md:grid-cols-3 gap-px bg-border/50 rounded-2xl overflow-hidden"
+          className="grid md:grid-cols-3 gap-6"
         >
           {testimonials.map((testimonial, idx) => (
             <motion.div
@@ -63,9 +64,11 @@ export default function Testimonials() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: idx * 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className="bg-surface p-10 lg:p-12 space-y-6"
+              className="bg-surface p-10 lg:p-12 space-y-6 rounded-2xl shadow-lg shadow-foreground/5 relative overflow-hidden group hover:shadow-xl hover:shadow-accent/10 transition-shadow duration-300"
             >
-              <Quote className="w-8 h-8 text-accent/40" strokeWidth={1} />
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-accent via-accent-strong to-accent" />
+              
+              <Quote className="w-8 h-8 text-accent/40 group-hover:text-accent/60 transition-colors duration-300" strokeWidth={1} />
 
               <div className="flex gap-0.5">
                 {Array.from({ length: testimonial.rating }).map((_, i) => (
@@ -80,7 +83,7 @@ export default function Testimonials() {
                 &ldquo;{testimonial.content}&rdquo;
               </p>
 
-              <div className="pt-4 border-t border-border">
+              <div className="pt-4 border-t border-accent/20">
                 <p className="text-sm font-medium text-foreground">{testimonial.name}</p>
                 <p className="text-xs text-foreground-muted mt-0.5">
                   {testimonial.role}
