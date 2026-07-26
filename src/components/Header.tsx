@@ -63,8 +63,11 @@ export default function Navbar() {
                   }`}
                 >
                   {link.label}
-                  <span className={`absolute -bottom-1 left-0 w-0 h-[1px] group-hover:w-full transition-all duration-300 ${
-                    scrolled ? "bg-foreground/80" : "bg-white/80"
+                  <span className={`absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-[2px] rounded-full group-hover:w-full transition-all duration-300 ${
+                    scrolled ? "bg-accent" : "bg-accent"
+                  }`} />
+                  <span className={`absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-[4px] blur-sm rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 ${
+                    scrolled ? "bg-accent" : "bg-accent"
                   }`} />
                 </Link>
               ))}
@@ -73,10 +76,10 @@ export default function Navbar() {
             <div className="flex items-center gap-3">
               <button
                 aria-label="Search"
-                className={`p-2.5 rounded-full transition-all duration-300 ${
+                className={`p-2.5 rounded-full transition-all duration-300 hover:shadow-[0_0_16px_-2px_rgba(199,154,86,0.4)] ${
                   scrolled
-                    ? "text-foreground-muted hover:text-foreground hover:bg-foreground/10"
-                    : "text-white/70 hover:text-white hover:bg-white/10"
+                    ? "text-foreground-muted hover:text-accent hover:bg-accent/10"
+                    : "text-white/70 hover:text-accent hover:bg-accent/10"
                 }`}
               >
                 <Search className="w-4 h-4" />
@@ -84,10 +87,10 @@ export default function Navbar() {
               <button
                 onClick={() => setCartOpen(true)}
                 aria-label="Cart"
-                className={`relative p-2.5 rounded-full transition-all duration-300 ${
+                className={`relative p-2.5 rounded-full transition-all duration-300 hover:shadow-[0_0_16px_-2px_rgba(199,154,86,0.4)] ${
                   scrolled
-                    ? "text-foreground-muted hover:text-foreground hover:bg-foreground/10"
-                    : "text-white/70 hover:text-white hover:bg-white/10"
+                    ? "text-foreground-muted hover:text-accent hover:bg-accent/10"
+                    : "text-white/70 hover:text-accent hover:bg-accent/10"
                 }`}
               >
                 <ShoppingBag className="w-4 h-4" />
@@ -102,20 +105,22 @@ export default function Navbar() {
               }`} />
               <Link
                 href="/sign-in"
-                className={`hidden md:inline-flex text-sm tracking-[0.15em] uppercase transition-colors duration-300 ${
+                className={`hidden md:inline-flex text-sm tracking-[0.15em] uppercase transition-all duration-300 relative group ${
                   scrolled
-                    ? "text-foreground-muted hover:text-foreground"
+                    ? "text-foreground-muted hover:text-accent"
                     : "text-white/70 hover:text-white"
                 }`}
               >
                 Sign In
+                <span className={`absolute -bottom-1 left-0 w-0 h-[2px] rounded-full group-hover:w-full transition-all duration-300 bg-accent`} />
+                <span className={`absolute -bottom-1 left-0 w-0 h-[4px] blur-sm rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 bg-accent`} />
               </Link>
               <button
                 onClick={() => setMobileOpen(!mobileOpen)}
-                className={`md:hidden p-2.5 rounded-full transition-all duration-300 ${
+                className={`md:hidden p-2.5 rounded-full transition-all duration-300 hover:shadow-[0_0_16px_-2px_rgba(199,154,86,0.4)] ${
                   scrolled
-                    ? "text-foreground-muted hover:text-foreground hover:bg-foreground/10"
-                    : "text-white/70 hover:text-white hover:bg-white/10"
+                    ? "text-foreground-muted hover:text-accent hover:bg-accent/10"
+                    : "text-white/70 hover:text-accent hover:bg-accent/10"
                 }`}
                 aria-label="Toggle menu"
               >
