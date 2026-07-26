@@ -30,14 +30,14 @@ const testimonials = [
 
 export default function Testimonials() {
   return (
-    <section className="py-24 lg:py-32 bg-foreground text-background overflow-hidden">
+    <section className="py-24 lg:py-32 bg-surface-muted overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-16 space-y-4">
           <Reveal>
             <span className="text-[11px] tracking-[0.25em] uppercase text-accent font-medium">
               Testimonials
             </span>
-            <h2 className="font-serif text-3xl md:text-4xl">
+            <h2 className="font-serif text-3xl md:text-4xl text-foreground">
               Loved by Thousands
             </h2>
           </Reveal>
@@ -54,7 +54,7 @@ export default function Testimonials() {
           initial="initial"
           whileInView="animate"
           viewport={{ once: true, margin: "-60px" }}
-          className="grid md:grid-cols-3 gap-px bg-white/10 rounded-2xl overflow-hidden"
+          className="grid md:grid-cols-3 gap-px bg-border/50 rounded-2xl overflow-hidden"
         >
           {testimonials.map((testimonial, idx) => (
             <motion.div
@@ -63,7 +63,7 @@ export default function Testimonials() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: idx * 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className="bg-foreground p-10 lg:p-12 space-y-6"
+              className="bg-surface p-10 lg:p-12 space-y-6"
             >
               <Quote className="w-8 h-8 text-accent/40" strokeWidth={1} />
 
@@ -76,12 +76,12 @@ export default function Testimonials() {
                 ))}
               </div>
 
-              <p className="text-background/75 leading-relaxed text-sm">
+              <p className="text-foreground-muted leading-relaxed text-sm">
                 &ldquo;{testimonial.content}&rdquo;
               </p>
 
-              <div className="pt-4 border-t border-white/10">
-                <p className="text-sm font-medium">{testimonial.name}</p>
+              <div className="pt-4 border-t border-border">
+                <p className="text-sm font-medium text-foreground">{testimonial.name}</p>
                 <p className="text-xs text-foreground-muted mt-0.5">
                   {testimonial.role}
                 </p>
