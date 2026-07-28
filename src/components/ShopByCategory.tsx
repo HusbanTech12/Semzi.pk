@@ -12,24 +12,14 @@ const categories = [
     image: "/images/soap-packaging.jpg",
   },
   {
-    name: "Shampoos",
-    href: "/shop?category=shampoos",
-    image: "https://images.unsplash.com/photo-1747858989102-cca0f4dc4a11?w=400&q=80",
-  },
-  {
-    name: "Gift Sets",
-    href: "/shop?category=gift-sets",
-    image: "https://images.unsplash.com/photo-1724682620333-19ee9ff860cb?w=400&q=80",
-  },
-  {
-    name: "Body Care",
-    href: "/shop?category=body-care",
+    name: "Cream Soaps",
+    href: "/shop?category=cream-soaps",
     image: "https://images.unsplash.com/photo-1607006483224-73ce0729e22a?w=400&q=80",
   },
   {
-    name: "Beach",
-    href: "/collections/beach",
-    image: "/images/soap-natural.jpg",
+    name: "Shampoos",
+    href: "/shop?category=shampoos",
+    image: "https://images.unsplash.com/photo-1747858989102-cca0f4dc4a11?w=400&q=80",
   },
 ];
 
