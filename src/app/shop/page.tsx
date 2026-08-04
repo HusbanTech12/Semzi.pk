@@ -19,7 +19,7 @@ export default function ShopPage() {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedConcerns, setSelectedConcerns] = useState<string[]>([]);
   const [selectedCollections, setSelectedCollections] = useState<string[]>([]);
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 5000]);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 100000]);
   const [inStockOnly, setInStockOnly] = useState(false);
   const { products, loading } = useProducts();
   const { fadeUp } = useAnimations();
@@ -116,17 +116,17 @@ export default function ShopPage() {
                   Price Range
                 </h4>
                 <div className="flex items-center gap-2 text-sm text-foreground-muted">
-                  <span>${priceRange[0] / 100}</span>
+                  <span>Rs. {priceRange[0] / 100}</span>
                   <input
                     type="range"
                     min={0}
-                    max={5000}
+                    max={100000}
                     step={100}
                     value={priceRange[1]}
                     onChange={(e) => setPriceRange([priceRange[0], Number(e.target.value)])}
                     className="flex-1 accent-accent"
                   />
-                  <span>${priceRange[1] / 100}</span>
+                  <span>Rs. {priceRange[1] / 100}</span>
                 </div>
               </div>
 
