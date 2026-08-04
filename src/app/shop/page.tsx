@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { X } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { X, ChevronDown, Check } from "lucide-react";
 import Navbar from "@/components/Header";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
@@ -17,6 +17,92 @@ const filterGroups = [
 ];
 
 type FilterKey = "category" | "collection" | "concern";
+
+function DropdownFilter({
+  group,
+  selected,
+  onToggle,
+}: {
+  group: (typeof filterGroups)[number];
+  selected: string[];
+  onToggle: (key: FilterKey, val: string) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    }
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, []);
+
+  const activeCount = selected.length;
+
+  return (
+    <div ref={ref} className="relative">
+      <button
+        onClick={() => setOpen(!open)}
+        className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border text-sm font-medium transition-all duration-300 ${
+          open
+            ? "bg-accent/10 border-accent/40 text-accent"
+            : activeCount > 0
+            ? "bg-accent/5 border-accent/20 text-accent"
+            : "bg-surface border-border text-foreground-muted hover:border-accent/30"
+        }`}
+      >
+        <span>{group.label}</span>
+        {activeCount > 0 && (
+          <span className="flex items-center justify-center w-5 h-5 rounded-full bg-accent text-white text-[10px] font-bold">
+            {activeCount}
+          </span>
+        )}
+        <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${open ? "rotate-180" : ""}`} />
+      </button>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, y: -8, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -8, scale: 0.96 }}
+            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute top-full left-0 mt-2 w-56 bg-surface border border-border rounded-xl shadow-[0_12px_40px_-8px_rgba(43,33,24,0.15)] z-40 overflow-hidden"
+          >
+            <div className="p-2 max-h-64 overflow-y-auto">
+              {group.options.map((opt) => {
+                const active = selected.includes(opt);
+                return (
+                  <button
+                    key={opt}
+                    onClick={() => onToggle(group.key, opt)}
+                    className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors duration-200 ${
+                      active
+                        ? "bg-accent/10 text-accent"
+                        : "text-foreground-muted hover:bg-accent/5 hover:text-foreground"
+                    }`}
+                  >
+                    <span
+                      className={`flex items-center justify-center w-4 h-4 rounded border transition-all duration-200 ${
+                        active
+                          ? "bg-accent border-accent text-white"
+                          : "border-border"
+                      }`}
+                    >
+                      {active && <Check className="w-3 h-3" />}
+                    </span>
+                    {opt}
+                  </button>
+                );
+              })}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
 
 export default function ShopPage() {
   const [selectedFilters, setSelectedFilters] = useState<Record<FilterKey, string[]>>({
@@ -52,59 +138,49 @@ export default function ShopPage() {
       <Navbar />
       <main className="pt-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
-          <motion.div {...fadeUp} className="mb-6">
+          <motion.div {...fadeUp} className="mb-8">
             <h1 className="font-serif text-3xl md:text-4xl text-foreground">Shop</h1>
             <p className="text-sm text-foreground-muted mt-1">
               {loading ? "Loading..." : `${filtered.length} products`}
             </p>
           </motion.div>
 
-          <motion.div {...fadeUp} className="mb-8 space-y-4">
-            {filterGroups.map((group) => (
-              <div key={group.key} className="flex flex-wrap items-center gap-2">
-                <span className="text-[10px] tracking-[0.2em] uppercase text-foreground-muted font-semibold min-w-[80px]">
-                  {group.label}
-                </span>
-                {group.options.map((opt) => {
-                  const active = selectedFilters[group.key].includes(opt);
-                  return (
-                    <button
-                      key={opt}
-                      onClick={() => toggleFilter(group.key, opt)}
-                      className={`px-4 py-2 rounded-full text-xs font-medium border transition-all duration-300 ${
-                        active
-                          ? "bg-accent text-white border-accent shadow-[0_0_16px_-4px_rgba(199,154,86,0.4)]"
-                          : "bg-surface text-foreground-muted border-border hover:border-accent/40 hover:text-accent"
-                      }`}
-                    >
-                      {opt}
-                    </button>
-                  );
-                })}
-              </div>
-            ))}
+          <motion.div {...fadeUp} className="mb-8">
+            <div className="flex flex-wrap items-center gap-3">
+              {filterGroups.map((group) => (
+                <DropdownFilter
+                  key={group.key}
+                  group={group}
+                  selected={selectedFilters[group.key]}
+                  onToggle={toggleFilter}
+                />
+              ))}
+
+              {totalActive > 0 && (
+                <button
+                  onClick={clearAll}
+                  className="flex items-center gap-1.5 px-3 py-2 text-xs text-foreground-muted hover:text-foreground transition-colors"
+                >
+                  <X className="w-3.5 h-3.5" />
+                  Clear all
+                </button>
+              )}
+            </div>
 
             {totalActive > 0 && (
-              <div className="flex items-center gap-2 pt-2">
-                <span className="text-xs text-foreground-muted">Active filters:</span>
+              <div className="flex flex-wrap items-center gap-2 mt-4">
                 {Object.entries(selectedFilters).flatMap(([key, vals]) =>
                   vals.map((val) => (
                     <button
                       key={`${key}-${val}`}
                       onClick={() => toggleFilter(key as FilterKey, val)}
-                      className="inline-flex items-center gap-1 px-3 py-1 bg-accent/10 text-accent text-xs font-medium rounded-full border border-accent/20 hover:bg-accent/20 transition-colors"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-accent/10 text-accent text-xs font-medium rounded-lg border border-accent/20 hover:bg-accent/20 transition-colors"
                     >
                       {val}
                       <X className="w-3 h-3" />
                     </button>
                   ))
                 )}
-                <button
-                  onClick={clearAll}
-                  className="text-xs text-foreground-muted hover:text-foreground underline transition-colors"
-                >
-                  Clear all
-                </button>
               </div>
             )}
           </motion.div>
