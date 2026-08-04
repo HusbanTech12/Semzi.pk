@@ -19,7 +19,6 @@ export default function ShopPage() {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedConcerns, setSelectedConcerns] = useState<string[]>([]);
   const [selectedCollections, setSelectedCollections] = useState<string[]>([]);
-  const [inStockOnly, setInStockOnly] = useState(false);
   const { products, loading } = useProducts();
   const { fadeUp } = useAnimations();
 
@@ -27,7 +26,6 @@ export default function ShopPage() {
     if (selectedCategories.length && !selectedCategories.includes(p.category)) return false;
     if (selectedConcerns.length && !p.skinConcern?.some((c) => selectedConcerns.includes(c))) return false;
     if (selectedCollections.length && !selectedCollections.includes(p.collection ?? "")) return false;
-    if (inStockOnly && !p.inStock) return false;
     return true;
   });
 
@@ -109,15 +107,6 @@ export default function ShopPage() {
                 </div>
               </div>
 
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={inStockOnly}
-                  onChange={() => setInStockOnly(!inStockOnly)}
-                  className="accent-accent"
-                />
-                <span className="text-sm text-foreground-muted">In Stock Only</span>
-              </label>
             </aside>
 
             {mobileFiltersOpen && (
