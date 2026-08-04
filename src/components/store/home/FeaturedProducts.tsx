@@ -1,13 +1,11 @@
-import { products as staticProducts } from "@/lib/products";
-import type { Product } from "@/lib/products";
+import { getAllProducts } from "@/lib/db-queries";
 import FeaturedProductsClient from "./FeaturedProductsClient";
 
-function getStaticFeatured(): Product[] {
-  return staticProducts.filter((p) => p.badge !== undefined);
-}
+export const dynamic = "force-dynamic";
 
-export default function FeaturedProducts() {
-  const featured = getStaticFeatured();
+export default async function FeaturedProducts() {
+  const allProducts = await getAllProducts();
+  const featured = allProducts.filter((p) => p.inStock).slice(0, 4);
 
   return <FeaturedProductsClient featured={featured} />;
 }
