@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ChevronDown, Check } from "lucide-react";
+import { X, ChevronDown, Check, SlidersHorizontal } from "lucide-react";
 import Navbar from "@/components/Header";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
@@ -41,10 +41,10 @@ function DropdownFilter({
   const activeCount = selected.length;
 
   return (
-    <div ref={ref} className="relative">
+    <div ref={ref} className="relative flex-1">
       <button
         onClick={() => setOpen(!open)}
-        className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border text-sm font-medium transition-all duration-300 ${
+        className={`w-full flex items-center justify-between px-5 py-3 rounded-xl border text-sm font-medium transition-all duration-300 ${
           open
             ? "bg-accent/10 border-accent/40 text-accent"
             : activeCount > 0
@@ -52,35 +52,37 @@ function DropdownFilter({
             : "bg-surface border-border text-foreground-muted hover:border-accent/30"
         }`}
       >
-        <span>{group.label}</span>
-        {activeCount > 0 && (
-          <span className="flex items-center justify-center w-5 h-5 rounded-full bg-accent text-white text-[10px] font-bold">
-            {activeCount}
-          </span>
-        )}
+        <span className="flex items-center gap-2">
+          <span>{group.label}</span>
+          {activeCount > 0 && (
+            <span className="flex items-center justify-center w-5 h-5 rounded-full bg-accent text-white text-[10px] font-bold">
+              {activeCount}
+            </span>
+          )}
+        </span>
         <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${open ? "rotate-180" : ""}`} />
       </button>
 
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, y: -8, scale: 0.96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -8, scale: 0.96 }}
+            initial={{ opacity: 0, y: -4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -4 }}
             transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute top-full left-0 mt-2 w-56 bg-surface border border-border rounded-xl shadow-[0_12px_40px_-8px_rgba(43,33,24,0.15)] z-40 overflow-hidden"
+            className="absolute top-full left-0 right-0 mt-2 bg-surface border border-border rounded-xl shadow-[0_12px_40px_-8px_rgba(43,33,24,0.15)] z-40 overflow-hidden"
           >
-            <div className="p-2 max-h-64 overflow-y-auto">
+            <div className="flex flex-wrap gap-2 p-3">
               {group.options.map((opt) => {
                 const active = selected.includes(opt);
                 return (
                   <button
                     key={opt}
                     onClick={() => onToggle(group.key, opt)}
-                    className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors duration-200 ${
+                    className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm border transition-all duration-200 ${
                       active
-                        ? "bg-accent/10 text-accent"
-                        : "text-foreground-muted hover:bg-accent/5 hover:text-foreground"
+                        ? "bg-accent/10 border-accent/30 text-accent"
+                        : "bg-background border-border text-foreground-muted hover:border-accent/20 hover:text-foreground"
                     }`}
                   >
                     <span
@@ -139,14 +141,27 @@ export default function ShopPage() {
       <main className="pt-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
           <motion.div {...fadeUp} className="mb-8">
-            <h1 className="font-serif text-3xl md:text-4xl text-foreground">Shop</h1>
-            <p className="text-sm text-foreground-muted mt-1">
-              {loading ? "Loading..." : `${filtered.length} products`}
-            </p>
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="font-serif text-3xl md:text-4xl text-foreground">Shop</h1>
+                <p className="text-sm text-foreground-muted mt-1">
+                  {loading ? "Loading..." : `${filtered.length} products`}
+                </p>
+              </div>
+              {totalActive > 0 && (
+                <button
+                  onClick={clearAll}
+                  className="flex items-center gap-2 px-4 py-2 text-sm text-foreground-muted hover:text-foreground border border-border rounded-xl hover:border-accent/30 transition-all"
+                >
+                  <SlidersHorizontal className="w-4 h-4" />
+                  Clear all ({totalActive})
+                </button>
+              )}
+            </div>
           </motion.div>
 
           <motion.div {...fadeUp} className="mb-8">
-            <div className="flex flex-wrap items-center gap-3">
+            <div className="flex flex-col sm:flex-row gap-3">
               {filterGroups.map((group) => (
                 <DropdownFilter
                   key={group.key}
@@ -155,16 +170,6 @@ export default function ShopPage() {
                   onToggle={toggleFilter}
                 />
               ))}
-
-              {totalActive > 0 && (
-                <button
-                  onClick={clearAll}
-                  className="flex items-center gap-1.5 px-3 py-2 text-xs text-foreground-muted hover:text-foreground transition-colors"
-                >
-                  <X className="w-3.5 h-3.5" />
-                  Clear all
-                </button>
-              )}
             </div>
 
             {totalActive > 0 && (
