@@ -44,7 +44,7 @@ function buildProductMap(rows: Awaited<ReturnType<typeof getAllProductsRaw>>): M
         id: p.id,
         slug: p.slug,
         name: p.name,
-        category: p.name,
+        category: p.category ?? "Artisan Soap",
         description: p.description ?? "",
         priceCents: p.priceCents,
         compareAtPriceCents: p.compareAtPriceCents ?? undefined,

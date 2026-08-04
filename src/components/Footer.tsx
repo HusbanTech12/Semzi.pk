@@ -9,6 +9,8 @@ const footerLinks = {
   Shop: [
     { label: "All Products", href: "/shop" },
     { label: "Soaps", href: "/shop?category=soaps" },
+    { label: "Glycerin Soap", href: "/shop?category=glycerin-soap" },
+    { label: "Goat Milk & Aloe Vera Soap", href: "/shop?category=goat-milk-aloe-vera-soap" },
     { label: "Shampoos", href: "/shop?category=shampoos" },
     { label: "Gift Sets", href: "/shop?category=gift-sets" },
   ],

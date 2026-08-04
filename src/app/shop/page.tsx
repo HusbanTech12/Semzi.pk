@@ -11,7 +11,7 @@ import { useAnimations } from "@/lib/animations";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const allConcerns = ["dry", "sensitive", "oily", "acne-prone", "normal", "damaged"];
-const allCategories = ["Artisan Soap", "Shampoo"];
+const allCategories = ["Artisan Soap", "Shampoo", "Glycerin Soap", "Goat Milk & Aloe Vera Soap"];
 const allCollections = ["Beach", "Signature"];
 
 export default function ShopPage() {

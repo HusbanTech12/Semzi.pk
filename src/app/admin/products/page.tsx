@@ -44,6 +44,7 @@ type AdminProduct = {
   compareAtPriceCents: number | null;
   ingredients: string | null;
   howToUse: string | null;
+  category: string | null;
   collectionId: number | null;
   isActive: boolean;
   isFeatured: boolean;
@@ -61,11 +62,14 @@ type ProductFormData = {
   compareAtPriceCents: string;
   ingredients: string;
   howToUse: string;
+  category: string;
   isActive: boolean;
   isFeatured: boolean;
   images: { url: string; alt: string }[];
   variants: { name: string; sku: string; priceCents: string; inventoryCount: string }[];
 };
+
+const availableCategories = ["Artisan Soap", "Shampoo", "Glycerin Soap", "Goat Milk & Aloe Vera Soap"];
 
 const emptyForm: ProductFormData = {
   name: "",
@@ -75,6 +79,7 @@ const emptyForm: ProductFormData = {
   compareAtPriceCents: "",
   ingredients: "",
   howToUse: "",
+  category: "",
   isActive: true,
   isFeatured: false,
   images: [],
@@ -143,6 +148,7 @@ function ProductForm({
         compareAtPriceCents: product.compareAtPriceCents ? String(product.compareAtPriceCents / 100) : "",
         ingredients: product.ingredients ?? "",
         howToUse: product.howToUse ?? "",
+        category: product.category ?? "",
         isActive: product.isActive,
         isFeatured: product.isFeatured,
         images: product.images.map((img) => ({ url: img.url, alt: img.alt ?? "" })),
@@ -257,6 +263,21 @@ function ProductForm({
               className="w-full px-3 py-2.5 bg-white/5 border border-white/10 rounded-xl text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-[#C79A56]/50 transition-all font-mono"
               placeholder="0"
             />
+          </div>
+
+          {/* Category */}
+          <div className="space-y-1.5">
+            <label className="text-xs font-medium text-white/40 uppercase tracking-wider">Category</label>
+            <select
+              value={form.category}
+              onChange={(e) => set("category", e.target.value)}
+              className="w-full px-3 py-2.5 bg-white/5 border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:border-[#C79A56]/50 transition-all appearance-none cursor-pointer"
+            >
+              <option value="" className="bg-[#111118]">Select category</option>
+              {availableCategories.map((cat) => (
+                <option key={cat} value={cat} className="bg-[#111118]">{cat}</option>
+              ))}
+            </select>
           </div>
 
           {/* Description */}
@@ -491,6 +512,7 @@ export default function AdminProducts() {
         compareAtPriceCents: formData.compareAtPriceCents ? Math.round(parseFloat(formData.compareAtPriceCents) * 100) : null,
         ingredients: formData.ingredients || null,
         howToUse: formData.howToUse || null,
+        category: formData.category || null,
         isActive: formData.isActive,
         isFeatured: formData.isFeatured,
         images: formData.images.filter((img) => img.url.trim() !== ""),
@@ -545,7 +567,8 @@ export default function AdminProducts() {
   const filtered = products.filter(
     (p) =>
       p.name.toLowerCase().includes(search.toLowerCase()) ||
-      (p.collectionName ?? "").toLowerCase().includes(search.toLowerCase())
+      (p.collectionName ?? "").toLowerCase().includes(search.toLowerCase()) ||
+      (p.category ?? "").toLowerCase().includes(search.toLowerCase())
   );
 
   const isInStock = (p: AdminProduct) => p.variants.some((v) => v.inventoryCount > 0);
@@ -711,7 +734,7 @@ export default function AdminProducts() {
                   <div className="p-4 space-y-3">
                     <div className="flex items-start justify-between gap-2">
                       <div>
-                        <p className="text-xs text-[#C79A56] font-medium">{product.collectionName ?? "No collection"}</p>
+                        <p className="text-xs text-[#C79A56] font-medium">{product.category ?? product.collectionName ?? "No category"}</p>
                         <h3 className="text-sm font-medium text-white mt-1">{product.name}</h3>
                       </div>
                       <div className="text-right shrink-0">
@@ -748,6 +771,7 @@ export default function AdminProducts() {
             <thead>
               <tr className="border-b border-white/5">
                 <th className="text-left px-6 py-4 text-xs font-medium text-white/30 uppercase tracking-wider">Product</th>
+                <th className="text-left px-6 py-4 text-xs font-medium text-white/30 uppercase tracking-wider hidden md:table-cell">Category</th>
                 <th className="text-left px-6 py-4 text-xs font-medium text-white/30 uppercase tracking-wider hidden md:table-cell">Collection</th>
                 <th className="text-left px-6 py-4 text-xs font-medium text-white/30 uppercase tracking-wider">Price</th>
                 <th className="text-left px-6 py-4 text-xs font-medium text-white/30 uppercase tracking-wider hidden md:table-cell">Status</th>
@@ -782,6 +806,9 @@ export default function AdminProducts() {
                             <p className="text-xs text-white/30">{product.slug}</p>
                           </div>
                         </div>
+                      </td>
+                      <td className="px-6 py-4 hidden md:table-cell">
+                        <span className="text-sm text-white/60">{product.category ?? "—"}</span>
                       </td>
                       <td className="px-6 py-4 hidden md:table-cell">
                         <span className="text-sm text-white/60">{product.collectionName ?? "—"}</span>

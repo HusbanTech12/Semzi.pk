@@ -5,7 +5,6 @@ import FeaturedProducts from "@/components/store/home/FeaturedProducts";
 import BrandStory from "@/components/BrandStory";
 import Features from "@/components/Features";
 import Testimonials from "@/components/Testimonials";
-import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
 
 export const dynamic = "force-dynamic";
@@ -21,7 +20,6 @@ export default function Home() {
         <BrandStory />
         <Features />
         <Testimonials />
-        <CTA />
       </main>
       <Footer />
     </>

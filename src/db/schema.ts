@@ -25,6 +25,7 @@ export const products = pgTable("products", {
   compareAtPriceCents: integer("compare_at_price_cents"),
   ingredients: text("ingredients"),
   howToUse: text("how_to_use"),
+  category: text("category"),
   collectionId: integer("collection_id").references(() => collections.id),
   isActive: boolean("is_active").default(true).notNull(),
   isFeatured: boolean("is_featured").default(false).notNull(),

@@ -42,6 +42,7 @@ export interface AdminProduct {
   compareAtPriceCents: number | null;
   ingredients: string | null;
   howToUse: string | null;
+  category: string | null;
   collectionId: number | null;
   isActive: boolean;
   isFeatured: boolean;
@@ -148,6 +149,7 @@ export interface CreateProductInput {
   compareAtPriceCents?: number | null;
   ingredients?: string | null;
   howToUse?: string | null;
+  category?: string | null;
   collectionId?: number | null;
   isActive?: boolean;
   isFeatured?: boolean;
@@ -163,6 +165,7 @@ export interface UpdateProductInput {
   compareAtPriceCents?: number | null;
   ingredients?: string | null;
   howToUse?: string | null;
+  category?: string | null;
   collectionId?: number | null;
   isActive?: boolean;
   isFeatured?: boolean;
@@ -275,6 +278,7 @@ export async function createAdminProduct(data: CreateProductInput): Promise<numb
       compareAtPriceCents: data.compareAtPriceCents ?? null,
       ingredients: data.ingredients ?? null,
       howToUse: data.howToUse ?? null,
+      category: data.category ?? null,
       collectionId: data.collectionId ?? null,
       isActive: data.isActive ?? true,
       isFeatured: data.isFeatured ?? false,
@@ -325,6 +329,7 @@ export async function updateAdminProduct(
   if (data.compareAtPriceCents !== undefined) updatePayload.compareAtPriceCents = data.compareAtPriceCents;
   if (data.ingredients !== undefined) updatePayload.ingredients = data.ingredients;
   if (data.howToUse !== undefined) updatePayload.howToUse = data.howToUse;
+  if (data.category !== undefined) updatePayload.category = data.category;
   if (data.collectionId !== undefined) updatePayload.collectionId = data.collectionId;
   if (data.isActive !== undefined) updatePayload.isActive = data.isActive;
   if (data.isFeatured !== undefined) updatePayload.isFeatured = data.isFeatured;

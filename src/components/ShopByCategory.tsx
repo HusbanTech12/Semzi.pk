@@ -17,6 +17,16 @@ const categories = [
     image: "https://images.unsplash.com/photo-1607006483224-73ce0729e22a?w=400&q=80",
   },
   {
+    name: "Glycerin Soap",
+    href: "/shop?category=glycerin-soap",
+    image: "https://images.unsplash.com/photo-1600857544200-b2f666a6a5b3?w=400&q=80",
+  },
+  {
+    name: "Goat Milk & Aloe Vera Soap",
+    href: "/shop?category=goat-milk-aloe-vera-soap",
+    image: "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=400&q=80",
+  },
+  {
     name: "Shampoos",
     href: "/shop?category=shampoos",
     image: "https://images.unsplash.com/photo-1747858989102-cca0f4dc4a11?w=400&q=80",
