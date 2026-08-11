@@ -11,7 +11,7 @@ import { useAnimations } from "@/lib/animations";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const filterGroups = [
-  { label: "Category", key: "category" as const, options: ["Artisan Soap", "Shampoo", "Glycerin Soap", "Goat Milk & Aloe Vera Soap"] },
+  { label: "Category", key: "category" as const, options: ["Artisan Soap", "Goat Milk & Aloe Vera Soap"] },
   { label: "Collection", key: "collection" as const, options: ["Beach", "Signature"] },
   { label: "Skin Concern", key: "concern" as const, options: ["dry", "sensitive", "oily", "acne-prone", "normal", "damaged"] },
 ];

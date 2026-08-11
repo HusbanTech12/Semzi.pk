@@ -34,7 +34,12 @@ export default function CollectionPage({ params }: { params: Promise<{ slug: str
 
   if (!loading && !meta) notFound();
 
-  const collectionProducts = products.filter((p) => p.collection?.toLowerCase() === slug);
+  const collectionProducts = products.filter(
+    (p) =>
+      p.collection?.toLowerCase() === slug &&
+      p.category !== "Shampoo" &&
+      p.category !== "Glycerin Soap"
+  );
 
   return (
     <>

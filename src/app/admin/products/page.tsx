@@ -69,7 +69,7 @@ type ProductFormData = {
   variants: { name: string; sku: string; priceCents: string; inventoryCount: string }[];
 };
 
-const availableCategories = ["Artisan Soap", "Shampoo", "Glycerin Soap", "Goat Milk & Aloe Vera Soap"];
+const availableCategories = ["Artisan Soap", "Goat Milk & Aloe Vera Soap"];
 
 const emptyForm: ProductFormData = {
   name: "",

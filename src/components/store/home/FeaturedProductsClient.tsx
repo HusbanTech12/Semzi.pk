@@ -83,7 +83,7 @@ export default function FeaturedProductsClient({
             Our Favorites
           </h2>
           <p className="text-foreground-muted max-w-xl mx-auto text-sm leading-relaxed">
-            Handpicked soaps and shampoos our community can&apos;t stop raving about.
+            Handpicked soaps our community can&apos;t stop raving about.
           </p>
         </motion.div>
 
