@@ -124,6 +124,11 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                 <h1 className="font-serif text-3xl md:text-4xl text-foreground">
                   {product.name}
                 </h1>
+                {product.tagline && (
+                  <p className="text-sm italic text-accent font-medium">
+                    &ldquo;{product.tagline}&rdquo;
+                  </p>
+                )}
                 <p className="text-sm text-foreground-muted leading-relaxed">
                   {product.category}
                 </p>
@@ -191,9 +196,16 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                       transition={{ duration: 0.2 }}
                     >
                       {activeTab === "description" && (
-                        <p className="text-sm text-foreground-muted leading-relaxed">
-                          {product.description}
-                        </p>
+                        <div className="space-y-4">
+                          <div className="flex items-center gap-2">
+                            <span className="text-xs tracking-wider uppercase text-accent font-medium">
+                              {(product.slug === "nourish-goat-milk-aloe" || product.slug === "goat-milk-aloe-soap") ? "Its handmade!" : "Its handcrafted!"}
+                            </span>
+                          </div>
+                          <p className="text-sm text-foreground-muted leading-relaxed">
+                            {product.description}
+                          </p>
+                        </div>
                       )}
                       {activeTab === "ingredients" && (
                         <IngredientList items={product.ingredients} />

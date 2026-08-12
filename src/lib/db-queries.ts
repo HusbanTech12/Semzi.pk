@@ -15,6 +15,7 @@ export interface ProductResult {
   caution: string;
   images: string[];
   badge?: string;
+  tagline?: string;
   collection?: string;
   skinConcern?: string[];
   inStock: boolean;
@@ -37,9 +38,19 @@ export async function getAllProducts(): Promise<ProductResult[]> {
 function buildProductMap(rows: Awaited<ReturnType<typeof getAllProductsRaw>>): Map<number, ProductResult> {
   const map = new Map<number, ProductResult>();
 
+  const taglines: Record<string, string> = {
+    "beach": "A Ritual of Softness, Crafted by Hand.",
+    "sea-voyage": "A Ritual of Softness, Crafted by Hand.",
+    "coral": "A Ritual of Softness, Crafted by Hand.",
+    "cloud": "A Ritual of Softness, Crafted by Hand.",
+    "flora": "A Ritual of Softness, Crafted by Hand.",
+    "goat-milk-aloe-soap": "Milk-Rich Softness, Naturally Refined.",
+  };
+
   for (const row of rows) {
     const p = row.product;
     if (!map.has(p.id)) {
+      const isGoatMilk = p.slug === "nourish-goat-milk-aloe";
       map.set(p.id, {
         id: p.id,
         slug: p.slug,
@@ -52,6 +63,7 @@ function buildProductMap(rows: Awaited<ReturnType<typeof getAllProductsRaw>>): M
         howToUse: p.howToUse ?? "",
         caution: "",
         images: [],
+        tagline: taglines[p.slug] ?? undefined,
         collection: row.collection?.name ?? undefined,
         inStock: true,
       });
