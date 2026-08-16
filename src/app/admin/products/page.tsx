@@ -704,7 +704,7 @@ export default function AdminProducts() {
                       </div>
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <div className="absolute top-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="absolute top-3 right-3 z-10 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                       <button
                         onClick={() => { setEditingProduct(product); setShowAddForm(false); }}
                         className="p-2 bg-black/50 backdrop-blur-sm rounded-lg text-white hover:bg-[#C79A56] transition-colors"
