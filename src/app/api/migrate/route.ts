@@ -18,13 +18,6 @@ export async function GET() {
       await sql.unsafe(stmt);
     }
 
-    await sql.unsafe(`
-      ALTER TABLE "products" ADD COLUMN IF NOT EXISTS "is_featured" boolean DEFAULT false NOT NULL;
-    `);
-    await sql.unsafe(`
-      ALTER TABLE "products" ADD COLUMN IF NOT EXISTS "category" text;
-    `);
-
     await sql.end();
     return NextResponse.json({ success: true, message: "Migration completed" });
   } catch (e: any) {

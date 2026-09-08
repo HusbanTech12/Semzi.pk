@@ -1,1 +1,1 @@
-ALTER TABLE "products" ADD COLUMN IF NOT EXISTS "category" text;
+ALTER TABLE "products" ADD COLUMN "category" text;

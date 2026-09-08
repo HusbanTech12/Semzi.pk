@@ -31,20 +31,10 @@ export default function Navbar() {
   const { signOut } = useClerk();
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (pathname === "/") {
-        const hero = document.getElementById("scroll-hero");
-        if (hero) {
-          setScrolled(hero.getBoundingClientRect().bottom <= 88);
-          return;
-        }
-      }
-      setScrolled(window.scrollY > 60);
-    };
-    handleScroll();
+    const handleScroll = () => setScrolled(window.scrollY > 60);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [pathname]);
+  }, []);
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {

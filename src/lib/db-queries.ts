@@ -1,7 +1,6 @@
 import { db } from "@/db";
 import { products, productImages, productVariants, collections, orders, orderItems } from "@/db/schema";
-import { products as catalogProducts } from "@/lib/products";
-import { eq, and, asc, desc } from "drizzle-orm";
+import { eq, and, asc, desc, like, inArray } from "drizzle-orm";
 
 export interface ProductResult {
   id: number;
@@ -31,27 +30,9 @@ export interface OrderResult {
   items: number;
 }
 
-function catalogFallback(): ProductResult[] {
-  return catalogProducts.map((product) => ({ ...product }));
-}
-
-async function withCatalogFallback(
-  query: () => Promise<ProductResult[]>,
-  fallback: () => ProductResult[] = catalogFallback
-): Promise<ProductResult[]> {
-  try {
-    return await query();
-  } catch (error) {
-    console.error("Database product query failed; using catalog fallback.", error);
-    return fallback();
-  }
-}
-
 export async function getAllProducts(): Promise<ProductResult[]> {
-  return withCatalogFallback(async () => {
-    const rows = await getAllProductsRaw();
-    return Array.from(buildProductMap(rows).values());
-  });
+  const rows = await getAllProductsRaw();
+  return Array.from(buildProductMap(rows).values());
 }
 
 function buildProductMap(rows: Awaited<ReturnType<typeof getAllProductsRaw>>): Map<number, ProductResult> {
@@ -126,51 +107,42 @@ async function getAllProductsRaw() {
 }
 
 export async function getFeaturedProducts(): Promise<ProductResult[]> {
-  return withCatalogFallback(async () => {
-    const rows = await db
-      .select({
-        product: products,
-        image: productImages,
-        variant: productVariants,
-        collection: collections,
-      })
-      .from(products)
-      .leftJoin(productImages, eq(productImages.productId, products.id))
-      .leftJoin(productVariants, eq(productVariants.productId, products.id))
-      .leftJoin(collections, eq(collections.id, products.collectionId))
-      .where(and(eq(products.isActive, true), eq(products.isFeatured, true)))
-      .orderBy(asc(products.id));
+  const rows = await db
+    .select({
+      product: products,
+      image: productImages,
+      variant: productVariants,
+      collection: collections,
+    })
+    .from(products)
+    .leftJoin(productImages, eq(productImages.productId, products.id))
+    .leftJoin(productVariants, eq(productVariants.productId, products.id))
+    .leftJoin(collections, eq(collections.id, products.collectionId))
+    .where(and(eq(products.isActive, true), eq(products.isFeatured, true)))
+    .orderBy(asc(products.id));
 
-    const featured = Array.from(buildProductMap(rows).values());
-    if (featured.length > 0) return featured;
-
-    return catalogFallback()
-      .filter((p) => p.inStock && p.category !== "Shampoo" && p.category !== "Glycerin Soap")
-      .slice(0, 4);
-  });
+  return Array.from(buildProductMap(rows).values());
 }
 
 export async function getRecentProducts(
   limit: number = 8
 ): Promise<ProductResult[]> {
-  return withCatalogFallback(async () => {
-    const rows = await db
-      .select({
-        product: products,
-        image: productImages,
-        variant: productVariants,
-        collection: collections,
-      })
-      .from(products)
-      .leftJoin(productImages, eq(productImages.productId, products.id))
-      .leftJoin(productVariants, eq(productVariants.productId, products.id))
-      .leftJoin(collections, eq(collections.id, products.collectionId))
-      .where(eq(products.isActive, true))
-      .orderBy(desc(products.createdAt))
-      .limit(limit);
+  const rows = await db
+    .select({
+      product: products,
+      image: productImages,
+      variant: productVariants,
+      collection: collections,
+    })
+    .from(products)
+    .leftJoin(productImages, eq(productImages.productId, products.id))
+    .leftJoin(productVariants, eq(productVariants.productId, products.id))
+    .leftJoin(collections, eq(collections.id, products.collectionId))
+    .where(eq(products.isActive, true))
+    .orderBy(desc(products.createdAt))
+    .limit(limit);
 
-    return Array.from(buildProductMap(rows).values());
-  }, () => catalogFallback().slice(0, limit));
+  return Array.from(buildProductMap(rows).values());
 }
 
 export async function getProductBySlug(slug: string): Promise<ProductResult | undefined> {
