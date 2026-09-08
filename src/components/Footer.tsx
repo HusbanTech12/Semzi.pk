@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Globe, ChevronRight, Camera, MessageCircle, Heart, Send } from "lucide-react";
+import { ChevronRight, Camera, MessageCircle, Heart, Send } from "lucide-react";
 import { useAnimations } from "@/lib/animations";
 
 const footerLinks = {
@@ -10,19 +10,15 @@ const footerLinks = {
     { label: "All Products", href: "/shop" },
     { label: "Soaps", href: "/shop?category=soaps" },
     { label: "Goat Milk & Aloe Vera Soap", href: "/shop?category=goat-milk-aloe-vera-soap" },
-    { label: "Gift Sets", href: "/shop?category=gift-sets" },
+    { label: "Beach Collection", href: "/collections/beach" },
   ],
   Company: [
     { label: "Our Story", href: "/about" },
-    { label: "Sustainability", href: "/about#sustainability" },
-    { label: "Ingredient Glossary", href: "/ingredients" },
-    { label: "Press", href: "/press" },
+    { label: "Contact", href: "/contact" },
   ],
   Support: [
-    { label: "FAQ", href: "/faq" },
-    { label: "Shipping & Returns", href: "/shipping" },
-    { label: "Contact", href: "/contact" },
-    { label: "Size Guide", href: "/size-guide" },
+    { label: "Shipping questions", href: "/contact" },
+    { label: "Account", href: "/account" },
   ],
 };
 
@@ -115,7 +111,10 @@ export default function Footer() {
           {...fadeUp}
           className="mt-16 pt-8 pb-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4"
         >
-          <p className="text-xs text-foreground-muted/50">
+          <p className="max-w-sm text-xs uppercase leading-relaxed tracking-[0.12em] text-background/45">
+            Full INCI on every bar. Nothing harsh. Nothing unnamed.
+          </p>
+          <p className="text-xs text-background/40">
             &copy; 2026 Semzi. All rights reserved.
           </p>
           <div className="flex gap-6 text-xs text-foreground-muted/50">

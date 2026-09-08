@@ -1,10 +1,12 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
-import ShopByCategory from "@/components/ShopByCategory";
+import TrustBar from "@/components/TrustBar";
+import CollectionShowcase from "@/components/CollectionShowcase";
 import FeaturedProducts from "@/components/store/home/FeaturedProducts";
 import BrandStory from "@/components/BrandStory";
-import Features from "@/components/Features";
+import IngredientStrip from "@/components/IngredientStrip";
 import Testimonials from "@/components/Testimonials";
+import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
 
 export const dynamic = "force-dynamic";
@@ -15,11 +17,13 @@ export default function Home() {
       <Header />
       <main>
         <Hero />
-        <ShopByCategory />
+        <TrustBar />
+        <CollectionShowcase />
         <FeaturedProducts />
         <BrandStory />
-        <Features />
+        <IngredientStrip />
         <Testimonials />
+        <CTA />
       </main>
       <Footer />
     </>

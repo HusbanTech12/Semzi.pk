@@ -1,1 +1,1 @@
-ALTER TABLE "products" ADD COLUMN "is_featured" boolean DEFAULT false NOT NULL;
+ALTER TABLE "products" ADD COLUMN IF NOT EXISTS "is_featured" boolean DEFAULT false NOT NULL;
