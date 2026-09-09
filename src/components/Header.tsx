@@ -24,6 +24,8 @@ export default function Navbar() {
   const [profileOpen, setProfileOpen] = useState(false);
   const profileRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+  const pathnameRef = useRef(pathname);
+  pathnameRef.current = pathname;
   const isHome = pathname === "/";
   const { totalItems } = useCart();
   const { fadeUp } = useAnimations();
@@ -31,7 +33,17 @@ export default function Navbar() {
   const { signOut } = useClerk();
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 60);
+    const handleScroll = () => {
+      if (pathnameRef.current === "/") {
+        const hero = document.getElementById("scroll-hero");
+        if (hero) {
+          setScrolled(hero.getBoundingClientRect().bottom <= 88);
+          return;
+        }
+      }
+      setScrolled(window.scrollY > 60);
+    };
+    handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
