@@ -14,6 +14,7 @@ const navLinks = [
   { label: "Shop", href: "/shop" },
   { label: "Collections", href: "/collections/beach" },
   { label: "Our Story", href: "/about" },
+  { label: "Social", href: "/social" },
   { label: "Contact", href: "/contact" },
 ];
 

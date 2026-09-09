@@ -59,9 +59,11 @@ async function generateQRCodes() {
   const existingFiles = fs.readdirSync(OUTPUT_DIR).filter(f => f.endsWith('.png'));
   let removed = 0;
 
+  const KEEP = new Set(['social']);
+
   for (const file of existingFiles) {
     const slug = file.replace('.png', '');
-    if (!dbSlugs.has(slug)) {
+    if (!dbSlugs.has(slug) && !KEEP.has(slug)) {
       fs.unlinkSync(path.join(OUTPUT_DIR, file));
       console.log(`✗ Removed orphaned: ${file}`);
       removed++;

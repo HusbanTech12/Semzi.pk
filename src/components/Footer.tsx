@@ -2,8 +2,10 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Globe, ChevronRight, Camera, MessageCircle, Heart, Send } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { useAnimations } from "@/lib/animations";
+import { socialPlatforms } from "@/lib/social";
+import SocialGlyph from "@/components/SocialGlyph";
 
 const footerLinks = {
   Shop: [
@@ -14,6 +16,7 @@ const footerLinks = {
   ],
   Company: [
     { label: "Our Story", href: "/about" },
+    { label: "Social", href: "/social" },
     { label: "Sustainability", href: "/about#sustainability" },
     { label: "Ingredient Glossary", href: "/ingredients" },
     { label: "Press", href: "/press" },
@@ -65,27 +68,25 @@ export default function Footer() {
               </div>
             </div>
 
-            <div className="flex gap-3">
-              {[
-                { icon: Camera, label: "Instagram", href: "https://instagram.com/semzi" },
-                { icon: Send, label: "Twitter", href: "https://twitter.com/semzi" },
-                { icon: Heart, label: "Facebook", href: "https://facebook.com/semzi" },
-                { icon: MessageCircle, label: "WhatsApp", href: "https://wa.me/923000000000" },
-              ].map((social) => {
-                const Icon = social.icon;
-                return (
-                  <Link
-                    key={social.label}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={social.label}
-                    className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-foreground-muted hover:text-accent hover:border-accent/30 hover:bg-accent/10 hover:shadow-[0_0_16px_-2px_rgba(199,154,86,0.3)] transition-all duration-300"
-                  >
-                    <Icon className="w-4 h-4" />
-                  </Link>
-                );
-              })}
+            <div className="flex flex-wrap gap-3">
+              {socialPlatforms.slice(0, 4).map((social) => (
+                <Link
+                  key={social.name}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={social.name}
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-foreground-muted transition-all duration-300 hover:border-accent/30 hover:bg-accent/10 hover:text-accent"
+                >
+                  <SocialGlyph name={social.name} className="h-4 w-4" />
+                </Link>
+              ))}
+              <Link
+                href="/social"
+                className="flex h-10 items-center rounded-full border border-white/10 bg-white/5 px-3 text-[10px] uppercase tracking-[0.16em] text-foreground-muted transition-all duration-300 hover:border-accent/30 hover:text-accent"
+              >
+                All
+              </Link>
             </div>
           </div>
 
