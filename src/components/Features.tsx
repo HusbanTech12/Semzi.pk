@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Sparkles, Heart, Leaf, Package } from "lucide-react";
 import Reveal from "./Reveal";
+import { useAnimations } from "@/lib/animations";
 
 const features = [
   {
@@ -32,46 +33,49 @@ const features = [
 ];
 
 export default function Features() {
+  const { cardHover } = useAnimations();
+
   return (
-    <section className="py-24 lg:py-32 bg-surface-muted">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <Reveal className="text-center max-w-xl mx-auto mb-16 space-y-4">
-          <span className="text-[11px] tracking-[0.25em] uppercase text-accent font-bold">
+    <section className="bg-surface-muted py-24 lg:py-32">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <Reveal className="mx-auto mb-16 max-w-xl space-y-4 text-center">
+          <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-accent">
             Our Promise
           </span>
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground">
+          <h2 className="font-serif text-3xl font-bold text-foreground md:text-4xl">
             Crafted with Care,
             <br />
             Backed by Nature
           </h2>
         </Reveal>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
           {features.map((feature, idx) => {
             const Icon = feature.icon;
             return (
-              <Reveal key={feature.title} delay={idx * 0.1}>
+              <Reveal key={feature.title} delay={idx * 0.1} scale>
                 <motion.div
-                  whileHover={{ y: -6, scale: 1.02 }}
-                  transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                  className="group relative p-8 rounded-2xl border border-border/50 bg-surface overflow-hidden cursor-default h-full"
+                  {...cardHover}
+                  className="group relative h-full cursor-default overflow-hidden rounded-2xl border border-border/50 bg-surface p-8"
                 >
-                  <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-accent/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <div className="absolute inset-0 bg-gradient-to-b from-accent/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-                  <div className="absolute inset-0 rounded-2xl shadow-[0_8px_40px_-8px_rgba(43,33,24,0.12),0_0_32px_-4px_rgba(199,154,86,0.15)] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                  <div className="absolute inset-x-0 top-0 h-0.5 bg-linear-to-r from-transparent via-accent/50 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                  <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-accent/5 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
-                  <div className="relative w-12 h-12 rounded-xl bg-accent-subtle flex items-center justify-center mb-5 group-hover:bg-accent/15 transition-all duration-500">
+                  <div className="relative mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-accent-subtle transition-all duration-500 group-hover:bg-accent/15">
                     <motion.div
                       whileHover={{ rotate: 360 }}
                       transition={{ duration: 0.6, ease: "easeInOut" }}
                     >
-                      <Icon className="w-5 h-5 text-accent group-hover:text-accent-strong transition-colors duration-300" strokeWidth={1.5} />
+                      <Icon
+                        className="h-5 w-5 text-accent transition-colors duration-300 group-hover:text-accent-strong"
+                        strokeWidth={1.5}
+                      />
                     </motion.div>
                   </div>
-                  <h3 className="relative font-serif text-lg font-bold text-foreground mb-3 group-hover:text-accent-strong transition-colors duration-300">
+                  <h3 className="relative mb-3 font-serif text-lg font-bold text-foreground transition-colors duration-300 group-hover:text-accent-strong">
                     {feature.title}
                   </h3>
-                  <p className="relative text-[13px] font-medium text-foreground-muted/70 leading-relaxed">
+                  <p className="relative text-[13px] font-medium leading-relaxed text-foreground-muted/70">
                     {feature.description}
                   </p>
                 </motion.div>

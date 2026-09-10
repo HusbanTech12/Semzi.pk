@@ -76,41 +76,68 @@ export default function Navbar() {
     <>
       <motion.header
         {...fadeUp}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        className={`fixed top-0 left-0 right-0 z-50 border-b transition-all duration-500 ${
           transparent
-            ? "bg-background/50 backdrop-blur-md border-b border-border/40"
-            : "bg-background/90 backdrop-blur-xl border-b border-border/50 shadow-lg shadow-foreground/5"
+            ? "border-accent/30 bg-linear-to-r from-foreground/40 via-accent-strong/35 to-foreground/40 shadow-[0_12px_48px_-8px_rgba(201,163,107,0.55),0_0_60px_-10px_rgba(201,163,107,0.45)] backdrop-blur-md"
+            : "border-accent/25 bg-linear-to-r from-background via-accent-subtle/80 to-background shadow-[0_16px_50px_-10px_rgba(201,163,107,0.5),0_0_70px_-12px_rgba(142,106,56,0.35)] backdrop-blur-xl"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
-            <Link href="/" className="relative group">
-              <span className="font-serif text-3xl italic font-bold tracking-tight text-foreground transition-colors duration-300">
+        {/* Heavy ambient gold glow layers */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="absolute inset-x-0 -top-8 h-24 bg-[radial-gradient(ellipse_at_center,rgba(201,163,107,0.55)_0%,transparent_70%)] blur-2xl" />
+          <div className="absolute left-1/4 top-0 h-full w-1/2 bg-[radial-gradient(ellipse_at_center,rgba(201,163,107,0.28)_0%,transparent_75%)] blur-xl" />
+          <div className="absolute inset-x-0 bottom-0 h-px bg-linear-to-r from-transparent via-accent to-transparent shadow-[0_0_20px_4px_rgba(201,163,107,0.8)]" />
+        </div>
+
+        <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="flex h-20 items-center justify-between">
+            <Link href="/" className="group relative">
+              <span
+                className={`font-serif text-3xl italic font-bold tracking-tight transition-all duration-300 ${
+                  transparent
+                    ? "bg-linear-to-r from-white via-accent-subtle to-white bg-clip-text text-transparent drop-shadow-[0_0_18px_rgba(201,163,107,0.85)]"
+                    : "bg-linear-to-r from-foreground via-accent-strong to-foreground bg-clip-text text-transparent drop-shadow-[0_0_16px_rgba(201,163,107,0.65)]"
+                } group-hover:drop-shadow-[0_0_28px_rgba(201,163,107,1)]`}
+              >
                 Semzi
               </span>
-              <span className="absolute -bottom-1 left-0 w-0 h-[1.5px] group-hover:w-full transition-all duration-300 bg-foreground/80" />
+              <span
+                className={`absolute -bottom-1 left-0 h-[1.5px] w-0 transition-all duration-300 group-hover:w-full ${
+                  transparent
+                    ? "bg-linear-to-r from-white/40 via-accent to-white/40 shadow-[0_0_12px_2px_rgba(201,163,107,0.9)]"
+                    : "bg-linear-to-r from-accent-subtle via-accent to-accent-strong shadow-[0_0_12px_2px_rgba(201,163,107,0.9)]"
+                }`}
+              />
             </Link>
 
-            <nav className="hidden md:flex items-center gap-12">
+            <nav className="hidden items-center gap-12 md:flex">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="relative group text-sm font-semibold tracking-[0.15em] uppercase text-foreground-muted hover:text-foreground transition-colors duration-300"
+                  className={`group relative text-sm font-semibold uppercase tracking-[0.15em] transition-all duration-300 hover:drop-shadow-[0_0_12px_rgba(201,163,107,0.9)] ${
+                    transparent
+                      ? "text-white/80 hover:text-white"
+                      : "text-foreground-muted hover:text-foreground"
+                  }`}
                 >
                   {link.label}
-                  <span className={`absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-0.5 rounded-full group-hover:w-full transition-all duration-300 bg-accent`} />
-                  <span className={`absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-1 blur-sm rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 bg-accent`} />
+                  <span className="absolute -bottom-1 left-1/2 h-0.5 w-0 -translate-x-1/2 rounded-full bg-linear-to-r from-accent-subtle via-accent to-accent-strong shadow-[0_0_10px_2px_rgba(201,163,107,0.85)] transition-all duration-300 group-hover:w-full" />
+                  <span className="absolute -bottom-1 left-1/2 h-2 w-0 -translate-x-1/2 rounded-full bg-accent opacity-0 blur-md transition-all duration-300 group-hover:w-full group-hover:opacity-100" />
                 </Link>
               ))}
               {isSignedIn && (
                 <Link
                   href="/admin"
-                  className="relative group text-sm font-semibold tracking-[0.15em] uppercase text-foreground-muted hover:text-foreground transition-colors duration-300"
+                  className={`group relative text-sm font-semibold uppercase tracking-[0.15em] transition-all duration-300 hover:drop-shadow-[0_0_12px_rgba(201,163,107,0.9)] ${
+                    transparent
+                      ? "text-white/80 hover:text-white"
+                      : "text-foreground-muted hover:text-foreground"
+                  }`}
                 >
                   Admin
-                  <span className={`absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-0.5 rounded-full group-hover:w-full transition-all duration-300 bg-accent`} />
-                  <span className={`absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-1 blur-sm rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 bg-accent`} />
+                  <span className="absolute -bottom-1 left-1/2 h-0.5 w-0 -translate-x-1/2 rounded-full bg-linear-to-r from-accent-subtle via-accent to-accent-strong shadow-[0_0_10px_2px_rgba(201,163,107,0.85)] transition-all duration-300 group-hover:w-full" />
+                  <span className="absolute -bottom-1 left-1/2 h-2 w-0 -translate-x-1/2 rounded-full bg-accent opacity-0 blur-md transition-all duration-300 group-hover:w-full group-hover:opacity-100" />
                 </Link>
               )}
             </nav>
@@ -118,30 +145,40 @@ export default function Navbar() {
             <div className="flex items-center gap-3">
               <button
                 aria-label="Search"
-                className="p-2.5 rounded-full text-foreground-muted hover:text-accent hover:bg-accent/10 transition-all duration-300 hover:shadow-[0_0_16px_-2px_rgba(199,154,86,0.4)]"
+                className={`rounded-full p-2.5 transition-all duration-300 hover:bg-accent/15 hover:text-accent hover:shadow-[0_0_24px_4px_rgba(201,163,107,0.55)] ${
+                  transparent ? "text-white/85" : "text-foreground-muted"
+                }`}
               >
-                <Search className="w-4 h-4" />
+                <Search className="h-4 w-4" />
               </button>
               <button
                 onClick={() => setCartOpen(true)}
                 aria-label="Cart"
-                className="relative p-2.5 rounded-full text-foreground-muted hover:text-accent hover:bg-accent/10 transition-all duration-300 hover:shadow-[0_0_16px_-2px_rgba(199,154,86,0.4)]"
+                className={`relative rounded-full p-2.5 transition-all duration-300 hover:bg-accent/15 hover:text-accent hover:shadow-[0_0_24px_4px_rgba(201,163,107,0.55)] ${
+                  transparent ? "text-white/85" : "text-foreground-muted"
+                }`}
               >
-                <ShoppingBag className="w-4 h-4" />
+                <ShoppingBag className="h-4 w-4" />
                 {totalItems > 0 && (
-                  <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-accent text-background text-[9px] font-mono flex items-center justify-center font-medium">
+                  <span className="absolute -top-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-linear-to-br from-accent to-accent-strong font-mono text-[9px] font-medium text-background shadow-[0_0_14px_3px_rgba(201,163,107,0.85)]">
                     {totalItems}
                   </span>
                 )}
               </button>
-              <div className="hidden md:block w-px h-6 mx-1 bg-border transition-colors duration-300" />
+              <div
+                className={`mx-1 hidden h-6 w-px transition-colors duration-300 md:block ${
+                  transparent ? "bg-white/25" : "bg-border"
+                }`}
+              />
 
               {isSignedIn ? (
                 /* Profile Icon + Dropdown */
-                <div ref={profileRef} className="hidden md:block relative">
+                <div ref={profileRef} className="relative hidden md:block">
                   <button
                     onClick={() => setProfileOpen(!profileOpen)}
-                    className="p-2.5 rounded-full text-foreground-muted hover:text-accent hover:bg-accent/10 transition-all duration-300 hover:shadow-[0_0_16px_-2px_rgba(199,154,86,0.4)]"
+                    className={`rounded-full p-2.5 transition-all duration-300 hover:bg-accent/15 hover:text-accent hover:shadow-[0_0_24px_4px_rgba(201,163,107,0.55)] ${
+                      transparent ? "text-white/85" : "text-foreground-muted"
+                    }`}
                     aria-label="Profile"
                   >
                     {user?.imageUrl ? (
@@ -212,20 +249,23 @@ export default function Navbar() {
               ) : (
                 <Link
                   href="/sign-in"
-                  className="hidden md:inline-flex text-sm tracking-[0.15em] uppercase transition-all duration-300 relative group text-foreground-muted hover:text-accent"
+                  className={`relative group hidden text-sm font-semibold uppercase tracking-[0.15em] transition-all duration-300 md:inline-flex ${
+                    transparent ? "text-white/80 hover:text-white" : "text-foreground-muted hover:text-accent"
+                  }`}
                 >
                   Sign In
-                  <span className={`absolute -bottom-1 left-0 w-0 h-0.5 rounded-full group-hover:w-full transition-all duration-300 bg-accent`} />
-                  <span className={`absolute -bottom-1 left-0 w-0 h-1 blur-sm rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 bg-accent`} />
+                  <span className="absolute -bottom-1 left-0 h-0.5 w-0 rounded-full bg-linear-to-r from-accent-subtle via-accent to-accent-strong transition-all duration-300 group-hover:w-full" />
                 </Link>
               )}
 
               <button
                 onClick={() => setMobileOpen(!mobileOpen)}
-                className="md:hidden p-2.5 rounded-full transition-all duration-300 hover:shadow-[0_0_16px_-2px_rgba(199,154,86,0.4)] text-foreground-muted hover:text-accent hover:bg-accent/10"
+                className={`rounded-full p-2.5 transition-all duration-300 hover:bg-accent/15 hover:text-accent hover:shadow-[0_0_24px_4px_rgba(201,163,107,0.55)] md:hidden ${
+                  transparent ? "text-white/85" : "text-foreground-muted"
+                }`}
                 aria-label="Toggle menu"
               >
-                {mobileOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+                {mobileOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
               </button>
             </div>
           </div>
@@ -238,7 +278,7 @@ export default function Navbar() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              className="border-t border-border bg-background/95 overflow-hidden backdrop-blur-xl"
+              className="overflow-hidden border-t border-border/60 bg-linear-to-b from-accent-subtle/50 via-background to-background backdrop-blur-xl"
             >
               <div className="px-6 py-8 space-y-6">
                 {navLinks.map((link) => (

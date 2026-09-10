@@ -5,8 +5,11 @@ import Link from "next/link";
 import Image from "next/image";
 import Reveal from "./Reveal";
 import { collections, getProductsByCollection } from "@/lib/products";
+import { useAnimations } from "@/lib/animations";
 
 export default function ShopByCategory() {
+  const { cardHover } = useAnimations();
+
   return (
     <section className="bg-background py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -27,8 +30,8 @@ export default function ShopByCategory() {
           {collections.map((collection, idx) => {
             const count = getProductsByCollection(collection.slug).length;
             return (
-              <Reveal key={collection.slug} delay={idx * 0.08}>
-                <motion.div whileHover={{ y: -4 }} transition={{ duration: 0.25 }}>
+              <Reveal key={collection.slug} delay={idx * 0.1} scale>
+                <motion.div {...cardHover}>
                   <Link
                     href={`/collections/${collection.slug}`}
                     className="group block overflow-hidden rounded-2xl border border-border/70 bg-surface transition-all duration-300 hover:border-accent/40 hover:shadow-lg hover:shadow-foreground/5"
@@ -83,9 +86,22 @@ export default function ShopByCategory() {
           <div className="mt-10 text-center">
             <Link
               href="/collections"
-              className="inline-flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-wider text-foreground-muted transition-colors hover:text-accent"
+              className="inline-flex items-center gap-2 rounded-lg border border-foreground/20 bg-surface px-8 py-3.5 font-mono text-xs font-bold uppercase tracking-[0.15em] text-foreground shadow-sm transition-all duration-300 hover:border-accent hover:bg-accent/10 hover:text-accent-strong hover:shadow-[0_0_24px_-4px_rgba(201,163,107,0.45)]"
             >
               View All Collections
+              <svg
+                className="h-3.5 w-3.5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1.5}
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"
+                />
+              </svg>
             </Link>
           </div>
         </Reveal>

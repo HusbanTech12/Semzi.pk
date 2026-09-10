@@ -14,17 +14,23 @@ interface FeaturedProductsClientProps {
 }
 
 function ProductCard({ product, index }: { product: Product; index: number }) {
-  const { scaleIn } = useAnimations();
+  const { scaleInView, cardHover } = useAnimations();
 
   return (
     <motion.article
-      {...scaleIn}
-      transition={{ delay: index * 0.06, ...scaleIn.transition }}
-      whileHover={{ y: -6 }}
+      {...scaleInView}
+      transition={{
+        ...(scaleInView.transition ?? {}),
+        delay: index * 0.08,
+      }}
+      {...cardHover}
       className="group flex flex-col"
     >
-      <Link href={`/product/${product.slug}`} className="relative block overflow-hidden rounded-2xl bg-surface-muted mb-4">
-        <div className="relative aspect-[4/5]">
+      <Link
+        href={`/product/${product.slug}`}
+        className="relative mb-4 block overflow-hidden rounded-2xl bg-surface-muted"
+      >
+        <div className="relative aspect-4/5">
           <Image
             src={product.images[0]}
             alt={product.name}
@@ -33,18 +39,20 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             priority={index < 4}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-foreground/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <div className="absolute inset-0 bg-linear-to-t from-foreground/20 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
         </div>
-        <div className="absolute inset-0 ring-1 ring-inset ring-border/0 group-hover:ring-border/50 transition-all duration-500 rounded-2xl" />
+        <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-border/0 transition-all duration-500 group-hover:ring-border/50" />
       </Link>
 
       <div className="flex flex-col gap-1.5 px-0.5">
-        <span className="text-[10px] tracking-[0.2em] uppercase text-accent/70 font-bold">
-          {product.collection ? `【${product.collection}】` : `【${product.category}】`}
+        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent/70">
+          {product.collection
+            ? `【${product.collection}】`
+            : `【${product.category}】`}
         </span>
 
         <Link href={`/product/${product.slug}`}>
-          <h3 className="font-serif text-base font-bold leading-snug text-foreground group-hover:text-accent-strong transition-colors duration-300">
+          <h3 className="font-serif text-base font-bold leading-snug text-foreground transition-colors duration-300 group-hover:text-accent-strong">
             {product.name}
           </h3>
         </Link>
@@ -57,10 +65,10 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
 
         <Link
           href={`/product/${product.slug}`}
-          className="inline-flex items-center gap-1 text-[11px] font-semibold tracking-[0.15em] uppercase text-foreground-muted/60 hover:text-accent transition-colors duration-300 mt-2"
+          className="mt-2 inline-flex items-center gap-1 text-[11px] font-semibold uppercase tracking-[0.15em] text-foreground-muted/60 transition-colors duration-300 hover:text-accent"
         >
           Shop Now
-          <ArrowRight className="w-3 h-3" />
+          <ArrowRight className="h-3 w-3" />
         </Link>
       </div>
     </motion.article>
@@ -70,36 +78,39 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
 export default function FeaturedProductsClient({
   featured,
 }: FeaturedProductsClientProps) {
-  const { fadeUp } = useAnimations();
+  const { fadeUpView } = useAnimations();
 
   return (
-    <section className="py-24 bg-background">
+    <section className="bg-background py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <motion.div {...fadeUp} className="text-center mb-16 space-y-3">
-          <span className="text-[11px] tracking-[0.25em] uppercase text-accent font-bold">
+        <motion.div
+          {...fadeUpView}
+          className="mb-16 space-y-3 text-center"
+        >
+          <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-accent">
             Best Sellers
           </span>
-          <h2 className="font-serif text-3xl font-bold sm:text-4xl text-foreground">
+          <h2 className="font-serif text-3xl font-bold text-foreground sm:text-4xl">
             Our Favorites
           </h2>
-          <p className="text-foreground-muted max-w-xl mx-auto text-sm font-medium leading-relaxed">
+          <p className="mx-auto max-w-xl text-sm font-medium leading-relaxed text-foreground-muted">
             Handpicked soaps our community can&apos;t stop raving about.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:gap-8 lg:grid-cols-4">
           {featured.map((product, i) => (
             <ProductCard key={product.id} product={product} index={i} />
           ))}
         </div>
 
-        <motion.div {...fadeUp} className="text-center mt-14">
+        <motion.div {...fadeUpView} className="mt-14 text-center">
           <Link
             href="/shop"
-            className="inline-flex items-center gap-2 px-10 py-3.5 bg-accent text-background text-sm tracking-[0.15em] uppercase rounded-lg font-bold hover:bg-accent-strong transition-colors duration-300"
+            className="inline-flex items-center gap-2 rounded-lg bg-accent px-10 py-3.5 text-sm font-bold uppercase tracking-[0.15em] text-background transition-colors duration-300 hover:bg-accent-strong"
           >
             View All Products
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="h-4 w-4" />
           </Link>
         </motion.div>
       </div>

@@ -20,9 +20,9 @@ export default function BrandStory() {
     <section className="py-24 lg:py-32 bg-background border-t border-border/40">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          <Reveal direction="left">
+          <Reveal direction="left" scale>
             <motion.div
-              className="relative aspect-4/5 rounded-2xl overflow-hidden bg-surface-muted border border-border/60 shadow-xl shadow-foreground/5"
+              className="relative aspect-4/5 overflow-hidden rounded-2xl border border-border/60 bg-surface-muted shadow-xl shadow-foreground/5"
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             >
