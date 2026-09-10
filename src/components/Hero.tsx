@@ -30,11 +30,11 @@ export default function Hero() {
     offset: ["start start", "end end"],
   });
 
-  const creamFade = useTransform(scrollYProgress, [0.9, 1], [0, 1]);
-  const progressWidth = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+  // Scrub finishes slightly before section ends so Collections appears right after
+  const progressWidth = useTransform(scrollYProgress, [0, 0.92], ["0%", "100%"]);
 
   useEffect(() => {
-    const holdMs = prefersReducedMotion ? 400 : 2200;
+    const holdMs = prefersReducedMotion ? 400 : 1800;
     const timer = window.setTimeout(() => setMinTimeElapsed(true), holdMs);
     return () => window.clearTimeout(timer);
   }, [prefersReducedMotion]);
@@ -55,14 +55,11 @@ export default function Hero() {
     video.addEventListener("loadedmetadata", onMeta);
     video.addEventListener("canplay", onReady);
     video.addEventListener("loadeddata", onReady);
-
-    // Force load in case browser hasn't started fetching yet
     video.load();
 
     if (video.readyState >= 1) onMeta();
     if (video.readyState >= 3) onReady();
 
-    // Reduced motion: autoplay muted loop instead of scroll scrub
     if (prefersReducedMotion) {
       video.loop = true;
       void video.play().catch(() => undefined);
@@ -76,10 +73,10 @@ export default function Hero() {
   }, [prefersReducedMotion]);
 
   useMotionValueEvent(scrollYProgress, "change", (progress) => {
-    targetProgressRef.current = progress;
+    // Cap scrub at 0.92 so the last stretch releases into Collections
+    targetProgressRef.current = Math.min(progress / 0.92, 1);
   });
 
-  // Smooth scroll → video time scrubbing
   useEffect(() => {
     if (prefersReducedMotion) return;
     const video = videoRef.current;
@@ -134,7 +131,7 @@ export default function Hero() {
       ref={sectionRef}
       id="scroll-hero"
       aria-label="Semzi Beach Collection film"
-      className={prefersReducedMotion ? "relative h-screen" : "relative h-[400vh]"}
+      className={prefersReducedMotion ? "relative h-screen" : "relative h-[200vh]"}
     >
       <h1 className="sr-only">Semzi — Natural soap, nothing harsh</h1>
 
@@ -152,7 +149,6 @@ export default function Hero() {
           )}
         </AnimatePresence>
 
-        {/* Primary hero video — always visible */}
         <video
           ref={videoRef}
           muted
@@ -163,11 +159,6 @@ export default function Hero() {
         >
           <source src="/videos/Soap1.mp4" type="video/mp4" />
         </video>
-
-        <motion.div
-          className="pointer-events-none absolute inset-0 bg-background"
-          style={{ opacity: prefersReducedMotion ? 0 : creamFade }}
-        />
 
         {!showLoader && (
           <button
