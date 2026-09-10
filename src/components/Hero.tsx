@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import {
   AnimatePresence,
   motion,
@@ -9,7 +10,9 @@ import {
   useMotionValueEvent,
   useReducedMotion,
 } from "framer-motion";
+import { ArrowRight } from "lucide-react";
 import BrandLoader from "@/components/BrandLoader";
+import { useAnimations } from "@/lib/animations";
 
 function useIsTouchDevice() {
   const [isTouch, setIsTouch] = useState(false);
@@ -34,6 +37,7 @@ export default function Hero() {
   const prefersReducedMotion = useReducedMotion();
   const isTouch = useIsTouchDevice();
   const useAutoplay = prefersReducedMotion || isTouch;
+  const { fadeUp } = useAnimations();
 
   const sectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -57,7 +61,6 @@ export default function Hero() {
     return () => window.clearTimeout(timer);
   }, [prefersReducedMotion]);
 
-  // Keep video ready + autoplay on mobile / reduced motion
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
@@ -90,7 +93,6 @@ export default function Hero() {
 
       tryPlay();
       video.addEventListener("canplay", tryPlay);
-      // iOS often needs a second attempt after a short delay
       const retry = window.setTimeout(tryPlay, 250);
 
       return () => {
@@ -121,7 +123,6 @@ export default function Hero() {
     targetProgressRef.current = Math.min(progress / 0.92, 1);
   });
 
-  // Desktop scroll scrub only
   useEffect(() => {
     if (useAutoplay) return;
     const video = videoRef.current;
@@ -156,8 +157,6 @@ export default function Hero() {
       aria-label="Semzi Beach Collection film"
       className={useAutoplay ? "relative h-screen" : "relative h-[200vh]"}
     >
-      <h1 className="sr-only">Semzi — Natural soap, nothing harsh</h1>
-
       <div className="sticky top-0 h-screen overflow-hidden bg-foreground">
         <AnimatePresence>
           {showLoader && (
@@ -186,6 +185,70 @@ export default function Hero() {
         >
           <source src="/videos/Soap1.mp4" type="video/mp4" />
         </video>
+
+        {/* Soft left vignette so white copy stays readable over the film */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-linear-to-r from-foreground/75 via-foreground/35 to-transparent sm:via-foreground/25"
+        />
+
+        {/* Heading — left on the video */}
+        <div className="absolute inset-0 z-10 flex items-center">
+          <div className="w-full max-w-7xl pl-5 pr-6 pt-16 sm:pl-8 lg:pl-12 xl:pl-16">
+            <div className="max-w-lg space-y-6 sm:space-y-7">
+              <motion.p
+                {...fadeUp}
+                transition={{ ...(fadeUp.transition ?? {}), delay: 0.1 }}
+                className="font-mono text-[11px] font-bold uppercase tracking-[0.28em] text-accent"
+              >
+                Handmade · Small Batch · Honest
+              </motion.p>
+
+              <motion.h1
+                {...fadeUp}
+                transition={{ ...(fadeUp.transition ?? {}), delay: 0.2 }}
+                className="font-serif text-3xl font-bold leading-[1.2] sm:text-4xl lg:text-5xl"
+              >
+                <span className="bg-linear-to-r from-white via-accent-subtle to-accent bg-clip-text text-transparent drop-shadow-[0_2px_24px_rgba(201,163,107,0.45)]">
+                  Natural Soap.
+                </span>
+                <br />
+                <span className="bg-linear-to-r from-accent via-accent-subtle to-white bg-clip-text text-transparent drop-shadow-[0_2px_24px_rgba(201,163,107,0.45)]">
+                  Nothing Harsh.
+                </span>
+              </motion.h1>
+
+              <motion.p
+                {...fadeUp}
+                transition={{ ...(fadeUp.transition ?? {}), delay: 0.3 }}
+                className="mt-2 max-w-md text-sm font-medium leading-relaxed text-white/80 sm:mt-3 sm:text-base"
+              >
+                Hand-poured glycerin bars and hair rituals — crafted in small
+                batches with full ingredient transparency.
+              </motion.p>
+
+              <motion.div
+                {...fadeUp}
+                transition={{ ...(fadeUp.transition ?? {}), delay: 0.38 }}
+                className="flex flex-wrap items-center gap-3 pt-3 sm:pt-4"
+              >
+                <Link
+                  href="/shop"
+                  className="inline-flex items-center gap-2 rounded-xl bg-accent px-7 py-3.5 font-mono text-xs font-bold uppercase tracking-[0.15em] text-background transition-colors duration-300 hover:bg-accent-strong"
+                >
+                  Shop All
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+                <Link
+                  href="/about"
+                  className="inline-flex items-center gap-2 rounded-xl border border-white/35 bg-white/10 px-7 py-3.5 font-mono text-xs font-bold uppercase tracking-[0.15em] text-white backdrop-blur-sm transition-all duration-300 hover:border-white/60 hover:bg-white/20"
+                >
+                  Our Story
+                </Link>
+              </motion.div>
+            </div>
+          </div>
+        </div>
 
         {!useAutoplay && (
           <div className="absolute bottom-0 left-0 right-0 z-10 h-0.5 bg-white/10">
