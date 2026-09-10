@@ -16,6 +16,7 @@
   --color-success: #3F6B52;
   --font-sans: var(--font-dm-sans), "Inter", system-ui, sans-serif;
   --font-serif: var(--font-playfair), "Fraunces", Georgia, serif;
+  --font-instrument: var(--font-instrument-serif), "Instrument Serif", Georgia, serif;
   --font-mono: "JetBrains Mono", monospace;
 
   --radius-sm: 8px;
@@ -72,5 +73,37 @@
   select,
   button {
     @apply focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent;
+  }
+}
+
+@layer utilities {
+  .text-heading-gradient {
+    background-image: linear-gradient(
+      90deg,
+      #1c1612 0%,
+      #8e6a38 42%,
+      #c9a36b 68%,
+      #1c1612 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .card-glow-brown {
+    box-shadow:
+      0 8px 28px -10px rgba(28, 22, 18, 0.28),
+      0 0 36px -12px rgba(142, 106, 56, 0.35),
+      0 0 0 1px rgba(142, 106, 56, 0.08);
+    transition: box-shadow 0.5s ease, border-color 0.5s ease;
+  }
+
+  .card-glow-brown:hover,
+  .card-glow-brown-heavy {
+    box-shadow:
+      0 16px 48px -12px rgba(28, 22, 18, 0.45),
+      0 0 60px -8px rgba(142, 106, 56, 0.55),
+      0 0 90px -16px rgba(201, 163, 107, 0.35),
+      0 0 0 1px rgba(142, 106, 56, 0.22);
   }
 }

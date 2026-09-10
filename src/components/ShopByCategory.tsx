@@ -17,7 +17,7 @@ export default function ShopByCategory() {
           <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-accent">
             Explore
           </span>
-          <h2 className="font-serif text-3xl font-bold text-foreground md:text-4xl">
+          <h2 className="font-serif text-3xl font-bold text-heading-gradient md:text-4xl">
             Our Collections
           </h2>
           <p className="mx-auto max-w-xl text-sm font-medium text-foreground-muted">
@@ -26,17 +26,17 @@ export default function ShopByCategory() {
           </p>
         </Reveal>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {collections.map((collection, idx) => {
             const count = getProductsByCollection(collection.slug).length;
             return (
-              <Reveal key={collection.slug} delay={idx * 0.1} scale>
-                <motion.div {...cardHover}>
+              <Reveal key={collection.slug} delay={idx * 0.1} scale className="h-full">
+                <motion.div {...cardHover} className="h-full">
                   <Link
                     href={`/collections/${collection.slug}`}
-                    className="group block overflow-hidden rounded-2xl border border-border/70 bg-surface transition-all duration-300 hover:border-accent/40 hover:shadow-lg hover:shadow-foreground/5"
+                    className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border/70 bg-surface card-glow-brown hover:border-accent/50"
                   >
-                    <div className="relative aspect-4/5 overflow-hidden bg-surface-muted">
+                    <div className="relative aspect-4/5 shrink-0 overflow-hidden bg-surface-muted">
                       <Image
                         src={collection.heroImageUrl}
                         alt={collection.name}
@@ -54,11 +54,11 @@ export default function ShopByCategory() {
                         </h3>
                       </div>
                     </div>
-                    <div className="space-y-1 p-4">
-                      <p className="text-sm font-medium text-foreground-muted">
+                    <div className="flex flex-1 flex-col gap-3 p-4">
+                      <p className="min-h-10 text-sm font-medium leading-snug text-foreground-muted line-clamp-2">
                         {collection.tagline}
                       </p>
-                      <span className="inline-flex items-center gap-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-accent transition-all group-hover:gap-2.5">
+                      <span className="mt-auto inline-flex items-center gap-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-accent transition-all group-hover:gap-2.5">
                         Shop Collection
                         <svg
                           className="h-3.5 w-3.5"

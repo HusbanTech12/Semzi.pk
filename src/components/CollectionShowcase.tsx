@@ -15,7 +15,7 @@ export default function CollectionShowcase() {
           <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-accent">
             Featured Collection
           </span>
-          <h2 className="font-serif text-3xl font-bold text-foreground md:text-4xl">
+          <h2 className="font-serif text-3xl font-bold text-heading-gradient md:text-4xl">
             {featured.name}
           </h2>
         </Reveal>

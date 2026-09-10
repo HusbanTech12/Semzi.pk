@@ -44,7 +44,7 @@ export default function ProductCard({ product, priority }: ProductCardProps) {
         boxShadow: "0 8px 40px -8px rgba(43,33,24,0.18), 0 0 0 1px rgba(199,154,86,0.15), 0 0 30px -6px rgba(199,154,86,0.1)",
         transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
       }}
-      className="group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-surface shadow-[0_2px_20px_-6px_rgba(43,33,24,0.08)]"
+      className="group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-surface card-glow-brown"
     >
       <div className="absolute inset-x-0 top-0 h-0.5 bg-linear-to-r from-transparent via-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
 

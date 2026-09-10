@@ -41,7 +41,7 @@ export default function Testimonials() {
             <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-accent">
               Testimonials
             </span>
-            <h2 className="font-serif text-3xl font-bold text-foreground md:text-4xl">
+            <h2 className="font-serif text-3xl font-bold text-heading-gradient md:text-4xl">
               Loved by Thousands
             </h2>
           </Reveal>

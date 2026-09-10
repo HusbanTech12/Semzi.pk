@@ -42,7 +42,7 @@ export default function Features() {
           <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-accent">
             Our Promise
           </span>
-          <h2 className="font-serif text-3xl font-bold text-foreground md:text-4xl">
+          <h2 className="font-serif text-3xl font-medium tracking-tight text-heading-gradient leading-tight md:text-4xl">
             Crafted with Care,
             <br />
             Backed by Nature
@@ -56,7 +56,7 @@ export default function Features() {
               <Reveal key={feature.title} delay={idx * 0.1} scale>
                 <motion.div
                   {...cardHover}
-                  className="group relative h-full cursor-default overflow-hidden rounded-2xl border border-border/50 bg-surface p-8"
+                  className="group relative h-full cursor-default overflow-hidden rounded-2xl border border-border/50 bg-surface p-8 card-glow-brown hover:border-accent/50"
                 >
                   <div className="absolute inset-x-0 top-0 h-0.5 bg-linear-to-r from-transparent via-accent/50 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                   <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-accent/5 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />

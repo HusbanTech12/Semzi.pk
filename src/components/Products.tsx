@@ -78,7 +78,7 @@ export default function Products() {
           <span className="text-[11px] tracking-[0.25em] uppercase text-accent font-medium">
             Best Sellers
           </span>
-          <h2 className="font-serif text-3xl md:text-4xl text-foreground">
+          <h2 className="font-serif text-3xl md:text-4xl text-heading-gradient">
             Featured Products
           </h2>
         </Reveal>

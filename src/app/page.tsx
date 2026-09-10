@@ -3,7 +3,6 @@ import Hero from "@/components/Hero";
 import ShopByCategory from "@/components/ShopByCategory";
 import BrandStory from "@/components/BrandStory";
 import Features from "@/components/Features";
-import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
 
 export const dynamic = "force-dynamic";
@@ -17,7 +16,6 @@ export default function Home() {
         <ShopByCategory />
         <BrandStory />
         <Features />
-        <Testimonials />
       </main>
       <Footer />
     </>

@@ -90,7 +90,7 @@ export default function FeaturedProductsClient({
           <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-accent">
             Best Sellers
           </span>
-          <h2 className="font-serif text-3xl font-bold text-foreground sm:text-4xl">
+          <h2 className="font-serif text-3xl font-bold text-heading-gradient sm:text-4xl">
             Our Favorites
           </h2>
           <p className="mx-auto max-w-xl text-sm font-medium leading-relaxed text-foreground-muted">

@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ShoppingBag, X, User, Settings, LogOut, LayoutDashboard, Package, ArrowUpRight } from "lucide-react";
+import { ShoppingBag, X, User, Settings, LogOut, LayoutDashboard, Package } from "lucide-react";
 import { useUser, useClerk } from "@clerk/nextjs";
 import { useAnimations } from "@/lib/animations";
 import { useCart } from "@/context/cart-context";
@@ -135,29 +135,27 @@ export default function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 28, stiffness: 240 }}
-              className="fixed inset-y-0 right-0 z-70 flex w-full max-w-md flex-col overflow-y-auto border-l border-accent/25 bg-linear-to-b from-accent-subtle/60 via-background to-background shadow-[-24px_0_80px_-20px_rgba(28,22,18,0.45)]"
+              className="fixed inset-y-0 right-0 z-70 flex w-full max-w-md flex-col overflow-y-auto border-l border-border/50 bg-linear-to-b from-accent-subtle via-background to-background shadow-[-24px_0_80px_-20px_rgba(28,22,18,0.45)]"
             >
-              <div className="pointer-events-none absolute inset-x-0 top-0 h-48 bg-[radial-gradient(ellipse_at_top,rgba(201,163,107,0.35)_0%,transparent_70%)] blur-2xl" />
-
-              <div className="relative flex h-20 items-center justify-between border-b border-border/60 px-6 lg:px-8">
-                <span className="font-serif text-2xl italic font-bold tracking-tight bg-linear-to-r from-foreground via-accent-strong to-foreground bg-clip-text text-transparent">
+              <div className="relative flex h-20 items-center justify-between px-6 lg:px-8">
+                <span className="font-serif text-2xl italic font-medium tracking-tight text-foreground">
                   Semzi
                 </span>
                 <button
                   type="button"
                   onClick={() => setMobileOpen(false)}
                   aria-label="Close menu"
-                  className="rounded-full border border-border p-2.5 text-foreground transition-all duration-300 hover:bg-accent/15 hover:text-accent"
+                  className="rounded-full border border-border/80 p-2.5 text-foreground transition-all duration-300 hover:bg-accent/15 hover:text-accent"
                 >
                   <X className="h-4 w-4" />
                 </button>
               </div>
 
-              <nav className="relative flex-1 px-6 py-10 lg:px-8" aria-label="Primary">
-                <p className="mb-6 font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-accent">
+              <nav className="relative flex flex-1 flex-col justify-center px-6 pb-10 lg:px-8" aria-label="Primary">
+                <p className="mb-8 font-mono text-[11px] font-semibold uppercase tracking-[0.35em] text-accent">
                   Navigate
                 </p>
-                <ul className="space-y-1">
+                <ul>
                   {[...navLinks, ...(isSignedIn ? [{ label: "Admin", href: "/admin" }] : [])].map(
                     (link, i) => {
                       const active = pathname === link.href || pathname.startsWith(`${link.href}/`);
@@ -172,17 +170,16 @@ export default function Navbar() {
                             href={link.href}
                             onClick={() => setMobileOpen(false)}
                             aria-current={active ? "page" : undefined}
-                            className={`group flex items-center justify-between border-b border-border/50 py-4 font-serif text-3xl font-bold tracking-tight transition-colors duration-300 sm:text-4xl ${
+                            className={`group flex items-baseline gap-5 border-b border-border/40 py-5 transition-colors duration-300 ${
                               active ? "text-accent-strong" : "text-foreground hover:text-accent-strong"
                             }`}
                           >
-                            <span className="flex items-center gap-4">
-                              <span className="font-mono text-[10px] font-semibold tracking-widest text-foreground-muted/60">
-                                0{i + 1}
-                              </span>
+                            <span className="shrink-0 font-mono text-[11px] font-medium tracking-[0.18em] text-foreground-muted/55">
+                              {String(i + 1).padStart(2, "0")}
+                            </span>
+                            <span className="font-serif text-2xl font-medium leading-none tracking-tight">
                               {link.label}
                             </span>
-                            <ArrowUpRight className="h-5 w-5 -translate-x-1 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
                           </Link>
                         </motion.li>
                       );
