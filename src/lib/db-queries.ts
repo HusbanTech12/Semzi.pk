@@ -20,6 +20,7 @@ export interface ProductResult {
   collection?: string;
   skinConcern?: string[];
   inStock: boolean;
+  createdAt?: string;
 }
 
 export interface OrderResult {
@@ -66,10 +67,12 @@ function buildProductMap(rows: Awaited<ReturnType<typeof getAllProductsRaw>>): M
     "goat-milk-aloe-soap": "Milk-Rich Softness, Naturally Refined.",
   };
 
+  const catalogBySlug = new Map(catalogProducts.map((item) => [item.slug, item]));
+
   for (const row of rows) {
     const p = row.product;
     if (!map.has(p.id)) {
-      const isGoatMilk = p.slug === "nourish-goat-milk-aloe";
+      const catalog = catalogBySlug.get(p.slug);
       map.set(p.id, {
         id: p.id,
         slug: p.slug,
@@ -80,11 +83,14 @@ function buildProductMap(rows: Awaited<ReturnType<typeof getAllProductsRaw>>): M
         compareAtPriceCents: p.compareAtPriceCents ?? undefined,
         ingredients: (p.ingredients ?? "").split(", ").filter(Boolean),
         howToUse: p.howToUse ?? "",
-        caution: "",
+        caution: catalog?.caution ?? "",
         images: [],
-        tagline: taglines[p.slug] ?? undefined,
-        collection: row.collection?.name ?? undefined,
+        badge: catalog?.badge,
+        tagline: taglines[p.slug] ?? catalog?.tagline ?? undefined,
+        collection: row.collection?.name ?? catalog?.collection ?? undefined,
+        skinConcern: catalog?.skinConcern,
         inStock: true,
+        createdAt: p.createdAt?.toISOString(),
       });
     }
 
@@ -96,6 +102,26 @@ function buildProductMap(rows: Awaited<ReturnType<typeof getAllProductsRaw>>): M
     if (row.variant) {
       entry.priceCents = row.variant.priceCents;
       entry.inStock = row.variant.inventoryCount > 0;
+    }
+  }
+
+  for (const entry of map.values()) {
+    const catalog =
+      catalogBySlug.get(entry.slug) ??
+      (entry.slug === "goat-milk-aloe-soap"
+        ? catalogBySlug.get("nourish-goat-milk-aloe")
+        : undefined);
+    if (!catalog?.images?.length) continue;
+    const preferCatalog =
+      entry.slug === "nourish-goat-milk-aloe" ||
+      entry.slug === "goat-milk-aloe-soap" ||
+      entry.slug === "clarity" ||
+      entry.slug === "balance" ||
+      entry.slug === "restore" ||
+      entry.images.length === 0 ||
+      entry.images.every((url) => url.startsWith("http"));
+    if (preferCatalog) {
+      entry.images = [...catalog.images];
     }
   }
 

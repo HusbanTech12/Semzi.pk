@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronDown, Check, SlidersHorizontal } from "lucide-react";
 import Navbar from "@/components/Header";
@@ -9,45 +9,54 @@ import ProductCard from "@/components/ProductCard";
 import { useProducts } from "@/lib/use-products";
 import { useAnimations } from "@/lib/animations";
 import { Skeleton } from "@/components/ui/skeleton";
+import { collections } from "@/lib/products";
 
-const filterGroups = [
-  {
-    label: "Category",
-    key: "category" as const,
-    options: [
-      "Artisan Soap",
-      "Goat Milk & Aloe Vera Soap",
-      "Cream Soap",
-      "Hair Ritual",
-    ],
-  },
-  {
-    label: "Collection",
-    key: "collection" as const,
-    options: [
-      "Hydrating Glycerin Bars",
-      "Botanical Edits",
-      "Radiance Cream Soap",
-      "Hair Rituals",
-    ],
-  },
-  {
-    label: "Skin Concern",
-    key: "concern" as const,
-    options: ["dry", "sensitive", "oily", "acne-prone", "normal", "damaged"],
-  },
+const SKIN_CONCERNS = [
+  "dry",
+  "sensitive",
+  "oily",
+  "acne-prone",
+  "normal",
+  "damaged",
+] as const;
+
+type FilterKey = "collection" | "concern";
+type SortOption =
+  | "featured"
+  | "price-asc"
+  | "price-desc"
+  | "newest"
+  | "name-asc";
+
+const SORT_OPTIONS: { value: SortOption; label: string }[] = [
+  { value: "featured", label: "Featured" },
+  { value: "newest", label: "Newest" },
+  { value: "price-asc", label: "Price: Low to High" },
+  { value: "price-desc", label: "Price: High to Low" },
+  { value: "name-asc", label: "Name: A–Z" },
 ];
 
-type FilterKey = "category" | "collection" | "concern";
+function formatConcern(value: string) {
+  return value
+    .split("-")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
+}
 
 function DropdownFilter({
-  group,
+  label,
+  filterKey,
+  options,
   selected,
   onToggle,
+  formatOption = (opt: string) => opt,
 }: {
-  group: (typeof filterGroups)[number];
+  label: string;
+  filterKey: FilterKey;
+  options: string[];
   selected: string[];
   onToggle: (key: FilterKey, val: string) => void;
+  formatOption?: (opt: string) => string;
 }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -63,26 +72,30 @@ function DropdownFilter({
   const activeCount = selected.length;
 
   return (
-    <div ref={ref} className="relative flex-1">
+    <div ref={ref} className="relative min-w-0 flex-1">
       <button
+        type="button"
         onClick={() => setOpen(!open)}
-        className={`w-full flex items-center justify-between px-5 py-3 rounded-xl border text-sm font-medium transition-all duration-300 ${
+        aria-expanded={open}
+        className={`flex w-full items-center justify-between rounded-xl border px-5 py-3 text-sm font-medium transition-all duration-300 ${
           open
-            ? "bg-accent/10 border-accent/40 text-accent"
+            ? "border-accent/40 bg-accent/10 text-accent"
             : activeCount > 0
-            ? "bg-accent/5 border-accent/20 text-accent"
-            : "bg-surface border-border text-foreground-muted hover:border-accent/30"
+              ? "border-accent/20 bg-accent/5 text-accent"
+              : "border-border bg-surface text-foreground-muted hover:border-accent/30"
         }`}
       >
         <span className="flex items-center gap-2">
-          <span>{group.label}</span>
+          <span>{label}</span>
           {activeCount > 0 && (
-            <span className="flex items-center justify-center w-5 h-5 rounded-full bg-accent text-white text-[10px] font-bold">
+            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-accent text-[10px] font-bold text-white">
               {activeCount}
             </span>
           )}
         </span>
-        <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${open ? "rotate-180" : ""}`} />
+        <ChevronDown
+          className={`h-4 w-4 transition-transform duration-300 ${open ? "rotate-180" : ""}`}
+        />
       </button>
 
       <AnimatePresence>
@@ -92,31 +105,108 @@ function DropdownFilter({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -4 }}
             transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute top-full left-0 right-0 mt-2 bg-surface border border-border rounded-xl shadow-[0_12px_40px_-8px_rgba(43,33,24,0.15)] z-40 overflow-hidden"
+            className="absolute top-full right-0 left-0 z-40 mt-2 overflow-hidden rounded-xl border border-border bg-surface shadow-[0_12px_40px_-8px_rgba(43,33,24,0.15)]"
           >
             <div className="flex flex-wrap gap-2 p-3">
-              {group.options.map((opt) => {
+              {options.map((opt) => {
                 const active = selected.includes(opt);
                 return (
                   <button
+                    type="button"
                     key={opt}
-                    onClick={() => onToggle(group.key, opt)}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm border transition-all duration-200 ${
+                    onClick={() => onToggle(filterKey, opt)}
+                    className={`flex items-center gap-2 rounded-lg border px-4 py-2 text-sm transition-all duration-200 ${
                       active
-                        ? "bg-accent/10 border-accent/30 text-accent"
-                        : "bg-background border-border text-foreground-muted hover:border-accent/20 hover:text-foreground"
+                        ? "border-accent/30 bg-accent/10 text-accent"
+                        : "border-border bg-background text-foreground-muted hover:border-accent/20 hover:text-foreground"
                     }`}
                   >
                     <span
-                      className={`flex items-center justify-center w-4 h-4 rounded border transition-all duration-200 ${
+                      className={`flex h-4 w-4 items-center justify-center rounded border transition-all duration-200 ${
                         active
-                          ? "bg-accent border-accent text-white"
+                          ? "border-accent bg-accent text-white"
                           : "border-border"
                       }`}
                     >
-                      {active && <Check className="w-3 h-3" />}
+                      {active && <Check className="h-3 w-3" />}
                     </span>
-                    {opt}
+                    {formatOption(opt)}
+                  </button>
+                );
+              })}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+function SortSelect({
+  value,
+  onChange,
+}: {
+  value: SortOption;
+  onChange: (value: SortOption) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const current = SORT_OPTIONS.find((opt) => opt.value === value)?.label ?? "Featured";
+
+  useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    }
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, []);
+
+  return (
+    <div ref={ref} className="relative min-w-0 flex-1 sm:max-w-55">
+      <button
+        type="button"
+        onClick={() => setOpen(!open)}
+        aria-expanded={open}
+        className={`flex w-full items-center justify-between rounded-xl border px-5 py-3 text-sm font-medium transition-all duration-300 ${
+          open || value !== "featured"
+            ? "border-accent/40 bg-accent/10 text-accent"
+            : "border-border bg-surface text-foreground-muted hover:border-accent/30"
+        }`}
+      >
+        <span className="truncate">Sort: {current}</span>
+        <ChevronDown
+          className={`h-4 w-4 shrink-0 transition-transform duration-300 ${open ? "rotate-180" : ""}`}
+        />
+      </button>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, y: -4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -4 }}
+            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute top-full right-0 left-0 z-40 mt-2 overflow-hidden rounded-xl border border-border bg-surface shadow-[0_12px_40px_-8px_rgba(43,33,24,0.15)]"
+          >
+            <div className="py-1">
+              {SORT_OPTIONS.map((opt) => {
+                const active = value === opt.value;
+                return (
+                  <button
+                    type="button"
+                    key={opt.value}
+                    onClick={() => {
+                      onChange(opt.value);
+                      setOpen(false);
+                    }}
+                    className={`flex w-full items-center justify-between px-4 py-2.5 text-left text-sm transition-colors ${
+                      active
+                        ? "bg-accent/10 text-accent"
+                        : "text-foreground-muted hover:bg-background hover:text-foreground"
+                    }`}
+                  >
+                    {opt.label}
+                    {active && <Check className="h-4 w-4" />}
                   </button>
                 );
               })}
@@ -130,52 +220,103 @@ function DropdownFilter({
 
 export default function ShopPage() {
   const [selectedFilters, setSelectedFilters] = useState<Record<FilterKey, string[]>>({
-    category: [],
     collection: [],
     concern: [],
   });
+  const [sort, setSort] = useState<SortOption>("featured");
+  const [inStockOnly, setInStockOnly] = useState(false);
   const { products, loading } = useProducts();
   const { fadeUp } = useAnimations();
 
-  const totalActive = Object.values(selectedFilters).reduce((sum, arr) => sum + arr.length, 0);
+  const collectionOptions = useMemo(() => {
+    const fromProducts = products
+      .map((p) => p.collection)
+      .filter((name): name is string => Boolean(name));
+    const fromCatalog = collections.map((c) => c.name);
+    return Array.from(new Set([...fromCatalog, ...fromProducts])).sort((a, b) =>
+      a.localeCompare(b)
+    );
+  }, [products]);
+
+  const totalActive =
+    Object.values(selectedFilters).reduce((sum, arr) => sum + arr.length, 0) +
+    (inStockOnly ? 1 : 0);
 
   function toggleFilter(key: FilterKey, val: string) {
     setSelectedFilters((prev) => ({
       ...prev,
-      [key]: prev[key].includes(val) ? prev[key].filter((v) => v !== val) : [...prev[key], val],
+      [key]: prev[key].includes(val)
+        ? prev[key].filter((v) => v !== val)
+        : [...prev[key], val],
     }));
   }
 
   function clearAll() {
-    setSelectedFilters({ category: [], collection: [], concern: [] });
+    setSelectedFilters({ collection: [], concern: [] });
+    setInStockOnly(false);
+    setSort("featured");
   }
 
-  const filtered = products.filter((p) => {
-    if (selectedFilters.category.length && !selectedFilters.category.includes(p.category)) return false;
-    if (selectedFilters.concern.length && !p.skinConcern?.some((c) => selectedFilters.concern.includes(c))) return false;
-    if (selectedFilters.collection.length && !selectedFilters.collection.includes(p.collection ?? "")) return false;
-    return true;
-  });
+  const filtered = useMemo(() => {
+    const next = products.filter((p) => {
+      if (inStockOnly && !p.inStock) return false;
+      if (
+        selectedFilters.concern.length &&
+        !p.skinConcern?.some((c) => selectedFilters.concern.includes(c))
+      ) {
+        return false;
+      }
+      if (
+        selectedFilters.collection.length &&
+        !selectedFilters.collection.includes(p.collection ?? "")
+      ) {
+        return false;
+      }
+      return true;
+    });
+
+    next.sort((a, b) => {
+      switch (sort) {
+        case "price-asc":
+          return a.priceCents - b.priceCents;
+        case "price-desc":
+          return b.priceCents - a.priceCents;
+        case "newest": {
+          const aTime = a.createdAt ? Date.parse(a.createdAt) : a.id;
+          const bTime = b.createdAt ? Date.parse(b.createdAt) : b.id;
+          return bTime - aTime;
+        }
+        case "name-asc":
+          return a.name.localeCompare(b.name);
+        case "featured":
+        default:
+          return a.id - b.id;
+      }
+    });
+
+    return next;
+  }, [products, selectedFilters, sort, inStockOnly]);
 
   return (
     <>
       <Navbar />
       <main className="pt-20">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
+        <div className="mx-auto max-w-7xl px-6 py-8 lg:px-8">
           <motion.div {...fadeUp} className="mb-8">
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between gap-4">
               <div>
-                <h1 className="font-serif text-3xl md:text-4xl text-foreground">Shop</h1>
-                <p className="text-sm text-foreground-muted mt-1">
+                <h1 className="font-serif text-3xl text-foreground md:text-4xl">Shop</h1>
+                <p className="mt-1 text-sm text-foreground-muted">
                   {loading ? "Loading..." : `${filtered.length} products`}
                 </p>
               </div>
               {totalActive > 0 && (
                 <button
+                  type="button"
                   onClick={clearAll}
-                  className="flex items-center gap-2 px-4 py-2 text-sm text-foreground-muted hover:text-foreground border border-border rounded-xl hover:border-accent/30 transition-all"
+                  className="flex items-center gap-2 rounded-xl border border-border px-4 py-2 text-sm text-foreground-muted transition-all hover:border-accent/30 hover:text-foreground"
                 >
-                  <SlidersHorizontal className="w-4 h-4" />
+                  <SlidersHorizontal className="h-4 w-4" />
                   Clear all ({totalActive})
                 </button>
               )}
@@ -183,37 +324,88 @@ export default function ShopPage() {
           </motion.div>
 
           <motion.div {...fadeUp} className="mb-8">
-            <div className="flex flex-col sm:flex-row gap-3">
-              {filterGroups.map((group) => (
-                <DropdownFilter
-                  key={group.key}
-                  group={group}
-                  selected={selectedFilters[group.key]}
-                  onToggle={toggleFilter}
-                />
-              ))}
+            <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap lg:flex-nowrap">
+              <DropdownFilter
+                label="Collection"
+                filterKey="collection"
+                options={collectionOptions}
+                selected={selectedFilters.collection}
+                onToggle={toggleFilter}
+              />
+              <DropdownFilter
+                label="Skin Concern"
+                filterKey="concern"
+                options={[...SKIN_CONCERNS]}
+                selected={selectedFilters.concern}
+                onToggle={toggleFilter}
+                formatOption={formatConcern}
+              />
+              <SortSelect value={sort} onChange={setSort} />
+            </div>
+
+            <div className="mt-4 flex flex-wrap items-center gap-3">
+              <button
+                type="button"
+                onClick={() => setInStockOnly((prev) => !prev)}
+                className={`inline-flex items-center gap-2 rounded-xl border px-4 py-2 text-sm font-medium transition-all duration-200 ${
+                  inStockOnly
+                    ? "border-accent/30 bg-accent/10 text-accent"
+                    : "border-border bg-surface text-foreground-muted hover:border-accent/20 hover:text-foreground"
+                }`}
+              >
+                <span
+                  className={`flex h-4 w-4 items-center justify-center rounded border transition-all duration-200 ${
+                    inStockOnly
+                      ? "border-accent bg-accent text-white"
+                      : "border-border"
+                  }`}
+                >
+                  {inStockOnly && <Check className="h-3 w-3" />}
+                </span>
+                In stock only
+              </button>
             </div>
 
             {totalActive > 0 && (
-              <div className="flex flex-wrap items-center gap-2 mt-4">
-                {Object.entries(selectedFilters).flatMap(([key, vals]) =>
-                  vals.map((val) => (
-                    <button
-                      key={`${key}-${val}`}
-                      onClick={() => toggleFilter(key as FilterKey, val)}
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-accent/10 text-accent text-xs font-medium rounded-lg border border-accent/20 hover:bg-accent/20 transition-colors"
-                    >
-                      {val}
-                      <X className="w-3 h-3" />
-                    </button>
-                  ))
+              <div className="mt-4 flex flex-wrap items-center gap-2">
+                {selectedFilters.collection.map((val) => (
+                  <button
+                    type="button"
+                    key={`collection-${val}`}
+                    onClick={() => toggleFilter("collection", val)}
+                    className="inline-flex items-center gap-1.5 rounded-lg border border-accent/20 bg-accent/10 px-3 py-1.5 text-xs font-medium text-accent transition-colors hover:bg-accent/20"
+                  >
+                    {val}
+                    <X className="h-3 w-3" />
+                  </button>
+                ))}
+                {selectedFilters.concern.map((val) => (
+                  <button
+                    type="button"
+                    key={`concern-${val}`}
+                    onClick={() => toggleFilter("concern", val)}
+                    className="inline-flex items-center gap-1.5 rounded-lg border border-accent/20 bg-accent/10 px-3 py-1.5 text-xs font-medium text-accent transition-colors hover:bg-accent/20"
+                  >
+                    {formatConcern(val)}
+                    <X className="h-3 w-3" />
+                  </button>
+                ))}
+                {inStockOnly && (
+                  <button
+                    type="button"
+                    onClick={() => setInStockOnly(false)}
+                    className="inline-flex items-center gap-1.5 rounded-lg border border-accent/20 bg-accent/10 px-3 py-1.5 text-xs font-medium text-accent transition-colors hover:bg-accent/20"
+                  >
+                    In stock
+                    <X className="h-3 w-3" />
+                  </button>
                 )}
               </div>
             )}
           </motion.div>
 
           {loading ? (
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10">
+            <div className="grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-3">
               {[1, 2, 3, 4, 5, 6].map((i) => (
                 <div key={i} className="space-y-3">
                   <Skeleton className="aspect-4/5 w-full rounded-lg" />
@@ -224,14 +416,18 @@ export default function ShopPage() {
               ))}
             </div>
           ) : filtered.length === 0 ? (
-            <div className="text-center py-24">
+            <div className="py-24 text-center">
               <p className="text-foreground-muted">No products match your filters.</p>
-              <button onClick={clearAll} className="mt-4 text-sm text-accent hover:text-accent-strong underline">
+              <button
+                type="button"
+                onClick={clearAll}
+                className="mt-4 text-sm text-accent underline hover:text-accent-strong"
+              >
                 Clear filters
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10">
+            <div className="grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-3">
               {filtered.map((product, i) => (
                 <ProductCard key={product.id} product={product} priority={i < 3} />
               ))}

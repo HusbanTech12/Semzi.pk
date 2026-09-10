@@ -64,17 +64,19 @@ export const products: Product[] = [
   {
     id: 2,
     slug: "clarity",
-    name: "Clarity",
+    name: "Strengthening Shampoo",
     category: "Hair Ritual",
     description:
-      "A clarifying scalp rinse that gently lifts buildup while nourishing the hair fiber with botanical extracts. Leaves hair feeling clean, light, and luminous — never stripped.",
+      "A strengthening shampoo for oily and combination scalp, infused with rosemary and jasmine extract. Gently lifts buildup while fortifying the hair fiber — leaving hair feeling clean, light, and resilient.",
     priceCents: 3800,
     compareAtPriceCents: 4200,
     ingredients: [
-      "Aloe Barbadensis Leaf Juice",
+      "Aqua (Water)",
       "Coco-Glucoside",
       "Glycerin",
-      "Melaleuca Alternifolia Leaf Oil",
+      "Rosmarinus Officinalis (Rosemary) Leaf Extract",
+      "Jasminum Officinale (Jasmine) Extract",
+      "Aloe Barbadensis Leaf Juice",
       "Tocopherol",
       "Citric Acid",
     ],
@@ -83,11 +85,11 @@ export const products: Product[] = [
     caution:
       "For external use only. Avoid contact with eyes. If contact occurs, rinse thoroughly with water.",
     images: [
-      "https://yunasop.com/wp-content/uploads/2023/02/%E8%B2%A1%E5%AF%8C%E9%BB%83%E6%8B%89%E9%95%B7%E7%9F%B3-800x800.png",
-      "https://yunasop.com/wp-content/uploads/2023/01/%E6%B5%B7%E8%97%8D%E5%AF%B6%E7%A6%AE%E7%9B%92-800x800.png",
+      "/images/products-img/shampoo/hair-rituals-hero.jpg",
+      "/images/products-img/shampoo/strengthening-shampoo-2.jpg",
     ],
     badge: "New",
-    tagline: "Clear the scalp. Reveal the shine.",
+    tagline: "Rosemary & jasmine. Stronger strands.",
     collection: "Hair Rituals",
     skinConcern: ["oily", "normal"],
     inStock: true,
@@ -146,8 +148,8 @@ export const products: Product[] = [
     caution:
       "For external use only. Avoid contact with eyes. Store in a cool, dry place away from direct sunlight.",
     images: [
-      "https://yunasop.com/wp-content/uploads/2025/07/3.png",
-      "https://yunasop.com/wp-content/uploads/2023/01/%E6%B5%B7%E8%97%8D%E5%AF%B6%E7%A6%AE%E7%9B%92-800x800.png",
+      "/images/products-img/shampoo/hair-rituals-hero.jpg",
+      "/images/products-img/shampoo/strengthening-shampoo-2.jpg",
     ],
     badge: "Eco",
     tagline: "Even scalp. Soft strands. Daily calm.",
@@ -209,8 +211,8 @@ export const products: Product[] = [
     caution:
       "For external use only. Avoid contact with eyes. If contact occurs, rinse thoroughly with water.",
     images: [
-      "https://yunasop.com/wp-content/uploads/2023/01/%E6%B5%B7%E8%97%8D%E5%AF%B6%E7%A6%AE%E7%9B%92-800x800.png",
-      "https://yunasop.com/wp-content/uploads/2024/08/IMG_0272-800x800.jpg",
+      "/images/products-img/shampoo/hair-rituals-hero.jpg",
+      "/images/products-img/shampoo/strengthening-shampoo-2.jpg",
     ],
     badge: "Nourish",
     tagline: "Rebuild softness. Restore resilience.",
@@ -340,10 +342,8 @@ export const products: Product[] = [
     caution:
       "For external use only. Avoid contact with eyes. Contains dairy-derived ingredients.",
     images: [
-      "/images/products-img/goat-milk/goat-milk-soap-1.jpg",
+      "/images/products-img/goat-milk/botanical-edits-hero.jpg",
       "/images/products-img/goat-milk/goat-milk-soap-2.jpg",
-      "/images/products-img/goat-milk/goat-milk-soap-3.jpg",
-      "/images/products-img/goat-milk/goat-milk-soap-4.jpg",
     ],
     badge: "Bestseller",
     tagline: "Milk-Rich Softness, Naturally Refined.",
@@ -360,7 +360,7 @@ export const collections: Collection[] = [
     tagline: "Soft glycerin. Coastal craft. Honest skin.",
     description:
       "Hand-poured hydrating glycerin bars — Coral, Beach, Flora, Sea Voyage, and Cloud — crafted for a cream-like lather that cleanses without stripping.",
-    heroImageUrl: "/images/beach-stills/03-beach.png",
+    heroImageUrl: "/images/products-img/hydrating-glycerin-hero.png",
     accent: "#2E8D9E",
     productSlugs: [
       "coral-soap",
@@ -376,7 +376,7 @@ export const collections: Collection[] = [
     tagline: "Milk-rich softness. Botanical calm.",
     description:
       "A focused botanical edit featuring our Goat Milk & Aloe Vera Soap — mild, nourishing, and ideal for dry or delicate skin.",
-    heroImageUrl: "/images/products-img/goat-milk/goat-milk-soap-1.jpg",
+    heroImageUrl: "/images/products-img/goat-milk/botanical-edits-hero.jpg",
     accent: "#8E6A38",
     productSlugs: ["nourish-goat-milk-aloe"],
   },
@@ -386,17 +386,17 @@ export const collections: Collection[] = [
     tagline: "Cream-soft cleanse. Quiet radiance.",
     description:
       "A luxurious cream soap ritual designed to cushion the skin in a dense, milk-soft lather and leave a luminous, comforted finish.",
-    heroImageUrl: "/images/beach-stills/02-cloud.png",
+    heroImageUrl: "/images/products-img/radiance-cream-hero.png",
     accent: "#C9A36B",
     productSlugs: ["radiance"],
   },
   {
     slug: "hair-rituals",
     name: "Hair Rituals",
-    tagline: "Clarity. Balance. Restore.",
+    tagline: "Strengthen. Balance. Restore.",
     description:
-      "A three-step wash-off hair ritual — Clarity to reset, Balance for daily calm, and Restore for deep softness — shaped with the same care as every Semzi bar.",
-    heroImageUrl: "/images/hero-soap.jpg",
+      "Wash-off hair rituals shaped with the same care as every Semzi bar — starting with our Strengthening Shampoo for oily and combination scalp, with rosemary and jasmine extract.",
+    heroImageUrl: "/images/products-img/shampoo/hair-rituals-hero.jpg",
     accent: "#5C5146",
     productSlugs: ["clarity", "balance", "restore"],
   },

@@ -18,11 +18,22 @@ export default function CollectionsPage() {
     <>
       <Navbar />
       <main className="min-h-screen bg-background pt-20">
-        <section className="relative overflow-hidden border-b border-border/40 py-16 lg:py-24">
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(201,163,107,0.12),transparent_65%)]" />
+        <section className="relative overflow-hidden border-b border-border/40 py-20 lg:py-28">
+          <Image
+            src="/images/soap-collection.jpg"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center"
+            aria-hidden
+          />
+          <div className="absolute inset-0 bg-background/78" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(201,163,107,0.18),transparent_60%)]" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-linear-to-t from-background to-transparent" />
           <div className="relative z-10 mx-auto max-w-4xl px-6 text-center lg:px-8">
             <Reveal>
-              <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-border bg-surface/80 px-4 py-1.5 backdrop-blur-sm">
+              <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-border/80 bg-surface/70 px-4 py-1.5 backdrop-blur-sm">
                 <span className="h-1.5 w-1.5 rounded-full bg-accent" />
                 <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-foreground-muted">
                   Semzi Catalog

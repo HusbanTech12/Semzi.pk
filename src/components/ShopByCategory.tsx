@@ -38,6 +38,7 @@ export default function ShopByCategory() {
                   >
                     <div className="relative aspect-4/5 shrink-0 overflow-hidden bg-surface-muted">
                       <Image
+                        key={collection.heroImageUrl}
                         src={collection.heroImageUrl}
                         alt={collection.name}
                         fill
