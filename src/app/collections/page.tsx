@@ -54,7 +54,7 @@ export default function CollectionsPage() {
                 <Reveal key={collection.slug}>
                   <article className="grid items-center gap-10 lg:grid-cols-12 lg:gap-14">
                     <div
-                      className={`lg:col-span-5 ${
+                      className={`min-w-0 lg:col-span-5 ${
                         isReversed ? "lg:order-2" : "lg:order-1"
                       }`}
                     >
@@ -83,7 +83,7 @@ export default function CollectionsPage() {
                     </div>
 
                     <div
-                      className={`lg:col-span-7 ${
+                      className={`min-w-0 lg:col-span-7 ${
                         isReversed ? "lg:order-1" : "lg:order-2"
                       }`}
                     >

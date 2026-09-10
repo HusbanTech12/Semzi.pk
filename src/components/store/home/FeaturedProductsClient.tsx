@@ -36,7 +36,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
             alt={product.name}
             fill
             className="object-cover transition-all duration-700 group-hover:scale-105"
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            sizes="(max-width: 1024px) 50vw, 25vw"
             priority={index < 4}
           />
           <div className="absolute inset-0 bg-linear-to-t from-foreground/20 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
@@ -45,7 +45,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
       </Link>
 
       <div className="flex flex-col gap-1.5 px-0.5">
-        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent/70">
+        <span className="truncate text-[10px] font-bold uppercase tracking-[0.2em] text-accent/70">
           {product.collection
             ? `【${product.collection}】`
             : `【${product.category}】`}
@@ -98,7 +98,7 @@ export default function FeaturedProductsClient({
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:gap-8 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-4 sm:gap-6 md:gap-8 lg:grid-cols-4">
           {featured.map((product, i) => (
             <ProductCard key={product.id} product={product} index={i} />
           ))}

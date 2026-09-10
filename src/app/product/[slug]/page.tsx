@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, use } from "react";
+import { useState, use, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Minus, Plus, ShoppingBag, ChevronLeft } from "lucide-react";
+import { Minus, Plus, ShoppingBag, ChevronLeft, Check } from "lucide-react";
+import { useCart } from "@/context/cart-context";
 import Navbar from "@/components/Header";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
@@ -30,6 +31,20 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState<Tab>("description");
+  const [justAdded, setJustAdded] = useState(false);
+  const { addItem } = useCart();
+
+  useEffect(() => {
+    if (!justAdded) return;
+    const t = window.setTimeout(() => setJustAdded(false), 1800);
+    return () => window.clearTimeout(t);
+  }, [justAdded]);
+
+  const handleAddToCart = () => {
+    if (!product || !product.inStock) return;
+    addItem(product, quantity);
+    setJustAdded(true);
+  };
 
   if (!loading && !product) notFound();
 
@@ -50,7 +65,7 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
         <main className="pt-20 max-w-7xl mx-auto px-6 lg:px-8 py-8">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
             <div className="space-y-4">
-              <Skeleton className="aspect-[4/5] w-full rounded-lg" />
+              <Skeleton className="aspect-4/5 w-full rounded-lg" />
             </div>
             <div className="space-y-6">
               <Skeleton className="h-4 w-32" />
@@ -82,7 +97,7 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
 
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
             <motion.div {...fadeUp} className="space-y-4">
-              <div className="relative aspect-[4/5] rounded-lg overflow-hidden bg-surface-muted">
+              <div className="relative aspect-4/5 rounded-lg overflow-hidden bg-surface-muted">
                 <Image
                   src={product.images[selectedImage]}
                   alt={product.name}
@@ -97,7 +112,10 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                   {product.images.map((img, i) => (
                     <button
                       key={i}
+                      type="button"
                       onClick={() => setSelectedImage(i)}
+                      aria-label={`View image ${i + 1} of ${product.images.length}`}
+                      aria-pressed={i === selectedImage}
                       className={cn(
                         "relative w-20 h-20 rounded-lg overflow-hidden bg-surface-muted border-2 transition-all duration-300 hover:shadow-[0_0_16px_-2px_rgba(199,154,86,0.3)]",
                         i === selectedImage ? "border-accent shadow-[0_0_16px_-2px_rgba(199,154,86,0.3)]" : "border-transparent hover:border-accent/50"
@@ -105,7 +123,7 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                     >
                       <Image
                         src={img}
-                        alt=""
+                        alt={`${product.name} — view ${i + 1}`}
                         fill
                         className="object-cover transition-transform duration-300 hover:scale-110"
                         sizes="80px"
@@ -140,43 +158,56 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
               </div>
 
               <div className="flex items-center gap-4">
-                <div className="flex items-center border border-border rounded-lg">
+                <div className="flex items-center border border-border rounded-lg" role="group" aria-label="Quantity">
                   <button
+                    type="button"
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="p-3 text-foreground-muted hover:text-foreground transition-colors"
+                    aria-label="Decrease quantity"
+                    disabled={quantity <= 1}
+                    className="p-3 text-foreground-muted hover:text-foreground transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
                   >
                     <Minus className="w-4 h-4" />
                   </button>
-                  <span className="w-12 text-center font-mono text-sm">{quantity}</span>
+                  <span className="w-12 text-center font-mono text-sm" aria-live="polite">{quantity}</span>
                   <button
+                    type="button"
                     onClick={() => setQuantity(quantity + 1)}
+                    aria-label="Increase quantity"
                     className="p-3 text-foreground-muted hover:text-foreground transition-colors"
                   >
                     <Plus className="w-4 h-4" />
                   </button>
                 </div>
                 <button
+                  type="button"
+                  onClick={handleAddToCart}
                   disabled={!product.inStock}
+                  aria-live="polite"
                   className={cn(
-                    "flex-1 flex items-center justify-center gap-2 px-8 py-3 text-sm tracking-wider uppercase rounded-lg transition-all",
-                    product.inStock
-                      ? "bg-accent text-background hover:bg-accent-strong"
-                      : "bg-foreground-muted/20 text-foreground-muted cursor-not-allowed"
+                    "flex-1 flex items-center justify-center gap-2 whitespace-nowrap px-4 sm:px-8 py-3 text-sm font-semibold tracking-wider uppercase rounded-lg transition-all",
+                    !product.inStock
+                      ? "bg-foreground-muted/20 text-foreground-muted cursor-not-allowed"
+                      : justAdded
+                        ? "bg-success text-white"
+                        : "bg-accent text-background hover:bg-accent-strong"
                   )}
                 >
-                  <ShoppingBag className="w-4 h-4" />
-                  {product.inStock ? "Add to Cart" : "Out of Stock"}
+                  {justAdded ? <Check className="w-4 h-4" /> : <ShoppingBag className="w-4 h-4" />}
+                  {!product.inStock ? "Out of Stock" : justAdded ? "Added to Cart" : "Add to Cart"}
                 </button>
               </div>
 
               <div>
-                <div className="flex border-b border-border">
+                <div className="flex border-b border-border" role="tablist" aria-label="Product details">
                   {tabs.map((tab) => (
                     <button
                       key={tab.key}
+                      type="button"
+                      role="tab"
+                      aria-selected={activeTab === tab.key}
                       onClick={() => setActiveTab(tab.key)}
                       className={cn(
-                        "px-6 py-3 text-xs tracking-wider uppercase transition-colors border-b-2 -mb-[1px]",
+                        "flex-1 sm:flex-none whitespace-nowrap px-3 sm:px-6 py-3 text-[11px] sm:text-xs font-semibold tracking-wider uppercase transition-colors border-b-2 -mb-px",
                         activeTab === tab.key
                           ? "text-accent border-accent"
                           : "text-foreground-muted border-transparent hover:text-foreground"
@@ -199,7 +230,7 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                         <div className="space-y-4">
                           <div className="flex items-center gap-2">
                             <span className="text-xs tracking-wider uppercase text-accent font-medium">
-                              {(product.slug === "nourish-goat-milk-aloe" || product.slug === "goat-milk-aloe-soap") ? "Its handmade!" : "Its handcrafted!"}
+                              {(product.slug === "nourish-goat-milk-aloe" || product.slug === "goat-milk-aloe-soap") ? "It's handmade" : "It's handcrafted"}
                             </span>
                           </div>
                           <p className="text-sm text-foreground-muted leading-relaxed">
@@ -239,25 +270,31 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
           )}
         </div>
 
-        <div className="fixed bottom-0 left-0 right-0 bg-surface border-t border-border p-4 lg:hidden">
+        <div className="fixed bottom-0 left-0 right-0 z-40 bg-surface/95 backdrop-blur-md border-t border-border p-4 pb-[max(1rem,env(safe-area-inset-bottom))] shadow-[0_-8px_30px_-12px_rgba(28,22,18,0.25)] lg:hidden">
           <div className="max-w-7xl mx-auto flex items-center gap-4">
             <PriceDisplay priceCents={product.priceCents} compareAtCents={product.compareAtPriceCents} />
             <button
+              type="button"
+              onClick={handleAddToCart}
               disabled={!product.inStock}
               className={cn(
-                "flex-1 flex items-center justify-center gap-2 px-6 py-3 text-sm tracking-wider uppercase rounded-lg transition-all",
-                product.inStock
-                  ? "bg-accent text-background hover:bg-accent-strong"
-                  : "bg-foreground-muted/20 text-foreground-muted cursor-not-allowed"
+                "flex-1 flex items-center justify-center gap-2 px-6 py-3 text-sm font-semibold tracking-wider uppercase rounded-lg transition-all",
+                !product.inStock
+                  ? "bg-foreground-muted/20 text-foreground-muted cursor-not-allowed"
+                  : justAdded
+                    ? "bg-success text-white"
+                    : "bg-accent text-background hover:bg-accent-strong"
               )}
             >
-              <ShoppingBag className="w-4 h-4" />
-              {product.inStock ? "Add to Cart" : "Out of Stock"}
+              {justAdded ? <Check className="w-4 h-4" /> : <ShoppingBag className="w-4 h-4" />}
+              {!product.inStock ? "Out of Stock" : justAdded ? "Added" : "Add to Cart"}
             </button>
           </div>
         </div>
       </main>
       <Footer />
+      {/* Spacer so the fixed mobile add-to-cart bar never covers the footer */}
+      <div aria-hidden className="h-24 lg:hidden" />
     </>
   );
 }

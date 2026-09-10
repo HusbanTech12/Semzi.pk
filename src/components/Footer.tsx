@@ -52,20 +52,31 @@ export default function Footer() {
               <p className="text-xs tracking-widest uppercase text-foreground-muted font-bold">
                 Join the Journal
               </p>
-              <div className="flex gap-2 max-w-sm">
+              <form
+                className="flex gap-2 max-w-sm"
+                onSubmit={(e) => e.preventDefault()}
+              >
+                <label htmlFor="footer-newsletter-email" className="sr-only">
+                  Email address
+                </label>
                 <input
+                  id="footer-newsletter-email"
                   type="email"
+                  name="email"
+                  autoComplete="email"
                   placeholder="Enter your email"
                   className="flex-1 px-4 py-2.5 bg-white/5 border border-white/10 rounded-sm text-sm text-background placeholder:text-foreground-muted/50 focus:outline-none focus:border-accent/50 focus:shadow-[0_0_20px_-4px_rgba(199,154,86,0.2)] transition-all duration-300"
                 />
                 <motion.button
+                  type="submit"
+                  aria-label="Subscribe to the journal"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   className="px-4 py-2.5 bg-accent text-background rounded-sm hover:bg-accent-strong transition-colors"
                 >
                   <ChevronRight className="w-4 h-4" />
                 </motion.button>
-              </div>
+              </form>
             </div>
 
             <div className="flex flex-wrap gap-3">

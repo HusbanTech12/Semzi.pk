@@ -53,6 +53,12 @@
   * {
     @apply border-border;
   }
+  html,
+  body {
+    /* Reveal animations translate elements on the x-axis before they enter view;
+       clip (not hidden) prevents horizontal scroll without breaking position: sticky. */
+    overflow-x: clip;
+  }
   body {
     @apply bg-background text-foreground font-sans antialiased;
     background-image: radial-gradient(rgba(28, 22, 18, 0.035) 0.65px, transparent 0.65px);
