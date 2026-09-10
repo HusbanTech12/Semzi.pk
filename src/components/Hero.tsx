@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Volume2, VolumeX } from "lucide-react";
 import {
   AnimatePresence,
   motion,
@@ -12,15 +11,35 @@ import {
 } from "framer-motion";
 import BrandLoader from "@/components/BrandLoader";
 
+function useIsTouchDevice() {
+  const [isTouch, setIsTouch] = useState(false);
+
+  useEffect(() => {
+    const sync = () => {
+      const coarse = window.matchMedia("(pointer: coarse)").matches;
+      const noHover = window.matchMedia("(hover: none)").matches;
+      const touchPoints = navigator.maxTouchPoints > 0;
+      setIsTouch(coarse || noHover || touchPoints);
+    };
+
+    sync();
+    window.addEventListener("resize", sync);
+    return () => window.removeEventListener("resize", sync);
+  }, []);
+
+  return isTouch;
+}
+
 export default function Hero() {
   const prefersReducedMotion = useReducedMotion();
+  const isTouch = useIsTouchDevice();
+  const useAutoplay = prefersReducedMotion || isTouch;
+
   const sectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const durationRef = useRef(0);
   const targetProgressRef = useRef(0);
-  const soundOnRef = useRef(false);
 
-  const [soundOn, setSoundOn] = useState(false);
   const [videoReady, setVideoReady] = useState(false);
   const [minTimeElapsed, setMinTimeElapsed] = useState(false);
   const showLoader = !videoReady || !minTimeElapsed;
@@ -30,68 +49,96 @@ export default function Hero() {
     offset: ["start start", "end end"],
   });
 
-  // Scrub finishes slightly before section ends so Collections appears right after
   const progressWidth = useTransform(scrollYProgress, [0, 0.92], ["0%", "100%"]);
 
   useEffect(() => {
-    const holdMs = prefersReducedMotion ? 400 : 1800;
+    const holdMs = prefersReducedMotion ? 400 : 1600;
     const timer = window.setTimeout(() => setMinTimeElapsed(true), holdMs);
     return () => window.clearTimeout(timer);
   }, [prefersReducedMotion]);
 
+  // Keep video ready + autoplay on mobile / reduced motion
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
+    const markReady = () => setVideoReady(true);
     const onMeta = () => {
       durationRef.current = video.duration || 0;
     };
-    const onReady = () => setVideoReady(true);
 
     video.muted = true;
+    video.defaultMuted = true;
     video.playsInline = true;
-    video.pause();
+    video.setAttribute("muted", "");
+    video.setAttribute("playsinline", "");
+    video.setAttribute("webkit-playsinline", "");
+    video.disablePictureInPicture = true;
+    video.controls = false;
 
     video.addEventListener("loadedmetadata", onMeta);
-    video.addEventListener("canplay", onReady);
-    video.addEventListener("loadeddata", onReady);
-    video.load();
+    video.addEventListener("canplay", markReady);
+    video.addEventListener("loadeddata", markReady);
+    video.addEventListener("playing", markReady);
 
-    if (video.readyState >= 1) onMeta();
-    if (video.readyState >= 3) onReady();
-
-    if (prefersReducedMotion) {
+    if (useAutoplay) {
       video.loop = true;
-      void video.play().catch(() => undefined);
+      const tryPlay = () => {
+        video.muted = true;
+        void video.play().catch(() => undefined);
+      };
+
+      tryPlay();
+      video.addEventListener("canplay", tryPlay);
+      // iOS often needs a second attempt after a short delay
+      const retry = window.setTimeout(tryPlay, 250);
+
+      return () => {
+        window.clearTimeout(retry);
+        video.removeEventListener("canplay", tryPlay);
+        video.removeEventListener("loadedmetadata", onMeta);
+        video.removeEventListener("canplay", markReady);
+        video.removeEventListener("loadeddata", markReady);
+        video.removeEventListener("playing", markReady);
+      };
     }
+
+    video.pause();
+    video.load();
+    if (video.readyState >= 1) onMeta();
+    if (video.readyState >= 2) markReady();
 
     return () => {
       video.removeEventListener("loadedmetadata", onMeta);
-      video.removeEventListener("canplay", onReady);
-      video.removeEventListener("loadeddata", onReady);
+      video.removeEventListener("canplay", markReady);
+      video.removeEventListener("loadeddata", markReady);
+      video.removeEventListener("playing", markReady);
     };
-  }, [prefersReducedMotion]);
+  }, [useAutoplay]);
 
   useMotionValueEvent(scrollYProgress, "change", (progress) => {
-    // Cap scrub at 0.92 so the last stretch releases into Collections
+    if (useAutoplay) return;
     targetProgressRef.current = Math.min(progress / 0.92, 1);
   });
 
+  // Desktop scroll scrub only
   useEffect(() => {
-    if (prefersReducedMotion) return;
+    if (useAutoplay) return;
     const video = videoRef.current;
     if (!video) return;
 
     let frame = 0;
     const tick = () => {
-      if (!soundOnRef.current) {
-        const duration = durationRef.current;
-        if (duration && video.readyState >= 2) {
-          const target = targetProgressRef.current * Math.max(duration - 0.05, 0);
-          const current = video.currentTime;
-          const delta = target - current;
-          if (Math.abs(delta) > 0.012) {
+      const duration = durationRef.current;
+      if (duration && video.readyState >= 2) {
+        const target = targetProgressRef.current * Math.max(duration - 0.05, 0);
+        const current = video.currentTime;
+        const delta = target - current;
+        if (Math.abs(delta) > 0.012) {
+          try {
             video.currentTime = Math.abs(delta) > 0.4 ? target : current + delta * 0.3;
+          } catch {
+            // Some browsers reject seeks while not fully ready
           }
         }
       }
@@ -100,38 +147,14 @@ export default function Hero() {
 
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
-  }, [prefersReducedMotion]);
-
-  async function toggleSound() {
-    const video = videoRef.current;
-    if (!video) return;
-
-    if (soundOnRef.current) {
-      video.muted = true;
-      video.pause();
-      soundOnRef.current = false;
-      setSoundOn(false);
-      return;
-    }
-
-    video.muted = false;
-    video.volume = 1;
-    video.loop = true;
-    try {
-      await video.play();
-      soundOnRef.current = true;
-      setSoundOn(true);
-    } catch {
-      video.muted = true;
-    }
-  }
+  }, [useAutoplay]);
 
   return (
     <section
       ref={sectionRef}
       id="scroll-hero"
       aria-label="Semzi Beach Collection film"
-      className={prefersReducedMotion ? "relative h-screen" : "relative h-[200vh]"}
+      className={useAutoplay ? "relative h-screen" : "relative h-[200vh]"}
     >
       <h1 className="sr-only">Semzi — Natural soap, nothing harsh</h1>
 
@@ -151,28 +174,20 @@ export default function Hero() {
 
         <video
           ref={videoRef}
+          autoPlay
           muted
+          loop={useAutoplay}
           playsInline
           preload="auto"
+          controls={false}
+          disablePictureInPicture
           poster="/videos/soap-preview.jpg"
-          className="absolute inset-0 h-full w-full object-cover"
+          className="absolute inset-0 h-full w-full object-cover [&::-webkit-media-controls]:hidden [&::-webkit-media-controls-start-playback-button]:hidden [&::-webkit-media-controls-enclosure]:hidden"
         >
           <source src="/videos/Soap1.mp4" type="video/mp4" />
         </video>
 
-        {!showLoader && (
-          <button
-            type="button"
-            onClick={toggleSound}
-            aria-pressed={soundOn}
-            aria-label={soundOn ? "Mute video" : "Play video sound"}
-            className="absolute bottom-6 right-6 z-20 flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-foreground/50 text-white backdrop-blur-sm transition-colors hover:bg-accent hover:text-foreground"
-          >
-            {soundOn ? <Volume2 className="h-5 w-5" /> : <VolumeX className="h-5 w-5" />}
-          </button>
-        )}
-
-        {!prefersReducedMotion && (
+        {!useAutoplay && (
           <div className="absolute bottom-0 left-0 right-0 z-10 h-0.5 bg-white/10">
             <motion.div className="h-full bg-accent" style={{ width: progressWidth }} />
           </div>
