@@ -6,6 +6,7 @@ import { ChevronRight } from "lucide-react";
 import { useAnimations } from "@/lib/animations";
 import { socialPlatforms } from "@/lib/social";
 import SocialGlyph from "@/components/SocialGlyph";
+import SemziLogo from "@/components/SemziLogo";
 
 const footerLinks = {
   Shop: [
@@ -41,7 +42,10 @@ export default function Footer() {
         >
           <div className="lg:col-span-2 space-y-6">
             <Link href="/" className="inline-block group">
-              <span className="font-serif text-2xl italic font-bold group-hover:text-accent transition-colors duration-300">Semzi</span>
+              <SemziLogo
+                surface="onDark"
+                className="h-9 opacity-95 transition-opacity duration-300 group-hover:opacity-80 sm:h-10"
+              />
             </Link>
             <p className="text-foreground-muted max-w-sm leading-relaxed text-sm font-medium">
               Handmade natural soap crafted in small batches. Nothing harsh.

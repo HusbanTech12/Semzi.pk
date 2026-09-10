@@ -11,37 +11,7 @@ import { useAnimations } from "@/lib/animations";
 import { Skeleton } from "@/components/ui/skeleton";
 import { collections } from "@/lib/products";
 
-const SKIN_CONCERNS = [
-  "dry",
-  "sensitive",
-  "oily",
-  "acne-prone",
-  "normal",
-  "damaged",
-] as const;
-
-type FilterKey = "collection" | "concern";
-type SortOption =
-  | "featured"
-  | "price-asc"
-  | "price-desc"
-  | "newest"
-  | "name-asc";
-
-const SORT_OPTIONS: { value: SortOption; label: string }[] = [
-  { value: "featured", label: "Featured" },
-  { value: "newest", label: "Newest" },
-  { value: "price-asc", label: "Price: Low to High" },
-  { value: "price-desc", label: "Price: High to Low" },
-  { value: "name-asc", label: "Name: A–Z" },
-];
-
-function formatConcern(value: string) {
-  return value
-    .split("-")
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(" ");
-}
+type FilterKey = "collection";
 
 function DropdownFilter({
   label,
@@ -49,14 +19,12 @@ function DropdownFilter({
   options,
   selected,
   onToggle,
-  formatOption = (opt: string) => opt,
 }: {
   label: string;
   filterKey: FilterKey;
   options: string[];
   selected: string[];
   onToggle: (key: FilterKey, val: string) => void;
-  formatOption?: (opt: string) => string;
 }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -72,7 +40,7 @@ function DropdownFilter({
   const activeCount = selected.length;
 
   return (
-    <div ref={ref} className="relative min-w-0 flex-1">
+    <div ref={ref} className="relative min-w-0 w-full sm:max-w-xs">
       <button
         type="button"
         onClick={() => setOpen(!open)}
@@ -130,83 +98,7 @@ function DropdownFilter({
                     >
                       {active && <Check className="h-3 w-3" />}
                     </span>
-                    {formatOption(opt)}
-                  </button>
-                );
-              })}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-}
-
-function SortSelect({
-  value,
-  onChange,
-}: {
-  value: SortOption;
-  onChange: (value: SortOption) => void;
-}) {
-  const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-  const current = SORT_OPTIONS.find((opt) => opt.value === value)?.label ?? "Featured";
-
-  useEffect(() => {
-    function handleClick(e: MouseEvent) {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
-    }
-    document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
-  }, []);
-
-  return (
-    <div ref={ref} className="relative min-w-0 flex-1 sm:max-w-55">
-      <button
-        type="button"
-        onClick={() => setOpen(!open)}
-        aria-expanded={open}
-        className={`flex w-full items-center justify-between rounded-xl border px-5 py-3 text-sm font-medium transition-all duration-300 ${
-          open || value !== "featured"
-            ? "border-accent/40 bg-accent/10 text-accent"
-            : "border-border bg-surface text-foreground-muted hover:border-accent/30"
-        }`}
-      >
-        <span className="truncate">Sort: {current}</span>
-        <ChevronDown
-          className={`h-4 w-4 shrink-0 transition-transform duration-300 ${open ? "rotate-180" : ""}`}
-        />
-      </button>
-
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0, y: -4 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -4 }}
-            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute top-full right-0 left-0 z-40 mt-2 overflow-hidden rounded-xl border border-border bg-surface shadow-[0_12px_40px_-8px_rgba(43,33,24,0.15)]"
-          >
-            <div className="py-1">
-              {SORT_OPTIONS.map((opt) => {
-                const active = value === opt.value;
-                return (
-                  <button
-                    type="button"
-                    key={opt.value}
-                    onClick={() => {
-                      onChange(opt.value);
-                      setOpen(false);
-                    }}
-                    className={`flex w-full items-center justify-between px-4 py-2.5 text-left text-sm transition-colors ${
-                      active
-                        ? "bg-accent/10 text-accent"
-                        : "text-foreground-muted hover:bg-background hover:text-foreground"
-                    }`}
-                  >
-                    {opt.label}
-                    {active && <Check className="h-4 w-4" />}
+                    {opt}
                   </button>
                 );
               })}
@@ -221,9 +113,7 @@ function SortSelect({
 export default function ShopPage() {
   const [selectedFilters, setSelectedFilters] = useState<Record<FilterKey, string[]>>({
     collection: [],
-    concern: [],
   });
-  const [sort, setSort] = useState<SortOption>("featured");
   const [inStockOnly, setInStockOnly] = useState(false);
   const { products, loading } = useProducts();
   const { fadeUp } = useAnimations();
@@ -239,8 +129,7 @@ export default function ShopPage() {
   }, [products]);
 
   const totalActive =
-    Object.values(selectedFilters).reduce((sum, arr) => sum + arr.length, 0) +
-    (inStockOnly ? 1 : 0);
+    selectedFilters.collection.length + (inStockOnly ? 1 : 0);
 
   function toggleFilter(key: FilterKey, val: string) {
     setSelectedFilters((prev) => ({
@@ -252,20 +141,13 @@ export default function ShopPage() {
   }
 
   function clearAll() {
-    setSelectedFilters({ collection: [], concern: [] });
+    setSelectedFilters({ collection: [] });
     setInStockOnly(false);
-    setSort("featured");
   }
 
   const filtered = useMemo(() => {
-    const next = products.filter((p) => {
+    return products.filter((p) => {
       if (inStockOnly && !p.inStock) return false;
-      if (
-        selectedFilters.concern.length &&
-        !p.skinConcern?.some((c) => selectedFilters.concern.includes(c))
-      ) {
-        return false;
-      }
       if (
         selectedFilters.collection.length &&
         !selectedFilters.collection.includes(p.collection ?? "")
@@ -274,28 +156,7 @@ export default function ShopPage() {
       }
       return true;
     });
-
-    next.sort((a, b) => {
-      switch (sort) {
-        case "price-asc":
-          return a.priceCents - b.priceCents;
-        case "price-desc":
-          return b.priceCents - a.priceCents;
-        case "newest": {
-          const aTime = a.createdAt ? Date.parse(a.createdAt) : a.id;
-          const bTime = b.createdAt ? Date.parse(b.createdAt) : b.id;
-          return bTime - aTime;
-        }
-        case "name-asc":
-          return a.name.localeCompare(b.name);
-        case "featured":
-        default:
-          return a.id - b.id;
-      }
-    });
-
-    return next;
-  }, [products, selectedFilters, sort, inStockOnly]);
+  }, [products, selectedFilters, inStockOnly]);
 
   return (
     <>
@@ -324,7 +185,7 @@ export default function ShopPage() {
           </motion.div>
 
           <motion.div {...fadeUp} className="mb-8">
-            <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap lg:flex-nowrap">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
               <DropdownFilter
                 label="Collection"
                 filterKey="collection"
@@ -332,22 +193,10 @@ export default function ShopPage() {
                 selected={selectedFilters.collection}
                 onToggle={toggleFilter}
               />
-              <DropdownFilter
-                label="Skin Concern"
-                filterKey="concern"
-                options={[...SKIN_CONCERNS]}
-                selected={selectedFilters.concern}
-                onToggle={toggleFilter}
-                formatOption={formatConcern}
-              />
-              <SortSelect value={sort} onChange={setSort} />
-            </div>
-
-            <div className="mt-4 flex flex-wrap items-center gap-3">
               <button
                 type="button"
                 onClick={() => setInStockOnly((prev) => !prev)}
-                className={`inline-flex items-center gap-2 rounded-xl border px-4 py-2 text-sm font-medium transition-all duration-200 ${
+                className={`inline-flex items-center gap-2 rounded-xl border px-4 py-3 text-sm font-medium transition-all duration-200 ${
                   inStockOnly
                     ? "border-accent/30 bg-accent/10 text-accent"
                     : "border-border bg-surface text-foreground-muted hover:border-accent/20 hover:text-foreground"
@@ -376,17 +225,6 @@ export default function ShopPage() {
                     className="inline-flex items-center gap-1.5 rounded-lg border border-accent/20 bg-accent/10 px-3 py-1.5 text-xs font-medium text-accent transition-colors hover:bg-accent/20"
                   >
                     {val}
-                    <X className="h-3 w-3" />
-                  </button>
-                ))}
-                {selectedFilters.concern.map((val) => (
-                  <button
-                    type="button"
-                    key={`concern-${val}`}
-                    onClick={() => toggleFilter("concern", val)}
-                    className="inline-flex items-center gap-1.5 rounded-lg border border-accent/20 bg-accent/10 px-3 py-1.5 text-xs font-medium text-accent transition-colors hover:bg-accent/20"
-                  >
-                    {formatConcern(val)}
                     <X className="h-3 w-3" />
                   </button>
                 ))}

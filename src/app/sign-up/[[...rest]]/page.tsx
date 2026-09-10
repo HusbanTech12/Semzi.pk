@@ -1,12 +1,15 @@
 import { SignUp } from "@clerk/nextjs";
 import Link from "next/link";
+import SemziLogo from "@/components/SemziLogo";
 
 export default function SignUpPage() {
   return (
     <div className="min-h-screen bg-background flex items-center justify-center px-6">
       <div className="w-full max-w-md space-y-8">
-        <div className="text-center">
-          <h1 className="font-serif text-3xl italic text-foreground">Semzi</h1>
+        <div className="text-center space-y-3">
+          <Link href="/" className="inline-flex justify-center">
+            <SemziLogo className="mx-auto h-12 sm:h-14" priority />
+          </Link>
           <p className="text-sm text-foreground-muted mt-2">Create your account</p>
         </div>
         <SignUp

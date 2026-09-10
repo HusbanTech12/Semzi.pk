@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Sparkles, ShieldCheck, HeartHandshake, Eye, ArrowRight, CheckCircle2 } from "lucide-react";
+import { Sparkles, ShieldCheck, HeartHandshake, Eye, CheckCircle2 } from "lucide-react";
 import Navbar from "@/components/Header";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
@@ -60,41 +60,6 @@ const HORIZONS = [
     status: "Coming Soon, InshAllah",
     description:
       "Expanding our artisan philosophy into future gentle body washes, scalp rituals, and skin-safe bath formulations.",
-  },
-];
-
-const FEATURED_SOAPS = [
-  {
-    id: "01",
-    name: "Coral Soap",
-    slug: "coral-soap",
-    tagline: "Translucent Glycerin · Emerald Coral Relief",
-    image: "/images/beach-stills/01-coral.png",
-    price: "$26.00",
-  },
-  {
-    id: "02",
-    name: "Cloud Soap",
-    slug: "cloud-soap",
-    tagline: "Sky Blue Cleansing Bar · Whipped Coconut Milk",
-    image: "/images/beach-stills/02-cloud.png",
-    price: "$22.00",
-  },
-  {
-    id: "03",
-    name: "Beach Soap",
-    slug: "beach-soap",
-    tagline: "Ocean Turquoise · Starfish & Scallop Shells",
-    image: "/images/beach-stills/03-beach.png",
-    price: "$24.00",
-  },
-  {
-    id: "04",
-    name: "Sea Voyage Soap",
-    slug: "sea-voyage-soap",
-    tagline: "Deep Marine Navy · Helmsman Crest & Golden Oar",
-    image: "/images/beach-stills/04-sea-voyage.png",
-    price: "$28.00",
   },
 ];
 
@@ -386,60 +351,6 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Artisan Beach Collection Gallery */}
-        <section className="py-20 bg-surface-muted/50 border-t border-border/50">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">
-              <div>
-                <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-accent font-semibold">
-                  Handcrafted Series
-                </span>
-                <h2 className="font-serif text-3xl sm:text-4xl text-foreground font-normal mt-1">
-                  The Beach Collection
-                </h2>
-              </div>
-              <Link
-                href="/shop"
-                className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-foreground hover:text-accent-strong transition-colors"
-              >
-                View Full Catalog
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
-
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {FEATURED_SOAPS.map((soap) => (
-                <Reveal key={soap.id}>
-                  <Link
-                    href={`/product/${soap.slug}`}
-                    className="group block rounded-2xl border border-border/80 bg-surface p-4 transition-all duration-300 hover:border-accent hover:shadow-lg hover:shadow-foreground/5"
-                  >
-                    <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-background mb-4">
-                      <Image
-                        src={soap.image}
-                        alt={soap.name}
-                        fill
-                        sizes="(max-width: 768px) 50vw, 25vw"
-                        className="object-contain p-2 transition-transform duration-500 group-hover:scale-105"
-                      />
-                    </div>
-                    <div className="flex items-center justify-between text-xs font-mono text-accent-strong">
-                      <span>No. {soap.id} / 04</span>
-                      <span className="text-foreground font-semibold">{soap.price}</span>
-                    </div>
-                    <h3 className="font-serif text-lg font-medium text-foreground mt-1 group-hover:text-accent-strong transition-colors">
-                      {soap.name}
-                    </h3>
-                    <p className="text-[11px] text-foreground-muted line-clamp-1 mt-0.5">
-                      {soap.tagline}
-                    </p>
-                  </Link>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* Closing Invitation CTA */}
         <section className="py-24 bg-foreground text-background text-center relative overflow-hidden">
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(201,163,107,0.18),transparent_70%)]" />
@@ -457,9 +368,9 @@ export default function AboutPage() {
               <div className="pt-6">
                 <Link
                   href="/shop"
-                  className="inline-flex items-center justify-center rounded-xl bg-accent px-8 py-3.5 font-mono text-xs uppercase tracking-wider text-background font-medium hover:bg-accent-strong transition-colors shadow-lg shadow-accent/20"
+                  className="inline-flex items-center justify-center rounded-xl bg-accent px-8 py-3.5 font-mono text-xs uppercase tracking-wider text-background font-bold hover:bg-accent-strong transition-colors shadow-lg shadow-accent/20"
                 >
-                  Shop the Beach Collection
+                  Shop All
                 </Link>
               </div>
             </Reveal>

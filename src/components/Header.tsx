@@ -9,6 +9,7 @@ import { useUser, useClerk } from "@clerk/nextjs";
 import { useAnimations } from "@/lib/animations";
 import { useCart } from "@/context/cart-context";
 import CartDrawer from "@/components/CartDrawer";
+import SemziLogo from "@/components/SemziLogo";
 
 const navLinks = [
   { label: "Shop", href: "/shop" },
@@ -81,15 +82,11 @@ export default function Navbar() {
       >
         <div className="flex h-20 w-full items-center justify-between pl-5 pr-5 sm:pl-6 sm:pr-6 lg:pl-8 lg:pr-8">
           <Link href="/" className="group relative shrink-0">
-            <span
-              className={`font-serif text-3xl italic font-bold tracking-tight transition-all duration-300 ${
-                transparent
-                  ? "bg-linear-to-r from-white via-accent-subtle to-white bg-clip-text text-transparent drop-shadow-[0_0_18px_rgba(201,163,107,0.85)]"
-                  : "bg-linear-to-r from-foreground via-accent-strong to-foreground bg-clip-text text-transparent drop-shadow-[0_0_16px_rgba(201,163,107,0.65)]"
-              } group-hover:drop-shadow-[0_0_28px_rgba(201,163,107,1)]`}
-            >
-              Semzi
-            </span>
+            <SemziLogo
+              priority
+              surface={transparent ? "onDark" : "onLight"}
+              className="transition-all duration-300 group-hover:opacity-90"
+            />
           </Link>
 
           <button
@@ -138,9 +135,7 @@ export default function Navbar() {
               className="fixed inset-y-0 right-0 z-70 flex w-full max-w-md flex-col overflow-y-auto border-l border-border/50 bg-linear-to-b from-accent-subtle via-background to-background shadow-[-24px_0_80px_-20px_rgba(28,22,18,0.45)]"
             >
               <div className="relative flex h-20 items-center justify-between px-6 lg:px-8">
-                <span className="font-serif text-2xl italic font-medium tracking-tight text-foreground">
-                  Semzi
-                </span>
+                <SemziLogo className="h-8 sm:h-9" />
                 <button
                   type="button"
                   onClick={() => setMobileOpen(false)}

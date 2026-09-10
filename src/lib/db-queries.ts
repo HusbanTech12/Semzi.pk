@@ -59,12 +59,18 @@ function buildProductMap(rows: Awaited<ReturnType<typeof getAllProductsRaw>>): M
   const map = new Map<number, ProductResult>();
 
   const taglines: Record<string, string> = {
-    "beach": "A Ritual of Softness, Crafted by Hand.",
-    "sea-voyage": "A Ritual of Softness, Crafted by Hand.",
-    "coral": "A Ritual of Softness, Crafted by Hand.",
-    "cloud": "A Ritual of Softness, Crafted by Hand.",
-    "flora": "A Ritual of Softness, Crafted by Hand.",
-    "goat-milk-aloe-soap": "Milk-Rich Softness, Naturally Refined.",
+    "beach-soap": "Carry the Beach home. Natural Soap. Nothing Harsh.",
+    beach: "Carry the Beach home. Natural Soap. Nothing Harsh.",
+    "sea-voyage-soap": "Every Bar Tells a Voyage. Natural Soap. Nothing Harsh.",
+    "sea-voyage": "Every Bar Tells a Voyage. Natural Soap. Nothing Harsh.",
+    "coral-soap": "Where the Ocean Blushes. Natural Soap. Nothing Harsh.",
+    coral: "Where the Ocean Blushes. Natural Soap. Nothing Harsh.",
+    "cloud-soap": "Above Everything, On Your Skin. Natural Soap. Nothing Harsh.",
+    cloud: "Above Everything, On Your Skin. Natural Soap. Nothing Harsh.",
+    "flora-soap": "From Petals to Your Palm. Natural Soap. Nothing Harsh.",
+    flora: "From Petals to Your Palm. Natural Soap. Nothing Harsh.",
+    "nourish-goat-milk-aloe": "Most Gentle Combination. Natural Soap. Nothing Harsh.",
+    "goat-milk-aloe-soap": "Most Gentle Combination. Natural Soap. Nothing Harsh.",
   };
 
   const catalogBySlug = new Map(catalogProducts.map((item) => [item.slug, item]));

@@ -312,7 +312,7 @@ function ProductForm({
               onChange={(e) => set("howToUse", e.target.value)}
               rows={2}
               className="w-full px-3 py-2.5 bg-white/5 border border-white/10 rounded-xl text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-[#C79A56]/50 transition-all resize-none"
-              placeholder="Lather with warm water..."
+              placeholder="Lather with water..."
             />
           </div>
 

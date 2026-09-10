@@ -48,7 +48,7 @@ export const products: Product[] = [
       "Tetrasodium EDTA",
     ],
     howToUse:
-      "Lather in warm water. Massage gently onto skin. Rinse thoroughly. For external use only.",
+      "Lather in water. Massage gently onto skin. Rinse thoroughly. For external use only.",
     caution:
       "For external use only. Avoid contact with eyes. Discontinue use if irritation occurs. Store in a cool, dry place.",
     images: [
@@ -56,7 +56,7 @@ export const products: Product[] = [
       "/images/products-img/beach-soap2.png",
     ],
     badge: "Bestseller",
-    tagline: "A Ritual of Softness, Crafted by Hand.",
+    tagline: "Carry the Beach home. Natural Soap. Nothing Harsh.",
     collection: "Hydrating Glycerin Bars",
     skinConcern: ["dry", "sensitive"],
     inStock: true,
@@ -114,7 +114,7 @@ export const products: Product[] = [
       "Tetrasodium EDTA",
     ],
     howToUse:
-      "Lather in warm water. Massage gently onto skin focusing on problem areas. Rinse thoroughly.",
+      "Lather in water. Massage gently onto skin focusing on problem areas. Rinse thoroughly.",
     caution:
       "For external use only. May be drying for very sensitive skin types. Discontinue use if irritation occurs.",
     images: [
@@ -122,7 +122,7 @@ export const products: Product[] = [
       "/images/products-img/sea-voyage-soap2.png",
     ],
     badge: "Popular",
-    tagline: "A Ritual of Softness, Crafted by Hand.",
+    tagline: "Every Bar Tells a Voyage. Natural Soap. Nothing Harsh.",
     collection: "Hydrating Glycerin Bars",
     skinConcern: ["oily", "acne-prone"],
     inStock: true,
@@ -177,7 +177,7 @@ export const products: Product[] = [
       "Tetrasodium EDTA",
     ],
     howToUse:
-      "Lather in warm water. Massage gently onto skin using circular motions. Rinse thoroughly.",
+      "Lather in water. Massage gently onto skin using circular motions. Rinse thoroughly.",
     caution:
       "For external use only. Contains natural exfoliants. Avoid use on broken or irritated skin.",
     images: [
@@ -185,7 +185,7 @@ export const products: Product[] = [
       "/images/products-img/coral-soap2.png",
     ],
     badge: "Soothing",
-    tagline: "A Ritual of Softness, Crafted by Hand.",
+    tagline: "Where the Ocean Blushes. Natural Soap. Nothing Harsh.",
     collection: "Hydrating Glycerin Bars",
     skinConcern: ["sensitive", "dry"],
     inStock: true,
@@ -240,14 +240,14 @@ export const products: Product[] = [
       "Tetrasodium EDTA",
     ],
     howToUse:
-      "Lather in warm water. Massage onto skin. Rinse thoroughly. Follow with moisturizer.",
+      "Lather in water. Massage onto skin. Rinse thoroughly. Follow with moisturizer.",
     caution:
       "For external use only. Avoid contact with eyes. May cause tingling sensation on sensitive skin.",
     images: [
       "/images/products-img/cloud-soap1.png",
       "/images/products-img/cloud-soap2.png",
     ],
-    tagline: "A Ritual of Softness, Crafted by Hand.",
+    tagline: "Above Everything, On Your Skin. Natural Soap. Nothing Harsh.",
     collection: "Hydrating Glycerin Bars",
     skinConcern: ["normal", "oily"],
     inStock: true,
@@ -272,14 +272,14 @@ export const products: Product[] = [
       "Sodium Hydroxide",
       "Tetrasodium EDTA",
     ],
-    howToUse: "Lather in warm water. Massage onto skin. Rinse thoroughly.",
+    howToUse: "Lather in water. Massage onto skin. Rinse thoroughly.",
     caution: "For external use only. Avoid contact with eyes.",
     images: [
       "/images/products-img/flora soap1.png",
       "/images/products-img/flora soap2.png",
     ],
     badge: "Sale",
-    tagline: "A Ritual of Softness, Crafted by Hand.",
+    tagline: "From Petals to Your Palm. Natural Soap. Nothing Harsh.",
     collection: "Hydrating Glycerin Bars",
     skinConcern: ["normal", "dry"],
     inStock: true,
@@ -338,7 +338,7 @@ export const products: Product[] = [
       "Disodium EDTA",
     ],
     howToUse:
-      "Lather in warm water. Apply to skin in gentle circular motions. Rinse thoroughly. Follow with moisturizer.",
+      "Lather in water. Apply to skin in gentle circular motions. Rinse thoroughly. Follow with moisturizer.",
     caution:
       "For external use only. Avoid contact with eyes. Contains dairy-derived ingredients.",
     images: [
@@ -346,7 +346,7 @@ export const products: Product[] = [
       "/images/products-img/goat-milk/goat-milk-soap-2.jpg",
     ],
     badge: "Bestseller",
-    tagline: "Milk-Rich Softness, Naturally Refined.",
+    tagline: "Most Gentle Combination. Natural Soap. Nothing Harsh.",
     collection: "Botanical Edits",
     skinConcern: ["dry", "sensitive"],
     inStock: true,
@@ -357,9 +357,9 @@ export const collections: Collection[] = [
   {
     slug: "hydrating-glycerin-bars",
     name: "Hydrating Glycerin Bars",
-    tagline: "Soft glycerin. Coastal craft. Honest skin.",
+    tagline: "Pure glycerin. Deeply hydrating. Nothing harsh.",
     description:
-      "Hand-poured hydrating glycerin bars — Coral, Beach, Flora, Sea Voyage, and Cloud — crafted for a cream-like lather that cleanses without stripping.",
+      "A collection of hand-poured glycerin bars, crafted for a cream-like lather that cleanses without stripping.",
     heroImageUrl: "/images/products-img/hydrating-glycerin-hero.png",
     accent: "#2E8D9E",
     productSlugs: [
@@ -373,9 +373,9 @@ export const collections: Collection[] = [
   {
     slug: "botanical-edits",
     name: "Botanical Edits",
-    tagline: "Milk-rich softness. Botanical calm.",
+    tagline: "Nature's calm. Botanical care.",
     description:
-      "A focused botanical edit featuring our Goat Milk & Aloe Vera Soap — mild, nourishing, and ideal for dry or delicate skin.",
+      "A focused edit of botanical soaps, crafted with nature's most nourishing ingredients — gentle, calming, and ideal for sensitive or delicate skin.",
     heroImageUrl: "/images/products-img/goat-milk/botanical-edits-hero.jpg",
     accent: "#8E6A38",
     productSlugs: ["nourish-goat-milk-aloe"],

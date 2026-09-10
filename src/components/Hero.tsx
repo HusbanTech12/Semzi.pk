@@ -227,8 +227,8 @@ export default function Hero() {
                 transition={{ ...(fadeLeft.transition ?? {}), delay: headingReady ? 0.36 : 0 }}
                 className="mt-2 max-w-md text-sm font-medium leading-relaxed text-white/80 sm:mt-3 sm:text-base"
               >
-                Hand-poured glycerin bars and hair rituals — crafted in small
-                batches with full ingredient transparency.
+                Handcrafted skin and hair care — an ancient craft, newly made,
+                honestly.
               </motion.p>
 
               <motion.div

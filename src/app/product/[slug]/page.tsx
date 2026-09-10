@@ -147,9 +147,6 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                     &ldquo;{product.tagline}&rdquo;
                   </p>
                 )}
-                <p className="text-sm text-foreground-muted leading-relaxed">
-                  {product.category}
-                </p>
                 <PriceDisplay
                   priceCents={product.priceCents}
                   compareAtCents={product.compareAtPriceCents}

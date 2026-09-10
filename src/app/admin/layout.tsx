@@ -21,6 +21,7 @@ import {
   Moon,
 } from "lucide-react";
 import { useUser, UserButton } from "@clerk/nextjs";
+import SemziLogo from "@/components/SemziLogo";
 
 const navItems = [
   { label: "Dashboard", href: "/admin", icon: LayoutDashboard },
@@ -55,7 +56,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <div className="flex items-center justify-between h-16 px-4 border-b border-white/5">
             {sidebarOpen && (
               <Link href="/admin" className="flex items-center gap-2">
-                <span className="font-serif text-xl italic text-white">Semzi</span>
+                <SemziLogo surface="onDark" className="h-7" />
                 <span className="text-[10px] tracking-[0.2em] uppercase text-white/30 font-medium">Admin</span>
               </Link>
             )}
@@ -142,7 +143,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             >
               <div className="flex items-center justify-between h-16 px-4 border-b border-white/5">
                 <Link href="/admin" className="flex items-center gap-2" onClick={() => setMobileOpen(false)}>
-                  <span className="font-serif text-xl italic text-white">Semzi</span>
+                  <SemziLogo surface="onDark" className="h-7" />
                   <span className="text-[10px] tracking-[0.2em] uppercase text-white/30 font-medium">Admin</span>
                 </Link>
                 <button
