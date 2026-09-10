@@ -13,22 +13,23 @@ export default function SemziLogo({
   className,
   surface = "onLight",
   priority = false,
-  sizes = "180px",
+  sizes = "200px",
 }: SemziLogoProps) {
   return (
-    <Image
-      src="/images/brand/semzi-logo.png"
-      alt="Semzi"
-      width={144}
-      height={64}
-      priority={priority}
-      sizes={sizes}
-      unoptimized
-      className={cn(
-        "h-8 w-auto bg-transparent object-contain object-left sm:h-9",
-        surface === "onDark" && "brightness-0 invert",
-        className
-      )}
-    />
+    <span className={cn("inline-flex items-center", className)}>
+      <Image
+        src="/images/brand/semzi-logo-v2.png"
+        alt="Semzi"
+        width={426}
+        height={183}
+        priority={priority}
+        sizes={sizes}
+        unoptimized
+        className={cn(
+          "h-9 w-auto max-w-[140px] bg-transparent object-contain object-left sm:h-10 sm:max-w-[160px]",
+          surface === "onDark" && "brightness-0 invert"
+        )}
+      />
+    </span>
   );
 }

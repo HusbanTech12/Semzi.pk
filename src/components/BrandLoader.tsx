@@ -31,13 +31,13 @@ export default function BrandLoader({
           className="relative"
         >
           <Image
-            src="/images/brand/semzi-logo.png"
+            src="/images/brand/semzi-logo-v2.png"
             alt="Semzi"
-            width={280}
-            height={112}
+            width={426}
+            height={183}
             priority
-            className="h-16 w-auto bg-transparent object-contain sm:h-20"
             unoptimized
+            className="h-16 w-auto bg-transparent object-contain sm:h-20"
           />
         </motion.div>
 
