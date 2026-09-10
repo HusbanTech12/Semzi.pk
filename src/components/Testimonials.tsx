@@ -35,16 +35,16 @@ export default function Testimonials() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16 space-y-4">
           <Reveal>
-            <span className="text-[11px] tracking-[0.25em] uppercase text-accent font-medium">
+            <span className="text-[11px] tracking-[0.25em] uppercase text-accent font-bold">
               Testimonials
             </span>
-            <h2 className="font-serif text-3xl md:text-4xl text-foreground">
+            <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground">
               Loved by Thousands
             </h2>
           </Reveal>
 
           <Reveal delay={0.1}>
-            <p className="text-foreground-muted max-w-sm mx-auto text-sm leading-relaxed">
+            <p className="text-foreground-muted max-w-sm mx-auto text-sm font-medium leading-relaxed">
               Hear from our community of customers who have made Semzi part of
               their daily ritual.
             </p>
@@ -92,13 +92,13 @@ export default function Testimonials() {
                 ))}
               </div>
 
-              <p className="text-foreground-muted leading-relaxed text-sm">
+              <p className="text-foreground-muted leading-relaxed text-sm font-medium">
                 &ldquo;{testimonial.content}&rdquo;
               </p>
 
               <div className="pt-4 border-t border-accent-strong/20 group-hover:border-accent/40 transition-colors duration-300">
-                <p className="text-sm font-medium text-foreground">{testimonial.name}</p>
-                <p className="text-xs text-foreground-muted mt-0.5">
+                <p className="text-sm font-bold text-foreground">{testimonial.name}</p>
+                <p className="text-xs font-medium text-foreground-muted mt-0.5">
                   {testimonial.role}
                 </p>
               </div>

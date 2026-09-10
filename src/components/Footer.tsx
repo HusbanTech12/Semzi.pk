@@ -10,16 +10,16 @@ import SocialGlyph from "@/components/SocialGlyph";
 const footerLinks = {
   Shop: [
     { label: "All Products", href: "/shop" },
-    { label: "Soaps", href: "/shop?category=soaps" },
-    { label: "Goat Milk & Aloe Vera Soap", href: "/shop?category=goat-milk-aloe-vera-soap" },
-    { label: "Gift Sets", href: "/shop?category=gift-sets" },
+    { label: "Our Collections", href: "/collections" },
+    { label: "Hydrating Glycerin Bars", href: "/collections/hydrating-glycerin-bars" },
+    { label: "Hair Rituals", href: "/collections/hair-rituals" },
   ],
   Company: [
     { label: "Our Story", href: "/about" },
     { label: "Social", href: "/social" },
-    { label: "Sustainability", href: "/about#sustainability" },
-    { label: "Ingredient Glossary", href: "/ingredients" },
-    { label: "Press", href: "/press" },
+    { label: "Botanical Edits", href: "/collections/botanical-edits" },
+    { label: "Radiance Cream Soap", href: "/collections/radiance-cream-soap" },
+    { label: "Contact", href: "/contact" },
   ],
   Support: [
     { label: "FAQ", href: "/faq" },
@@ -41,15 +41,15 @@ export default function Footer() {
         >
           <div className="lg:col-span-2 space-y-6">
             <Link href="/" className="inline-block group">
-              <span className="font-serif text-2xl italic group-hover:text-accent transition-colors duration-300">Semzi</span>
+              <span className="font-serif text-2xl italic font-bold group-hover:text-accent transition-colors duration-300">Semzi</span>
             </Link>
-            <p className="text-foreground-muted max-w-sm leading-relaxed text-sm">
+            <p className="text-foreground-muted max-w-sm leading-relaxed text-sm font-medium">
               Handmade natural soap crafted in small batches. Nothing harsh.
               Nothing synthetic. Just honest ingredients you can trust.
             </p>
 
             <div className="space-y-4">
-              <p className="text-xs tracking-widest uppercase text-foreground-muted">
+              <p className="text-xs tracking-widest uppercase text-foreground-muted font-bold">
                 Join the Journal
               </p>
               <div className="flex gap-2 max-w-sm">
@@ -92,7 +92,7 @@ export default function Footer() {
 
           {Object.entries(footerLinks).map(([category, links]) => (
             <div key={category} className="space-y-4">
-              <h4 className="text-xs tracking-widest uppercase text-foreground-muted">
+              <h4 className="text-xs tracking-widest uppercase text-foreground-muted font-bold">
                 {category}
               </h4>
               <ul className="space-y-3">

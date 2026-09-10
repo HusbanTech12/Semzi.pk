@@ -19,6 +19,7 @@ export default function Hero() {
   const durationRef = useRef(0);
   const targetProgressRef = useRef(0);
   const soundOnRef = useRef(false);
+
   const [soundOn, setSoundOn] = useState(false);
   const [videoReady, setVideoReady] = useState(false);
   const [minTimeElapsed, setMinTimeElapsed] = useState(false);
@@ -33,7 +34,7 @@ export default function Hero() {
   const progressWidth = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
   useEffect(() => {
-    const holdMs = prefersReducedMotion ? 400 : 3200;
+    const holdMs = prefersReducedMotion ? 400 : 2200;
     const timer = window.setTimeout(() => setMinTimeElapsed(true), holdMs);
     return () => window.clearTimeout(timer);
   }, [prefersReducedMotion]);
@@ -48,23 +49,37 @@ export default function Hero() {
     const onReady = () => setVideoReady(true);
 
     video.muted = true;
+    video.playsInline = true;
     video.pause();
+
     video.addEventListener("loadedmetadata", onMeta);
     video.addEventListener("canplay", onReady);
     video.addEventListener("loadeddata", onReady);
+
+    // Force load in case browser hasn't started fetching yet
+    video.load();
+
     if (video.readyState >= 1) onMeta();
     if (video.readyState >= 3) onReady();
+
+    // Reduced motion: autoplay muted loop instead of scroll scrub
+    if (prefersReducedMotion) {
+      video.loop = true;
+      void video.play().catch(() => undefined);
+    }
+
     return () => {
       video.removeEventListener("loadedmetadata", onMeta);
       video.removeEventListener("canplay", onReady);
       video.removeEventListener("loadeddata", onReady);
     };
-  }, []);
+  }, [prefersReducedMotion]);
 
   useMotionValueEvent(scrollYProgress, "change", (progress) => {
     targetProgressRef.current = progress;
   });
 
+  // Smooth scroll → video time scrubbing
   useEffect(() => {
     if (prefersReducedMotion) return;
     const video = videoRef.current;
@@ -118,9 +133,11 @@ export default function Hero() {
     <section
       ref={sectionRef}
       id="scroll-hero"
+      aria-label="Semzi Beach Collection film"
       className={prefersReducedMotion ? "relative h-screen" : "relative h-[400vh]"}
     >
       <h1 className="sr-only">Semzi — Natural soap, nothing harsh</h1>
+
       <div className="sticky top-0 h-screen overflow-hidden bg-foreground">
         <AnimatePresence>
           {showLoader && (
@@ -130,21 +147,21 @@ export default function Hero() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
             >
-              <BrandLoader className="h-full w-full" />
+              <BrandLoader className="h-full w-full" label="Loading Semzi film" />
             </motion.div>
           )}
         </AnimatePresence>
 
+        {/* Primary hero video — always visible */}
         <video
           ref={videoRef}
           muted
           playsInline
           preload="auto"
-          autoPlay={!!prefersReducedMotion}
-          loop
+          poster="/videos/soap-preview.jpg"
           className="absolute inset-0 h-full w-full object-cover"
         >
-          <source src="/videos/SOAP.mp4" type="video/mp4" />
+          <source src="/videos/Soap1.mp4" type="video/mp4" />
         </video>
 
         <motion.div

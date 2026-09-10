@@ -39,12 +39,12 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
       </Link>
 
       <div className="flex flex-col gap-1.5 px-0.5">
-        <span className="text-[10px] tracking-[0.2em] uppercase text-accent/70 font-semibold">
+        <span className="text-[10px] tracking-[0.2em] uppercase text-accent/70 font-bold">
           {product.collection ? `【${product.collection}】` : `【${product.category}】`}
         </span>
 
         <Link href={`/product/${product.slug}`}>
-          <h3 className="font-serif text-base leading-snug text-foreground group-hover:text-accent-strong transition-colors duration-300">
+          <h3 className="font-serif text-base font-bold leading-snug text-foreground group-hover:text-accent-strong transition-colors duration-300">
             {product.name}
           </h3>
         </Link>
@@ -57,7 +57,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
 
         <Link
           href={`/product/${product.slug}`}
-          className="inline-flex items-center gap-1 text-[11px] tracking-[0.15em] uppercase text-foreground-muted/60 hover:text-accent transition-colors duration-300 mt-2"
+          className="inline-flex items-center gap-1 text-[11px] font-semibold tracking-[0.15em] uppercase text-foreground-muted/60 hover:text-accent transition-colors duration-300 mt-2"
         >
           Shop Now
           <ArrowRight className="w-3 h-3" />
@@ -76,13 +76,13 @@ export default function FeaturedProductsClient({
     <section className="py-24 bg-background">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div {...fadeUp} className="text-center mb-16 space-y-3">
-          <span className="text-[11px] tracking-[0.25em] uppercase text-accent font-medium">
+          <span className="text-[11px] tracking-[0.25em] uppercase text-accent font-bold">
             Best Sellers
           </span>
-          <h2 className="font-serif text-3xl sm:text-4xl text-foreground">
+          <h2 className="font-serif text-3xl font-bold sm:text-4xl text-foreground">
             Our Favorites
           </h2>
-          <p className="text-foreground-muted max-w-xl mx-auto text-sm leading-relaxed">
+          <p className="text-foreground-muted max-w-xl mx-auto text-sm font-medium leading-relaxed">
             Handpicked soaps our community can&apos;t stop raving about.
           </p>
         </motion.div>
@@ -96,7 +96,7 @@ export default function FeaturedProductsClient({
         <motion.div {...fadeUp} className="text-center mt-14">
           <Link
             href="/shop"
-            className="inline-flex items-center gap-2 px-10 py-3.5 bg-accent text-background text-sm tracking-[0.15em] uppercase rounded-lg font-medium hover:bg-accent-strong transition-colors duration-300"
+            className="inline-flex items-center gap-2 px-10 py-3.5 bg-accent text-background text-sm tracking-[0.15em] uppercase rounded-lg font-bold hover:bg-accent-strong transition-colors duration-300"
           >
             View All Products
             <ArrowRight className="w-4 h-4" />

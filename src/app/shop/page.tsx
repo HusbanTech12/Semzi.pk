@@ -11,9 +11,31 @@ import { useAnimations } from "@/lib/animations";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const filterGroups = [
-  { label: "Category", key: "category" as const, options: ["Artisan Soap", "Goat Milk & Aloe Vera Soap"] },
-  { label: "Collection", key: "collection" as const, options: ["Beach", "Signature"] },
-  { label: "Skin Concern", key: "concern" as const, options: ["dry", "sensitive", "oily", "acne-prone", "normal", "damaged"] },
+  {
+    label: "Category",
+    key: "category" as const,
+    options: [
+      "Artisan Soap",
+      "Goat Milk & Aloe Vera Soap",
+      "Cream Soap",
+      "Hair Ritual",
+    ],
+  },
+  {
+    label: "Collection",
+    key: "collection" as const,
+    options: [
+      "Hydrating Glycerin Bars",
+      "Botanical Edits",
+      "Radiance Cream Soap",
+      "Hair Rituals",
+    ],
+  },
+  {
+    label: "Skin Concern",
+    key: "concern" as const,
+    options: ["dry", "sensitive", "oily", "acne-prone", "normal", "damaged"],
+  },
 ];
 
 type FilterKey = "category" | "collection" | "concern";
@@ -194,7 +216,7 @@ export default function ShopPage() {
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10">
               {[1, 2, 3, 4, 5, 6].map((i) => (
                 <div key={i} className="space-y-3">
-                  <Skeleton className="aspect-[4/5] w-full rounded-lg" />
+                  <Skeleton className="aspect-4/5 w-full rounded-lg" />
                   <Skeleton className="h-4 w-20" />
                   <Skeleton className="h-5 w-32" />
                   <Skeleton className="h-4 w-16" />

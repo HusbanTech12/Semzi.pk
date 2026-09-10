@@ -17,6 +17,20 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/collections/beach",
+        destination: "/collections/hydrating-glycerin-bars",
+        permanent: true,
+      },
+      {
+        source: "/collections/signature",
+        destination: "/collections",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

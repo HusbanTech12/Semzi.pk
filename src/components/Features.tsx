@@ -36,10 +36,10 @@ export default function Features() {
     <section className="py-24 lg:py-32 bg-surface-muted">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <Reveal className="text-center max-w-xl mx-auto mb-16 space-y-4">
-          <span className="text-[11px] tracking-[0.25em] uppercase text-accent font-medium">
+          <span className="text-[11px] tracking-[0.25em] uppercase text-accent font-bold">
             Our Promise
           </span>
-          <h2 className="font-serif text-3xl md:text-4xl text-foreground">
+          <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground">
             Crafted with Care,
             <br />
             Backed by Nature
@@ -68,10 +68,10 @@ export default function Features() {
                       <Icon className="w-5 h-5 text-accent group-hover:text-accent-strong transition-colors duration-300" strokeWidth={1.5} />
                     </motion.div>
                   </div>
-                  <h3 className="relative font-serif text-lg text-foreground mb-3 group-hover:text-accent-strong transition-colors duration-300">
+                  <h3 className="relative font-serif text-lg font-bold text-foreground mb-3 group-hover:text-accent-strong transition-colors duration-300">
                     {feature.title}
                   </h3>
-                  <p className="relative text-[13px] text-foreground-muted/70 leading-relaxed">
+                  <p className="relative text-[13px] font-medium text-foreground-muted/70 leading-relaxed">
                     {feature.description}
                   </p>
                 </motion.div>

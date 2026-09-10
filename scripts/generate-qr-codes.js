@@ -46,7 +46,7 @@ async function generateQRCodes() {
       type: 'png',
       width: 1024,
       margin: 2,
-      color: { dark: '#2B2118', light: '#FFFFFF' },
+      color: { dark: '#1C1612', light: '#FFFBF5' },
       errorCorrectionLevel: 'H',
     });
 

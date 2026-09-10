@@ -3,17 +3,17 @@
 @plugin "tailwindcss-animate";
 
 @theme inline {
-  --color-background: #FAF3E7;
-  --color-surface: #FFFFFF;
-  --color-surface-muted: #F1E6D3;
-  --color-accent: #C79A56;
-  --color-accent-strong: #A47C3B;
-  --color-accent-subtle: #EADFC5;
-  --color-foreground: #2B2118;
-  --color-foreground-muted: #6B5D4D;
-  --color-border: #E4D6BC;
+  --color-background: #F6EFE4;
+  --color-surface: #FFFBF5;
+  --color-surface-muted: #E8DCC8;
+  --color-accent: #C9A36B;
+  --color-accent-strong: #8E6A38;
+  --color-accent-subtle: #E8D7B3;
+  --color-foreground: #1C1612;
+  --color-foreground-muted: #5C5146;
+  --color-border: #D6C5A8;
   --color-destructive: #B4432E;
-  --color-success: #4C7A5E;
+  --color-success: #3F6B52;
   --font-sans: var(--font-dm-sans), "Inter", system-ui, sans-serif;
   --font-serif: var(--font-playfair), "Fraunces", Georgia, serif;
   --font-mono: "JetBrains Mono", monospace;
@@ -55,6 +55,8 @@
   }
   body {
     @apply bg-background text-foreground font-sans antialiased;
+    background-image: radial-gradient(rgba(28, 22, 18, 0.035) 0.65px, transparent 0.65px);
+    background-size: 18px 18px;
   }
   *:focus-visible {
     @apply outline-2 outline-offset-2 outline-accent;

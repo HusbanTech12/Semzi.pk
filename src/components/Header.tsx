@@ -12,7 +12,7 @@ import CartDrawer from "@/components/CartDrawer";
 
 const navLinks = [
   { label: "Shop", href: "/shop" },
-  { label: "Collections", href: "/collections/beach" },
+  { label: "Collections", href: "/collections" },
   { label: "Our Story", href: "/about" },
   { label: "Social", href: "/social" },
   { label: "Contact", href: "/contact" },
@@ -79,21 +79,17 @@ export default function Navbar() {
         {...fadeUp}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           transparent
-            ? "bg-transparent border-b border-white/10"
+            ? "bg-background/50 backdrop-blur-md border-b border-border/40"
             : "bg-background/90 backdrop-blur-xl border-b border-border/50 shadow-lg shadow-foreground/5"
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             <Link href="/" className="relative group">
-              <span className={`font-serif text-3xl italic tracking-tight transition-colors duration-300 ${
-                transparent ? "text-white" : "text-foreground"
-              }`}>
+              <span className="font-serif text-3xl italic font-bold tracking-tight text-foreground transition-colors duration-300">
                 Semzi
               </span>
-              <span className={`absolute -bottom-1 left-0 w-0 h-[1.5px] group-hover:w-full transition-all duration-300 ${
-                transparent ? "bg-white/80" : "bg-foreground/80"
-              }`} />
+              <span className="absolute -bottom-1 left-0 w-0 h-[1.5px] group-hover:w-full transition-all duration-300 bg-foreground/80" />
             </Link>
 
             <nav className="hidden md:flex items-center gap-12">
@@ -101,29 +97,21 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`relative group text-sm tracking-[0.15em] uppercase transition-colors duration-300 ${
-                    transparent
-                      ? "text-white/70 hover:text-white"
-                      : "text-foreground-muted hover:text-foreground"
-                  }`}
+                  className="relative group text-sm font-semibold tracking-[0.15em] uppercase text-foreground-muted hover:text-foreground transition-colors duration-300"
                 >
                   {link.label}
-                  <span className={`absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-[2px] rounded-full group-hover:w-full transition-all duration-300 bg-accent`} />
-                  <span className={`absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-[4px] blur-sm rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 bg-accent`} />
+                  <span className={`absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-0.5 rounded-full group-hover:w-full transition-all duration-300 bg-accent`} />
+                  <span className={`absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-1 blur-sm rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 bg-accent`} />
                 </Link>
               ))}
               {isSignedIn && (
                 <Link
                   href="/admin"
-                  className={`relative group text-sm tracking-[0.15em] uppercase transition-colors duration-300 ${
-                    transparent
-                      ? "text-white/70 hover:text-white"
-                      : "text-foreground-muted hover:text-foreground"
-                  }`}
+                  className="relative group text-sm font-semibold tracking-[0.15em] uppercase text-foreground-muted hover:text-foreground transition-colors duration-300"
                 >
                   Admin
-                  <span className={`absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-[2px] rounded-full group-hover:w-full transition-all duration-300 bg-accent`} />
-                  <span className={`absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-[4px] blur-sm rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 bg-accent`} />
+                  <span className={`absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-0.5 rounded-full group-hover:w-full transition-all duration-300 bg-accent`} />
+                  <span className={`absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-1 blur-sm rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 bg-accent`} />
                 </Link>
               )}
             </nav>
@@ -131,22 +119,14 @@ export default function Navbar() {
             <div className="flex items-center gap-3">
               <button
                 aria-label="Search"
-                className={`p-2.5 rounded-full transition-all duration-300 hover:shadow-[0_0_16px_-2px_rgba(199,154,86,0.4)] ${
-                  transparent
-                    ? "text-white/70 hover:text-accent hover:bg-accent/10"
-                    : "text-foreground-muted hover:text-accent hover:bg-accent/10"
-                }`}
+                className="p-2.5 rounded-full text-foreground-muted hover:text-accent hover:bg-accent/10 transition-all duration-300 hover:shadow-[0_0_16px_-2px_rgba(199,154,86,0.4)]"
               >
                 <Search className="w-4 h-4" />
               </button>
               <button
                 onClick={() => setCartOpen(true)}
                 aria-label="Cart"
-                className={`relative p-2.5 rounded-full transition-all duration-300 hover:shadow-[0_0_16px_-2px_rgba(199,154,86,0.4)] ${
-                  transparent
-                    ? "text-white/70 hover:text-accent hover:bg-accent/10"
-                    : "text-foreground-muted hover:text-accent hover:bg-accent/10"
-                }`}
+                className="relative p-2.5 rounded-full text-foreground-muted hover:text-accent hover:bg-accent/10 transition-all duration-300 hover:shadow-[0_0_16px_-2px_rgba(199,154,86,0.4)]"
               >
                 <ShoppingBag className="w-4 h-4" />
                 {totalItems > 0 && (
@@ -155,20 +135,14 @@ export default function Navbar() {
                   </span>
                 )}
               </button>
-              <div className={`hidden md:block w-px h-6 mx-1 transition-colors duration-300 ${
-                transparent ? "bg-white/20" : "bg-border"
-              }`} />
+              <div className="hidden md:block w-px h-6 mx-1 bg-border transition-colors duration-300" />
 
               {isSignedIn ? (
                 /* Profile Icon + Dropdown */
                 <div ref={profileRef} className="hidden md:block relative">
                   <button
                     onClick={() => setProfileOpen(!profileOpen)}
-                    className={`p-2.5 rounded-full transition-all duration-300 hover:shadow-[0_0_16px_-2px_rgba(199,154,86,0.4)] ${
-                      transparent
-                        ? "text-white/70 hover:text-accent hover:bg-accent/10"
-                        : "text-foreground-muted hover:text-accent hover:bg-accent/10"
-                    }`}
+                    className="p-2.5 rounded-full text-foreground-muted hover:text-accent hover:bg-accent/10 transition-all duration-300 hover:shadow-[0_0_16px_-2px_rgba(199,154,86,0.4)]"
                     aria-label="Profile"
                   >
                     {user?.imageUrl ? (
@@ -239,25 +213,17 @@ export default function Navbar() {
               ) : (
                 <Link
                   href="/sign-in"
-                  className={`hidden md:inline-flex text-sm tracking-[0.15em] uppercase transition-all duration-300 relative group ${
-                    transparent
-                      ? "text-white/70 hover:text-white"
-                      : "text-foreground-muted hover:text-accent"
-                  }`}
+                  className="hidden md:inline-flex text-sm tracking-[0.15em] uppercase transition-all duration-300 relative group text-foreground-muted hover:text-accent"
                 >
                   Sign In
-                  <span className={`absolute -bottom-1 left-0 w-0 h-[2px] rounded-full group-hover:w-full transition-all duration-300 bg-accent`} />
-                  <span className={`absolute -bottom-1 left-0 w-0 h-[4px] blur-sm rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 bg-accent`} />
+                  <span className={`absolute -bottom-1 left-0 w-0 h-0.5 rounded-full group-hover:w-full transition-all duration-300 bg-accent`} />
+                  <span className={`absolute -bottom-1 left-0 w-0 h-1 blur-sm rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 bg-accent`} />
                 </Link>
               )}
 
               <button
                 onClick={() => setMobileOpen(!mobileOpen)}
-                className={`md:hidden p-2.5 rounded-full transition-all duration-300 hover:shadow-[0_0_16px_-2px_rgba(199,154,86,0.4)] ${
-                  transparent
-                    ? "text-white/70 hover:text-accent hover:bg-accent/10"
-                    : "text-foreground-muted hover:text-accent hover:bg-accent/10"
-                }`}
+                className="md:hidden p-2.5 rounded-full transition-all duration-300 hover:shadow-[0_0_16px_-2px_rgba(199,154,86,0.4)] text-foreground-muted hover:text-accent hover:bg-accent/10"
                 aria-label="Toggle menu"
               >
                 {mobileOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
@@ -273,11 +239,7 @@ export default function Navbar() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              className={`border-t overflow-hidden backdrop-blur-xl ${
-                transparent
-                  ? "border-white/10 bg-foreground/90"
-                  : "border-border bg-background/95"
-              }`}
+              className="border-t border-border bg-background/95 overflow-hidden backdrop-blur-xl"
             >
               <div className="px-6 py-8 space-y-6">
                 {navLinks.map((link) => (
@@ -285,11 +247,7 @@ export default function Navbar() {
                     key={link.href}
                     href={link.href}
                     onClick={() => setMobileOpen(false)}
-                    className={`block text-sm tracking-[0.15em] uppercase transition-colors duration-300 ${
-                      transparent
-                        ? "text-white/70 hover:text-white"
-                        : "text-foreground-muted hover:text-foreground"
-                    }`}
+                    className="block text-sm tracking-[0.15em] uppercase transition-colors duration-300 text-foreground-muted hover:text-foreground"
                   >
                     {link.label}
                   </Link>
@@ -298,17 +256,13 @@ export default function Navbar() {
                   <Link
                     href="/admin"
                     onClick={() => setMobileOpen(false)}
-                    className={`block text-sm tracking-[0.15em] uppercase transition-colors duration-300 ${
-                      transparent ? "text-white/70 hover:text-white" : "text-foreground-muted hover:text-foreground"
-                    }`}
+                    className="block text-sm tracking-[0.15em] uppercase transition-colors duration-300 text-foreground-muted hover:text-foreground"
                   >
                     Admin
                   </Link>
                 )}
 
-                <div className={`pt-4 border-t space-y-1 ${
-                  transparent ? "border-white/10" : "border-border"
-                }`}>
+                <div className="pt-4 border-t border-border space-y-1">
                   {isSignedIn ? (
                     <>
                       {/* Mobile Profile Info */}
@@ -324,7 +278,7 @@ export default function Navbar() {
                           <p className="text-sm font-medium text-foreground">
                             {user?.firstName || "Account"}
                           </p>
-                          <p className="text-xs text-foreground-muted truncate max-w-[180px]">
+                          <p className="text-xs text-foreground-muted truncate max-w-45">
                             {user?.emailAddresses?.[0]?.emailAddress || ""}
                           </p>
                         </div>

@@ -61,7 +61,7 @@ export default function CTA() {
                 <div className="space-y-1">
                   <motion.p
                     className="font-serif text-3xl text-accent"
-                    whileHover={{ scale: 1.1, color: "#A47C3B" }}
+                    whileHover={{ scale: 1.1, color: "#8E6A38" }}
                     transition={{ duration: 0.2 }}
                   >
                     10K+
@@ -73,7 +73,7 @@ export default function CTA() {
                 <div className="space-y-1">
                   <motion.p
                     className="font-serif text-3xl text-accent"
-                    whileHover={{ scale: 1.1, color: "#A47C3B" }}
+                    whileHover={{ scale: 1.1, color: "#8E6A38" }}
                     transition={{ duration: 0.2 }}
                   >
                     100%
@@ -85,7 +85,7 @@ export default function CTA() {
                 <div className="space-y-1">
                   <motion.p
                     className="font-serif text-3xl text-accent"
-                    whileHover={{ scale: 1.1, color: "#A47C3B" }}
+                    whileHover={{ scale: 1.1, color: "#8E6A38" }}
                     transition={{ duration: 0.2 }}
                   >
                     50+

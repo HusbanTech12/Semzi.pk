@@ -18,7 +18,7 @@ export default function BrandLoader({
       aria-label={label}
     >
       <div className="flex flex-col items-center gap-7">
-        <p className="font-serif text-4xl italic tracking-tight text-foreground">
+        <p className="font-serif text-4xl italic font-bold tracking-tight text-foreground">
           Semzi
         </p>
         <div className="relative h-14 w-14">
@@ -26,7 +26,7 @@ export default function BrandLoader({
           <span className="absolute inset-0 rounded-full border border-accent/20 motion-safe:animate-[soap-ripple_1.8s_ease-out_infinite] motion-safe:[animation-delay:0.55s]" />
           <span className="absolute inset-[18px] rounded-full bg-accent" />
         </div>
-        <p className="text-[10px] uppercase tracking-[0.35em] text-foreground-muted">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.35em] text-foreground-muted">
           Preparing
         </p>
         <span className="sr-only">{label}</span>
