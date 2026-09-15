@@ -120,7 +120,7 @@ export default function AdminSettings() {
                 <label className="text-xs text-white/40 uppercase tracking-wider">Store Description</label>
                 <textarea
                   rows={3}
-                  defaultValue="Handmade natural soap crafted in small batches. Full INCI ingredient transparency, seasonal collections, and gift-worthy packaging."
+                  defaultValue="Handmade natural soap crafted with patience. Full INCI ingredient transparency, seasonal collections, and gift-worthy packaging."
                   className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:border-[#C79A56]/50 transition-all resize-none"
                 />
               </div>

@@ -48,7 +48,7 @@ export default function Footer() {
               />
             </Link>
             <p className="text-foreground-muted max-w-sm leading-relaxed text-sm font-medium">
-              Handmade natural soap crafted in small batches. Nothing harsh.
+              Handmade natural soap, crafted with patience and care. Nothing harsh.
               Nothing synthetic. Just honest ingredients you can trust.
             </p>
 

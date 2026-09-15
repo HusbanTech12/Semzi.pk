@@ -36,7 +36,7 @@ export default function BrandStory() {
               <div className="absolute inset-0 bg-linear-to-t from-foreground/40 via-transparent to-transparent" />
               <div className="absolute bottom-6 left-6 right-6 text-white">
                 <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-accent-subtle">
-                  Artisan Small Batch
+                  Artisan Made
                 </span>
                 <p className="font-serif text-lg italic font-semibold mt-1 text-white/95">
                   Hand-poured with patience, care, and human touch.
@@ -63,7 +63,7 @@ export default function BrandStory() {
                   Soap-making is an ancient craft &mdash; one of humanity&apos;s oldest rituals, dating back over 2,000 years. As soap became mass-produced, it stopped being soap in any meaningful sense and started becoming something closer to a harsh disinfectant.
                 </p>
                 <p>
-                  We make our soaps by hand, in small batches, with the same patience an artisan brings to any craft. pH-balanced to work with your skin&apos;s natural barrier: gentle enough for a child, effective enough for anyone.
+                  We make our soaps by hand, a few bars at a time, with the same patience an artisan brings to any craft. pH-balanced to work with your skin&apos;s natural barrier: gentle enough for a child, effective enough for anyone.
                 </p>
               </div>
             </Reveal>

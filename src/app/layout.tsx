@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { DM_Sans, Playfair_Display, Instrument_Serif } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { CartProvider } from "@/context/cart-context";
+import ChatWidget from "@/components/ChatWidget";
+import WhatsAppWidget from "@/components/WhatsAppWidget";
 import "./globals.css";
 
 const dmSans = DM_Sans({
@@ -29,13 +31,18 @@ export const metadata: Metadata = {
     template: "%s | Semzi",
   },
   description:
-    "Handmade natural soap crafted in small batches. Full INCI ingredient transparency, seasonal collections, and gift-worthy packaging.",
+    "Handmade natural soap crafted with patience. Full INCI ingredient transparency, seasonal collections, and gift-worthy packaging.",
   metadataBase: new URL("https://semzi.com"),
   openGraph: {
     title: "Semzi | Natural Soap. Nothing Harsh.",
     description:
-      "Handmade natural soap crafted in small batches with full ingredient transparency.",
+      "Handmade natural soap crafted with patience and care, with full ingredient transparency.",
     images: ["/og-image.jpg"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    description:
+      "Handmade natural soap crafted with patience and care, with full ingredient transparency.",
   },
 };
 
@@ -60,7 +67,11 @@ export default function RootLayout({
         className={`${dmSans.variable} ${playfair.variable} ${instrumentSerif.variable} antialiased`}
       >
         <body className="min-h-full">
-          <CartProvider>{children}</CartProvider>
+          <CartProvider>
+            {children}
+            <WhatsAppWidget />
+            <ChatWidget />
+          </CartProvider>
         </body>
       </html>
     </ClerkProvider>
