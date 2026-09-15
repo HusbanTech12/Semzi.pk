@@ -6,16 +6,20 @@ export default function SignUpPage() {
   return (
     <div className="min-h-screen bg-background flex items-center justify-center px-6">
       <div className="w-full max-w-md space-y-8">
-        <div className="text-center space-y-3">
+        <div className="text-center">
           <Link href="/" className="inline-flex justify-center">
             <SemziLogo className="mx-auto h-12 sm:h-14" priority />
           </Link>
-          <p className="text-sm text-foreground-muted mt-2">Create your account</p>
         </div>
         <SignUp
           routing="hash"
           signInUrl="/sign-in"
           fallbackRedirectUrl="/"
+          appearance={{
+            elements: {
+              headerTitle: "hidden",
+            },
+          }}
         />
         <p className="text-center text-sm text-foreground-muted">
           Already have an account?{" "}

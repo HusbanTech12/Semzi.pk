@@ -114,7 +114,6 @@ export default function ShopPage() {
   const [selectedFilters, setSelectedFilters] = useState<Record<FilterKey, string[]>>({
     collection: [],
   });
-  const [inStockOnly, setInStockOnly] = useState(false);
   const { products, loading } = useProducts();
   const { fadeUp } = useAnimations();
 
@@ -128,8 +127,7 @@ export default function ShopPage() {
     );
   }, [products]);
 
-  const totalActive =
-    selectedFilters.collection.length + (inStockOnly ? 1 : 0);
+  const totalActive = selectedFilters.collection.length;
 
   function toggleFilter(key: FilterKey, val: string) {
     setSelectedFilters((prev) => ({
@@ -142,12 +140,10 @@ export default function ShopPage() {
 
   function clearAll() {
     setSelectedFilters({ collection: [] });
-    setInStockOnly(false);
   }
 
   const filtered = useMemo(() => {
     return products.filter((p) => {
-      if (inStockOnly && !p.inStock) return false;
       if (
         selectedFilters.collection.length &&
         !selectedFilters.collection.includes(p.collection ?? "")
@@ -156,7 +152,7 @@ export default function ShopPage() {
       }
       return true;
     });
-  }, [products, selectedFilters, inStockOnly]);
+  }, [products, selectedFilters]);
 
   return (
     <>
@@ -193,26 +189,6 @@ export default function ShopPage() {
                 selected={selectedFilters.collection}
                 onToggle={toggleFilter}
               />
-              <button
-                type="button"
-                onClick={() => setInStockOnly((prev) => !prev)}
-                className={`inline-flex items-center gap-2 rounded-xl border px-4 py-3 text-sm font-medium transition-all duration-200 ${
-                  inStockOnly
-                    ? "border-accent/30 bg-accent/10 text-accent"
-                    : "border-border bg-surface text-foreground-muted hover:border-accent/20 hover:text-foreground"
-                }`}
-              >
-                <span
-                  className={`flex h-4 w-4 items-center justify-center rounded border transition-all duration-200 ${
-                    inStockOnly
-                      ? "border-accent bg-accent text-white"
-                      : "border-border"
-                  }`}
-                >
-                  {inStockOnly && <Check className="h-3 w-3" />}
-                </span>
-                In stock only
-              </button>
             </div>
 
             {totalActive > 0 && (
@@ -228,16 +204,6 @@ export default function ShopPage() {
                     <X className="h-3 w-3" />
                   </button>
                 ))}
-                {inStockOnly && (
-                  <button
-                    type="button"
-                    onClick={() => setInStockOnly(false)}
-                    className="inline-flex items-center gap-1.5 rounded-lg border border-accent/20 bg-accent/10 px-3 py-1.5 text-xs font-medium text-accent transition-colors hover:bg-accent/20"
-                  >
-                    In stock
-                    <X className="h-3 w-3" />
-                  </button>
-                )}
               </div>
             )}
           </motion.div>

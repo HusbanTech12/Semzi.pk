@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, use, useEffect } from "react";
+import { useState, use, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -32,13 +33,35 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState<Tab>("description");
   const [justAdded, setJustAdded] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const [showStickyCart, setShowStickyCart] = useState(false);
+  const primaryCartRef = useRef<HTMLButtonElement>(null);
   const { addItem } = useCart();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (!justAdded) return;
     const t = window.setTimeout(() => setJustAdded(false), 1800);
     return () => window.clearTimeout(t);
   }, [justAdded]);
+
+  useEffect(() => {
+    const target = primaryCartRef.current;
+    if (!target) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setShowStickyCart(!entry.isIntersecting);
+      },
+      { threshold: 0, rootMargin: "-80px 0px 0px 0px" }
+    );
+
+    observer.observe(target);
+    return () => observer.disconnect();
+  }, [product?.id, loading]);
 
   const handleAddToCart = () => {
     if (!product || !product.inStock) return;
@@ -176,6 +199,7 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                   </button>
                 </div>
                 <button
+                  ref={primaryCartRef}
                   type="button"
                   onClick={handleAddToCart}
                   disabled={!product.inStock}
@@ -227,7 +251,14 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                         <div className="space-y-4">
                           <div className="flex items-center gap-2">
                             <span className="text-xs tracking-wider uppercase text-accent font-medium">
-                              {(product.slug === "nourish-goat-milk-aloe" || product.slug === "goat-milk-aloe-soap") ? "It's handmade" : "It's handcrafted"}
+                              {(product.slug === "nourish-goat-milk-aloe" ||
+                                product.slug === "goat-milk-aloe-soap" ||
+                                product.slug === "radiance" ||
+                                product.slug === "clarity" ||
+                                product.slug === "balance" ||
+                                product.slug === "restore")
+                                ? "It's handmade"
+                                : "It's handcrafted"}
                             </span>
                           </div>
                           <p className="text-sm text-foreground-muted leading-relaxed">
@@ -266,32 +297,39 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
             </section>
           )}
         </div>
-
-        <div className="fixed bottom-0 left-0 right-0 z-40 bg-surface/95 backdrop-blur-md border-t border-border p-4 pb-[max(1rem,env(safe-area-inset-bottom))] shadow-[0_-8px_30px_-12px_rgba(28,22,18,0.25)] lg:hidden">
-          <div className="max-w-7xl mx-auto flex items-center gap-4">
-            <PriceDisplay priceCents={product.priceCents} compareAtCents={product.compareAtPriceCents} />
-            <button
-              type="button"
-              onClick={handleAddToCart}
-              disabled={!product.inStock}
-              className={cn(
-                "flex-1 flex items-center justify-center gap-2 px-6 py-3 text-sm font-semibold tracking-wider uppercase rounded-lg transition-all",
-                !product.inStock
-                  ? "bg-foreground-muted/20 text-foreground-muted cursor-not-allowed"
-                  : justAdded
-                    ? "bg-success text-white"
-                    : "bg-accent text-background hover:bg-accent-strong"
-              )}
-            >
-              {justAdded ? <Check className="w-4 h-4" /> : <ShoppingBag className="w-4 h-4" />}
-              {!product.inStock ? "Out of Stock" : justAdded ? "Added" : "Add to Cart"}
-            </button>
-          </div>
-        </div>
       </main>
       <Footer />
-      {/* Spacer so the fixed mobile add-to-cart bar never covers the footer */}
-      <div aria-hidden className="h-24 lg:hidden" />
+      {mounted &&
+        showStickyCart &&
+        createPortal(
+          <div className="pointer-events-none fixed inset-x-0 bottom-0 z-50 lg:hidden">
+            <div className="pointer-events-auto border-t border-border bg-surface/95 p-4 pb-[max(1rem,env(safe-area-inset-bottom))] shadow-[0_-8px_30px_-12px_rgba(28,22,18,0.25)] backdrop-blur-md">
+              <div className="mx-auto flex max-w-7xl items-center gap-4 px-6">
+                <PriceDisplay
+                  priceCents={product.priceCents}
+                  compareAtCents={product.compareAtPriceCents}
+                />
+                <button
+                  type="button"
+                  onClick={handleAddToCart}
+                  disabled={!product.inStock}
+                  className={cn(
+                    "flex flex-1 items-center justify-center gap-2 rounded-lg px-6 py-3 text-sm font-semibold tracking-wider uppercase transition-all",
+                    !product.inStock
+                      ? "cursor-not-allowed bg-foreground-muted/20 text-foreground-muted"
+                      : justAdded
+                        ? "bg-success text-white"
+                        : "bg-accent text-background hover:bg-accent-strong"
+                  )}
+                >
+                  {justAdded ? <Check className="h-4 w-4" /> : <ShoppingBag className="h-4 w-4" />}
+                  {!product.inStock ? "Out of Stock" : justAdded ? "Added" : "Add to Cart"}
+                </button>
+              </div>
+            </div>
+          </div>,
+          document.body
+        )}
     </>
   );
 }

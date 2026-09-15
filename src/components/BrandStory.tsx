@@ -48,7 +48,7 @@ export default function BrandStory() {
           <div className="space-y-8">
             <Reveal direction="right" className="space-y-4">
               <span className="text-[11px] tracking-[0.25em] uppercase text-accent font-bold font-mono">
-                Our Story · Our Ethos
+                Our Ethos
               </span>
               <h2 className="font-serif text-3xl font-medium tracking-tight text-heading-gradient leading-tight md:text-4xl lg:text-5xl">
                 Bringing the Soul Back

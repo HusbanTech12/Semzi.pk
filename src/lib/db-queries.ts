@@ -71,6 +71,10 @@ function buildProductMap(rows: Awaited<ReturnType<typeof getAllProductsRaw>>): M
     flora: "From Petals to Your Palm. Natural Soap. Nothing Harsh.",
     "nourish-goat-milk-aloe": "Most Gentle Combination. Natural Soap. Nothing Harsh.",
     "goat-milk-aloe-soap": "Most Gentle Combination. Natural Soap. Nothing Harsh.",
+    radiance: "Cleanse. Brighten. Glow.",
+    clarity: "Clarity From Root to Tip.",
+    balance: "Reset. Rebalance. Refresh.",
+    restore: "What Hair Remembers",
   };
 
   const catalogBySlug = new Map(catalogProducts.map((item) => [item.slug, item]));

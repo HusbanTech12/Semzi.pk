@@ -45,7 +45,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
+    <ClerkProvider
+      localization={{
+        signUp: {
+          start: {
+            title: "Semzi",
+            subtitle: "Welcome! Please fill in the details to get started.",
+          },
+        },
+      }}
+    >
       <html
         lang="en"
         className={`${dmSans.variable} ${playfair.variable} ${instrumentSerif.variable} antialiased`}

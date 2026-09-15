@@ -8,27 +8,27 @@ import { useAnimations } from "@/lib/animations";
 const features = [
   {
     icon: Sparkles,
-    title: "100% Natural",
+    title: "Nature-First",
     description:
-      "Every ingredient is sourced from nature. No synthetic additives, parabens, or sulfates. Full INCI transparency on every product.",
+      "Every ingredient is sourced from nature. No synthetic additives, parabens, or harsh sulfates. Full INCI transparency on every product.",
   },
   {
     icon: Heart,
     title: "Handcrafted",
     description:
-      "Small-batch production ensures quality and attention to detail in every single bar and bottle.",
+      "Made by hand, a few bars at a time. Every product gets the attention and care that mass production leaves behind.",
   },
   {
     icon: Leaf,
     title: "Cruelty-Free",
     description:
-      "We never test on animals. Certified cruelty-free and vegan friendly. Kind to your skin and the planet.",
+      "We never test on animals or our ingredients on them. Kind to your skin, and kind by principle.",
   },
   {
     icon: Package,
-    title: "Eco Packaging",
+    title: "Eco-Conscious Packaging",
     description:
-      "100% biodegradable packaging made from recycled materials. Because what wraps your soap matters too.",
+      "We choose packaging with care — recyclable materials, minimal waste, and nothing wrapped for the sake of appearance alone.",
   },
 ];
 

@@ -4,11 +4,9 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ShoppingBag, X, User, Settings, LogOut, LayoutDashboard, Package } from "lucide-react";
-import { useUser, useClerk } from "@clerk/nextjs";
+import { X } from "lucide-react";
+import { useUser } from "@clerk/nextjs";
 import { useAnimations } from "@/lib/animations";
-import { useCart } from "@/context/cart-context";
-import CartDrawer from "@/components/CartDrawer";
 import SemziLogo from "@/components/SemziLogo";
 
 const navLinks = [
@@ -20,16 +18,13 @@ const navLinks = [
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [cartOpen, setCartOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
   const pathnameRef = useRef(pathname);
   pathnameRef.current = pathname;
   const isHome = pathname === "/";
-  const { totalItems } = useCart();
   const { fadeUp } = useAnimations();
-  const { isSignedIn, user } = useUser();
-  const { signOut } = useClerk();
+  const { isSignedIn } = useUser();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -40,12 +35,12 @@ export default function Navbar() {
           return;
         }
       }
-      setScrolled(window.scrollY > 60);
+      setScrolled(window.scrollY > 24);
     };
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [pathname]);
 
   useEffect(() => {
     setMobileOpen(false);
@@ -66,19 +61,19 @@ export default function Navbar() {
   }, [mobileOpen]);
 
   const transparent = isHome && !scrolled;
-
-  const profileMenuItems = [
-    { label: "Profile", href: "/account", icon: User },
-    { label: "My Orders", href: "/account", icon: Package },
-    ...(isSignedIn ? [{ label: "Admin Panel", href: "/admin", icon: LayoutDashboard }] : []),
-    { label: "Settings", href: "/account", icon: Settings },
-  ];
+  const frosted = scrolled;
 
   return (
     <>
       <motion.header
         {...fadeUp}
-        className="fixed top-0 left-0 right-0 z-50 bg-transparent"
+        className={`fixed top-0 right-0 left-0 z-50 transition-[background-color,border-color,box-shadow,backdrop-filter] duration-300 ${
+          transparent
+            ? "border-b border-transparent bg-transparent"
+            : frosted
+              ? "border-b border-border/70 bg-background/70 shadow-[0_10px_40px_-20px_rgba(28,22,18,0.45)] backdrop-blur-xl"
+              : "border-b border-transparent bg-transparent"
+        }`}
       >
         <div className="flex h-20 w-full items-center justify-between pl-5 pr-5 sm:pl-6 sm:pr-6 lg:pl-8 lg:pr-8">
           <Link href="/" className="group relative shrink-0">
@@ -89,25 +84,37 @@ export default function Navbar() {
             />
           </Link>
 
-          <button
-            type="button"
-            onClick={() => setMobileOpen(true)}
-            aria-label="Open menu"
-            aria-expanded={mobileOpen}
-            aria-controls="site-menu"
-            className={`group/menu inline-flex shrink-0 items-center gap-2.5 rounded-full px-2 py-2.5 transition-all duration-300 hover:bg-white/10 sm:px-3 ${
-              transparent ? "text-white" : "text-foreground hover:bg-accent/10"
-            }`}
-          >
-            <span className="hidden font-mono text-[11px] font-bold uppercase tracking-[0.2em] sm:inline">
-              Menu
-            </span>
-            <span className="relative flex h-4 w-5 flex-col justify-between" aria-hidden>
-              <span className="h-[1.5px] w-full rounded-full bg-current transition-transform duration-300 group-hover/menu:translate-x-0.5" />
-              <span className="h-[1.5px] w-3/4 self-end rounded-full bg-current transition-all duration-300 group-hover/menu:w-full" />
-              <span className="h-[1.5px] w-full rounded-full bg-current transition-transform duration-300 group-hover/menu:-translate-x-0.5" />
-            </span>
-          </button>
+          <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+            <Link
+              href={isSignedIn ? "/shop" : "/sign-up"}
+              className={`inline-flex items-center rounded-xl px-3.5 py-2.5 font-mono text-[11px] font-bold uppercase tracking-[0.15em] transition-all duration-300 sm:px-5 ${
+                transparent
+                  ? "bg-white/15 text-white backdrop-blur-sm hover:bg-white/25"
+                  : "bg-accent text-background hover:bg-accent-strong"
+              }`}
+            >
+              Get Started
+            </Link>
+            <button
+              type="button"
+              onClick={() => setMobileOpen(true)}
+              aria-label="Open menu"
+              aria-expanded={mobileOpen}
+              aria-controls="site-menu"
+              className={`group/menu inline-flex shrink-0 items-center gap-2.5 rounded-full px-2 py-2.5 transition-all duration-300 hover:bg-white/10 sm:px-3 ${
+                transparent ? "text-white" : "text-foreground hover:bg-accent/10"
+              }`}
+            >
+              <span className="hidden font-mono text-[11px] font-bold uppercase tracking-[0.2em] sm:inline">
+                Menu
+              </span>
+              <span className="relative flex h-4 w-5 flex-col justify-between" aria-hidden>
+                <span className="h-[1.5px] w-full rounded-full bg-current transition-transform duration-300 group-hover/menu:translate-x-0.5" />
+                <span className="h-[1.5px] w-3/4 self-end rounded-full bg-current transition-all duration-300 group-hover/menu:w-full" />
+                <span className="h-[1.5px] w-full rounded-full bg-current transition-transform duration-300 group-hover/menu:-translate-x-0.5" />
+              </span>
+            </button>
+          </div>
         </div>
       </motion.header>
 
@@ -183,85 +190,8 @@ export default function Navbar() {
                 </ul>
               </nav>
 
-              <div className="relative space-y-3 border-t border-border/60 px-6 py-6 lg:px-8">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setMobileOpen(false);
-                    setCartOpen(true);
-                  }}
-                  className="flex w-full items-center justify-between rounded-xl border border-border/70 bg-surface px-4 py-3.5 text-sm font-semibold text-foreground transition-colors hover:border-accent/50"
-                >
-                  <span className="inline-flex items-center gap-2">
-                    <ShoppingBag className="h-4 w-4 text-accent" />
-                    Cart
-                  </span>
-                  {totalItems > 0 && (
-                    <span className="rounded-full bg-accent px-2 py-0.5 font-mono text-[10px] font-bold text-background">
-                      {totalItems}
-                    </span>
-                  )}
-                </button>
-
-                {isSignedIn ? (
-                  <>
-                    <div className="mb-1 flex items-center gap-3 pt-2">
-                      {user?.imageUrl ? (
-                        <img src={user.imageUrl} alt="" className="h-10 w-10 rounded-full object-cover ring-2 ring-accent/30" />
-                      ) : (
-                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-accent/10">
-                          <User className="h-4 w-4 text-accent" />
-                        </div>
-                      )}
-                      <div className="min-w-0">
-                        <p className="truncate text-sm font-semibold text-foreground">
-                          {user?.firstName || "Account"}
-                        </p>
-                        <p className="truncate text-xs text-foreground-muted">
-                          {user?.emailAddresses?.[0]?.emailAddress || ""}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-2 gap-2">
-                      {profileMenuItems.map((item) => {
-                        const Icon = item.icon;
-                        return (
-                          <Link
-                            key={item.label}
-                            href={item.href}
-                            onClick={() => setMobileOpen(false)}
-                            className="flex items-center gap-2 rounded-lg border border-border/70 bg-surface px-3 py-2.5 text-xs font-semibold text-foreground-muted transition-colors duration-200 hover:border-accent/50 hover:text-foreground"
-                          >
-                            <Icon className="h-4 w-4" />
-                            {item.label}
-                          </Link>
-                        );
-                      })}
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setMobileOpen(false);
-                          signOut({ redirectUrl: "/" });
-                        }}
-                        className="flex items-center gap-2 rounded-lg border border-border/70 bg-surface px-3 py-2.5 text-xs font-semibold text-foreground-muted transition-colors duration-200 hover:border-destructive/40 hover:text-destructive"
-                      >
-                        <LogOut className="h-4 w-4" />
-                        Sign Out
-                      </button>
-                    </div>
-                  </>
-                ) : (
-                  <Link
-                    href="/sign-in"
-                    onClick={() => setMobileOpen(false)}
-                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-foreground px-6 py-3.5 font-mono text-xs font-bold uppercase tracking-[0.15em] text-background transition-colors duration-300 hover:bg-accent hover:text-foreground"
-                  >
-                    <User className="h-4 w-4" />
-                    Sign In / Create Account
-                  </Link>
-                )}
-
-                <p className="pt-2 font-mono text-[10px] uppercase tracking-[0.2em] text-foreground-muted/60">
+              <div className="relative border-t border-border/60 px-6 py-6 lg:px-8">
+                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-foreground-muted/60">
                   Natural soap. Nothing harsh.
                 </p>
               </div>
@@ -269,8 +199,6 @@ export default function Navbar() {
           </>
         )}
       </AnimatePresence>
-
-      <CartDrawer open={cartOpen} onOpenChange={setCartOpen} />
     </>
   );
 }

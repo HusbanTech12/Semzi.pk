@@ -77,7 +77,7 @@ export default function AboutPage() {
               <div className="inline-flex items-center gap-2 rounded-full border border-border bg-surface/80 px-4 py-1.5 backdrop-blur-sm mb-6">
                 <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
                 <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-foreground-muted">
-                  Our Story · Our Ethos
+                  Our Ethos
                 </span>
               </div>
             </Reveal>

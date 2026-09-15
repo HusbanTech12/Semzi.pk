@@ -63,12 +63,6 @@ export default function ProductCard({ product, priority }: ProductCardProps) {
 
           <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none bg-[radial-gradient(circle_at_50%_50%,rgba(199,154,86,0.06)_0%,transparent_70%)]" />
 
-          {product.badge && (
-            <div className="absolute top-4 left-4 z-10 px-3 py-1.5 bg-surface/90 backdrop-blur-md rounded-full text-[10px] font-semibold tracking-[0.15em] uppercase text-foreground shadow-sm ring-1 ring-border/50">
-              {product.badge}
-            </div>
-          )}
-
           {product.inStock && (
             // Visible on hover for pointer devices; always visible on touch devices (no hover).
             <div className="absolute top-3 right-3 z-10 flex flex-col gap-2 transition-all duration-300 opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 focus-within:opacity-100 focus-within:translate-y-0 [@media(hover:none)]:opacity-100 [@media(hover:none)]:translate-y-0 sm:top-4 sm:right-4">
