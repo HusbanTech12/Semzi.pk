@@ -111,7 +111,7 @@ export default function CTA() {
                     href="/about"
                     className="group px-8 py-3.5 border border-white/20 text-background text-sm tracking-[0.15em] uppercase rounded-lg relative overflow-hidden"
                   >
-                    <span className="relative z-10 group-hover:text-foreground transition-colors duration-300">Our Story</span>
+                    <span className="relative z-10 group-hover:text-foreground transition-colors duration-300">Our Ethos</span>
                     <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   </Link>
                 </motion.div>

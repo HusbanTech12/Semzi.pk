@@ -248,7 +248,7 @@ export default function Hero() {
                   href="/about"
                   className="inline-flex items-center gap-2 rounded-xl border border-white/35 bg-white/10 px-7 py-3.5 font-mono text-xs font-bold uppercase tracking-[0.15em] text-white backdrop-blur-sm transition-all duration-300 hover:border-white/60 hover:bg-white/20"
                 >
-                  Our Story
+                  Our Ethos
                 </Link>
               </motion.div>
             </div>

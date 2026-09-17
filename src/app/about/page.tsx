@@ -7,6 +7,8 @@ import { Sparkles, ShieldCheck, HeartHandshake, Eye, CheckCircle2 } from "lucide
 import Navbar from "@/components/Header";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
+import GlowFrame from "@/components/GlowFrame";
+import { useAnimations } from "@/lib/animations";
 
 const ETHOS_PILLARS = [
   {
@@ -64,6 +66,8 @@ const HORIZONS = [
 ];
 
 export default function AboutPage() {
+  const { cardHover } = useAnimations();
+
   return (
     <>
       <Navbar />
@@ -72,6 +76,7 @@ export default function AboutPage() {
         {/* Editorial Page Header */}
         <section className="relative overflow-hidden border-b border-border/40 py-20 lg:py-28">
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(201,163,107,0.12),transparent_70%)]" />
+          <div className="ambient-glow pointer-events-none absolute left-1/2 top-0 h-64 w-64 -translate-x-1/2 rounded-full bg-accent/20 blur-3xl" />
           <div className="max-w-5xl mx-auto px-6 lg:px-8 text-center relative z-10">
             <Reveal>
               <div className="inline-flex items-center gap-2 rounded-full border border-border bg-surface/80 px-4 py-1.5 backdrop-blur-sm mb-6">
@@ -104,16 +109,16 @@ export default function AboutPage() {
             <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
               <div className="lg:col-span-5 order-2 lg:order-1">
                 <Reveal direction="left">
-                  <div className="relative aspect-4/5 rounded-2xl overflow-hidden border border-border/60 bg-surface-muted shadow-xl shadow-foreground/5">
+                  <GlowFrame className="aspect-4/5 shadow-xl shadow-foreground/5">
                     <Image
-                      src="/images/soap-collection.jpg"
+                      src="/images/pages/about-origin-soaps.png"
                       alt="Collection of handmade artisan soaps"
                       fill
                       priority
                       sizes="(max-width: 1024px) 100vw, 40vw"
-                      className="object-cover"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-linear-to-t from-foreground/40 via-transparent to-transparent" />
+                    <div className="absolute inset-0 bg-linear-to-t from-foreground/45 via-transparent to-transparent" />
                     <div className="absolute bottom-6 left-6 right-6 text-white">
                       <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-accent-subtle">
                         Artisan Lineage
@@ -122,7 +127,7 @@ export default function AboutPage() {
                         Over 2,000 years of soapcraft tradition
                       </p>
                     </div>
-                  </div>
+                  </GlowFrame>
                 </Reveal>
               </div>
 
@@ -152,18 +157,20 @@ export default function AboutPage() {
 
                 <Reveal delay={0.25}>
                   <div className="pt-2 flex flex-wrap gap-4 text-xs font-mono text-foreground-muted">
-                    <span className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-4 py-2">
-                      <CheckCircle2 className="h-4 w-4 text-accent" />
-                      Zero Harsh Detergents
-                    </span>
-                    <span className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-4 py-2">
-                      <CheckCircle2 className="h-4 w-4 text-accent" />
-                      No Stripping Sulfates
-                    </span>
-                    <span className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-4 py-2">
-                      <CheckCircle2 className="h-4 w-4 text-accent" />
-                      Skin Barrier Preserving
-                    </span>
+                    {[
+                      "Zero Harsh Detergents",
+                      "No Stripping Sulfates",
+                      "Skin Barrier Preserving",
+                    ].map((label) => (
+                      <motion.span
+                        key={label}
+                        {...cardHover}
+                        className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-4 py-2 card-glow-brown hover:border-accent/40"
+                      >
+                        <CheckCircle2 className="h-4 w-4 text-accent" />
+                        {label}
+                      </motion.span>
+                    ))}
                   </div>
                 </Reveal>
               </div>
@@ -224,15 +231,15 @@ export default function AboutPage() {
 
               <div className="lg:col-span-5">
                 <Reveal direction="right">
-                  <div className="relative aspect-4/5 rounded-2xl overflow-hidden border border-border/60 bg-surface-muted shadow-xl shadow-foreground/5">
+                  <GlowFrame className="aspect-4/5 shadow-xl shadow-foreground/5">
                     <Image
-                      src="/images/Our-Story-img.jpeg"
+                      src="/images/pages/about-craft-pour.png"
                       alt="Pouring handmade soap by hand into artisan molds"
                       fill
                       sizes="(max-width: 1024px) 100vw, 40vw"
-                      className="object-cover"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-linear-to-t from-foreground/30 via-transparent to-transparent" />
+                    <div className="absolute inset-0 bg-linear-to-t from-foreground/35 via-transparent to-transparent" />
                     <div className="absolute bottom-6 left-6 right-6 text-white">
                       <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-accent-subtle">
                         Small Batch Studio
@@ -241,7 +248,7 @@ export default function AboutPage() {
                         Hand-poured with plant oils and pure botanicals
                       </p>
                     </div>
-                  </div>
+                  </GlowFrame>
                 </Reveal>
               </div>
             </div>
@@ -273,10 +280,13 @@ export default function AboutPage() {
                 const Icon = pillar.icon;
                 return (
                   <Reveal key={pillar.title}>
-                    <div className="h-full p-8 rounded-2xl bg-background border border-border/70 hover:border-accent/40 hover:shadow-lg hover:shadow-foreground/5 transition-all duration-300 flex flex-col justify-between">
+                    <motion.div
+                      {...cardHover}
+                      className="flex h-full flex-col justify-between rounded-2xl border border-border/70 bg-background p-8 card-glow-brown transition-colors duration-300 hover:border-accent/40"
+                    >
                       <div>
-                        <div className="flex items-center justify-between mb-5">
-                          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-accent/15 text-accent-strong">
+                        <div className="mb-5 flex items-center justify-between">
+                          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-accent/15 text-accent-strong transition-transform duration-300 group-hover:scale-105">
                             <Icon className="h-6 w-6" />
                           </div>
                           <span className="font-mono text-xs font-semibold text-accent">
@@ -286,21 +296,24 @@ export default function AboutPage() {
                         <h3 className="font-serif text-lg font-medium text-foreground">
                           {pillar.title}
                         </h3>
-                        <p className="mt-2.5 text-xs sm:text-sm text-foreground-muted leading-relaxed">
+                        <p className="mt-2.5 text-xs leading-relaxed text-foreground-muted sm:text-sm">
                           {pillar.description}
                         </p>
                       </div>
-                    </div>
+                    </motion.div>
                   </Reveal>
                 );
               })}
             </div>
 
-            <div className="mt-12 rounded-2xl border border-accent/30 bg-accent-subtle/20 p-6 sm:p-8 text-center max-w-3xl mx-auto">
-              <p className="font-mono text-xs uppercase tracking-[0.2em] text-accent-strong font-semibold">
-                Radical Transparency Promise
+            <div className="mt-12 mx-auto max-w-3xl space-y-4 rounded-2xl border border-accent/30 bg-accent-subtle/20 p-6 text-center card-glow-brown sm:p-8">
+              <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-accent-strong">
+                Our Ethos
               </p>
-              <p className="mt-2 text-sm sm:text-base text-foreground leading-relaxed">
+              <p className="text-sm leading-relaxed text-foreground sm:text-base">
+                Every Semzi formula &mdash; soap, shampoo, and beyond &mdash; is built without parabens, sulfates, or harsh synthetic fillers. Where a preservative is needed to keep a water-based formula safe, we choose only mild, non-paraben options. Our fragrances are 100% pure fragrance oils, free of any added parabens or synthetic preservatives.
+              </p>
+              <p className="text-sm leading-relaxed text-foreground-muted">
                 That&apos;s why every ingredient we use is listed, plainly, on every label &mdash; you should be able to look at what you&apos;re putting on your skin and understand exactly what it is.
               </p>
             </div>
@@ -327,7 +340,10 @@ export default function AboutPage() {
             <div className="grid md:grid-cols-3 gap-8">
               {HORIZONS.map((item) => (
                 <Reveal key={item.step}>
-                  <div className="h-full rounded-2xl border border-border/80 bg-surface p-7 sm:p-8 shadow-sm flex flex-col justify-between hover:border-accent/50 transition-colors">
+                  <motion.div
+                    {...cardHover}
+                    className="flex h-full flex-col justify-between rounded-2xl border border-border/80 bg-surface p-7 shadow-sm card-glow-brown transition-colors hover:border-accent/50 sm:p-8"
+                  >
                     <div>
                       <div className="flex items-center justify-between">
                         <span className="font-mono text-xs font-semibold text-accent-strong">
@@ -340,11 +356,11 @@ export default function AboutPage() {
                       <h3 className="mt-5 font-serif text-2xl font-normal text-foreground">
                         {item.category}
                       </h3>
-                      <p className="mt-3 text-sm text-foreground-muted leading-relaxed">
+                      <p className="mt-3 text-sm leading-relaxed text-foreground-muted">
                         {item.description}
                       </p>
                     </div>
-                  </div>
+                  </motion.div>
                 </Reveal>
               ))}
             </div>

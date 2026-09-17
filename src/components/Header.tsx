@@ -12,7 +12,7 @@ import SemziLogo from "@/components/SemziLogo";
 const navLinks = [
   { label: "Shop", href: "/shop" },
   { label: "Collections", href: "/collections" },
-  { label: "Our Story", href: "/about" },
+  { label: "Our Ethos", href: "/about" },
   { label: "Contact", href: "/contact" },
 ];
 

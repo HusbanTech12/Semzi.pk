@@ -33,7 +33,7 @@ export default function WhatsAppWidget() {
   if (hidden) return null;
 
   return (
-    <div className="pointer-events-none fixed bottom-24 left-4 z-50 sm:bottom-6 sm:left-6">
+    <div className="pointer-events-none fixed bottom-4 left-4 z-50 sm:bottom-6 sm:left-6">
       <motion.a
         href={buildHref()}
         target="_blank"

@@ -65,6 +65,9 @@ export default function BrandStory() {
                 <p>
                   We make our soaps by hand, a few bars at a time, with the same patience an artisan brings to any craft. pH-balanced to work with your skin&apos;s natural barrier: gentle enough for a child, effective enough for anyone.
                 </p>
+                <p>
+                  Every Semzi formula &mdash; soap, shampoo, and beyond &mdash; is built without parabens, sulfates, or harsh synthetic fillers. Where a preservative is needed to keep a water-based formula safe, we choose only mild, non-paraben options. Our fragrances are 100% pure fragrance oils, free of any added parabens or synthetic preservatives.
+                </p>
               </div>
             </Reveal>
 
