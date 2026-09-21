@@ -27,7 +27,7 @@ export default function SemziLogo({
         unoptimized
         className={cn(
           "h-9 w-auto max-w-[140px] bg-transparent object-contain object-left sm:h-10 sm:max-w-[160px]",
-          surface === "onDark" && "brightness-0 invert"
+          surface === "onDark" ? "brightness-0 invert" : "logo-tint-footer"
         )}
       />
     </span>

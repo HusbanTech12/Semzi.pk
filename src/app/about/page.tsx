@@ -320,6 +320,55 @@ export default function AboutPage() {
           </div>
         </section>
 
+        {/* Formulation Philosophy */}
+        <section className="relative overflow-hidden border-b border-border/50 py-20 lg:py-28">
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(201,163,107,0.12),transparent_55%)]" />
+          <div className="ambient-glow pointer-events-none absolute bottom-10 right-[8%] h-56 w-56 rounded-full bg-accent/20 blur-3xl" />
+
+          <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="grid items-start gap-12 lg:grid-cols-12 lg:gap-16">
+              <div className="lg:col-span-4 lg:sticky lg:top-28">
+                <Reveal direction="left">
+                  <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.25em] text-accent">
+                    Our Ethos
+                  </span>
+                  <h2 className="mt-3 font-serif text-3xl leading-tight text-foreground sm:text-4xl">
+                    Our Formulation Philosophy
+                  </h2>
+                  <p className="mt-5 border-l-2 border-accent pl-4 font-serif text-lg italic leading-relaxed text-foreground">
+                    Not the absence of every synthetic &mdash; the presence of intention behind every one we choose.
+                  </p>
+                </Reveal>
+              </div>
+
+              <div className="lg:col-span-8">
+                <Reveal direction="right">
+                  <motion.div
+                    {...cardHover}
+                    className="space-y-6 rounded-2xl border border-border/70 bg-surface p-6 card-glow-brown sm:p-10"
+                  >
+                    <p className="text-base leading-relaxed text-foreground-muted sm:text-lg">
+                      There&apos;s a lot of &ldquo;100% natural&rdquo; on shelves today. Most of it isn&apos;t quite true &mdash; and we&apos;d rather tell you the truth than sell you a fantasy.
+                    </p>
+                    <p className="text-base leading-relaxed text-foreground-muted sm:text-lg">
+                      Semzi formulas are built on naturally-derived, coconut-based surfactants &mdash; gentle cleansing agents &mdash; the kind that lift away dirt and oil without the harshness of sulfates like SLS or SLES. We pair these with real botanical actives: rosemary, green tea, and licorice root extract, chosen for what they actually do for skin and scalp, not for how they look on a label.
+                    </p>
+                    <p className="text-base leading-relaxed text-foreground-muted sm:text-lg">
+                      Where we use a synthetic ingredient &mdash; a mild preservative to keep a water-based formula safe, or a conditioning polymer to help detangle hair &mdash; it&apos;s there for a reason, in the smallest amount that does the job. Never to cut costs. Never to fill space.
+                    </p>
+                    <p className="text-base leading-relaxed text-foreground-muted sm:text-lg">
+                      About fragrances we use fragrance oil at a carefully measured concentration of just 0.6% &mdash; well within safety limits for wash-off products. Because our products are rinsed off within a single wash, this low concentration never gets the chance to penetrate the skin barrier. That&apos;s what makes our fragrance genuinely safe, unlike leave-on products such as perfumes, creams, and lotions, which often contain far higher fragrance concentrations &mdash; levels that can exceed safe limits and are linked to hormone disruption. We believe safety shouldn&apos;t be an afterthought; it&apos;s built into every formulation choice we make.
+                    </p>
+                    <p className="border-t border-border/60 pt-6 text-base font-medium leading-relaxed text-foreground sm:text-lg">
+                      This is what we mean by clean formulation: not the absence of every synthetic ingredient, but the presence of intention behind every one we choose. Every ingredient earns its place. Nothing is hidden, and nothing is there by accident.
+                    </p>
+                  </motion.div>
+                </Reveal>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* The Horizon: Soap, Shampoo & Beyond (Act IV) */}
         <section className="py-20 lg:py-28">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">

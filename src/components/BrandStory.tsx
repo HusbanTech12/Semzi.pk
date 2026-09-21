@@ -77,7 +77,6 @@ export default function BrandStory() {
                   <p className="text-[10px] tracking-[0.2em] uppercase text-accent font-bold font-mono">
                     Plain-Language INCI Transparency
                   </p>
-                  <span className="font-mono text-[10px] font-semibold text-foreground-muted">100% Disclosed</span>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {ingredients.map((ing) => (

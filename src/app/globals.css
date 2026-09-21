@@ -137,4 +137,10 @@
       opacity: 0.55;
     }
   }
+
+  /* Tint logo wordmark to footer forest green (#143528) on light surfaces */
+  .logo-tint-footer {
+    filter: brightness(0) saturate(100%) invert(15%) sepia(28%) saturate(1100%)
+      hue-rotate(108deg) brightness(0.88) contrast(1.05);
+  }
 }

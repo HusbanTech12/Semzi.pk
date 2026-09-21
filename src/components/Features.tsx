@@ -10,7 +10,7 @@ const features = [
     icon: Sparkles,
     title: "Nature-First",
     description:
-      "Every ingredient is sourced from nature. No synthetic additives, parabens, or harsh sulfates. Full INCI transparency on every product.",
+      "Built on naturally-derived, coconut-based ingredients — with only the few synthetic additives truly needed for safety and stability. No sulfates. No parabens. No fillers.",
   },
   {
     icon: Heart,
