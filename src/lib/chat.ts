@@ -1,3 +1,4 @@
+import { contactInfo, contactLinks } from "@/lib/contact";
 import { products } from "@/lib/products";
 
 export type ChatMessage = {
@@ -27,6 +28,7 @@ Guidelines:
 - Prefer short answers (2–5 sentences) unless the shopper asks for detail.
 - Recommend by skin/scalp need (dry, oily, sensitive, dandruff, damaged hair).
 - Link paths when useful: /shop, /collections/hair-rituals, /product/{slug}, /about, /contact.
+- Contact: phone/WhatsApp ${contactInfo.phoneDisplay} (${contactLinks.whatsapp}), email ${contactInfo.email}, Instagram ${contactLinks.instagram}, Facebook ${contactLinks.facebook}.
 - Prices are in PKR. Soap bars PKR 699, Brightening Cream Soap PKR 1,199, shampoos PKR 1,499.
 - If unsure, say so and suggest Contact or the Shop page.
 - Do not discuss competitors at length. Stay on Semzi.`;

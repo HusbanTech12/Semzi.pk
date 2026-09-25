@@ -104,7 +104,7 @@ export default function AdminSettings() {
                   <label className="text-xs text-white/40 uppercase tracking-wider">Contact Email</label>
                   <input
                     type="email"
-                    defaultValue="hello@semzi.pk"
+                    defaultValue="semzipk@gmail.com"
                     className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:border-[#C79A56]/50 transition-all"
                   />
                 </div>

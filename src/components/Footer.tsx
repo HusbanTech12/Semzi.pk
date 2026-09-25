@@ -2,8 +2,9 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Mail, Phone } from "lucide-react";
 import { useAnimations } from "@/lib/animations";
+import { contactInfo, contactLinks } from "@/lib/contact";
 import { socialPlatforms } from "@/lib/social";
 import SocialGlyph from "@/components/SocialGlyph";
 import SemziLogo from "@/components/SemziLogo";
@@ -52,6 +53,27 @@ export default function Footer() {
               Nothing synthetic. Just honest ingredients you can trust.
             </p>
 
+            <ul className="space-y-2.5 text-sm font-medium text-white/90">
+              <li>
+                <a
+                  href={contactLinks.phone}
+                  className="inline-flex items-center gap-2 transition-colors duration-300 hover:text-accent"
+                >
+                  <Phone className="h-3.5 w-3.5 shrink-0 text-accent" aria-hidden />
+                  {contactInfo.phoneDisplay}
+                </a>
+              </li>
+              <li>
+                <a
+                  href={contactLinks.email}
+                  className="inline-flex items-center gap-2 transition-colors duration-300 hover:text-accent"
+                >
+                  <Mail className="h-3.5 w-3.5 shrink-0 text-accent" aria-hidden />
+                  {contactInfo.email}
+                </a>
+              </li>
+            </ul>
+
             <div className="space-y-4">
               <p className="text-xs font-bold uppercase tracking-widest text-white/75">
                 Join the Journal
@@ -84,7 +106,7 @@ export default function Footer() {
             </div>
 
             <div className="flex flex-wrap gap-3">
-              {socialPlatforms.slice(0, 4).map((social) => (
+              {socialPlatforms.map((social) => (
                 <Link
                   key={social.name}
                   href={social.href}
@@ -96,12 +118,6 @@ export default function Footer() {
                   <SocialGlyph name={social.name} className="h-4 w-4" />
                 </Link>
               ))}
-              <Link
-                href="/social"
-                className="flex h-10 items-center rounded-full border border-white/25 bg-white/10 px-3 text-[10px] uppercase tracking-[0.16em] text-white transition-all duration-300 hover:border-accent/50 hover:text-accent"
-              >
-                All
-              </Link>
             </div>
           </div>
 

@@ -3,12 +3,14 @@
 import { useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, Mail, MapPin, Phone } from "lucide-react";
+import { ChevronDown, Instagram, Mail, MapPin, Phone } from "lucide-react";
 import Navbar from "@/components/Header";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
 import GlowFrame from "@/components/GlowFrame";
+import SocialGlyph from "@/components/SocialGlyph";
 import { useAnimations } from "@/lib/animations";
+import { contactInfo, contactLinks } from "@/lib/contact";
 import { cn } from "@/lib/utils";
 
 const faqs = [
@@ -38,21 +40,47 @@ const faqs = [
   },
 ];
 
-const contactDetails = [
+type ContactDetail = {
+  title: string;
+  body: string;
+  href?: string;
+  external?: boolean;
+  lucideIcon?: typeof Phone;
+  socialGlyph?: "Facebook";
+};
+
+const contactDetails: ContactDetail[] = [
   {
-    icon: Mail,
+    lucideIcon: Phone,
+    title: "Phone / WhatsApp",
+    body: contactInfo.phoneDisplay,
+    href: contactLinks.whatsapp,
+    external: true,
+  },
+  {
+    lucideIcon: Mail,
     title: "Email",
-    body: "hello@semzi.com",
+    body: contactInfo.email,
+    href: contactLinks.email,
   },
   {
-    icon: MapPin,
+    lucideIcon: MapPin,
     title: "Studio",
-    body: "Formulated in Pakistan",
+    body: contactInfo.studio,
   },
   {
-    icon: Phone,
-    title: "WhatsApp",
-    body: "Chat with us anytime",
+    lucideIcon: Instagram,
+    title: "Instagram",
+    body: "@semzipk",
+    href: contactLinks.instagram,
+    external: true,
+  },
+  {
+    socialGlyph: "Facebook",
+    title: "Facebook",
+    body: "Semzi Pk",
+    href: contactLinks.facebook,
+    external: true,
   },
 ];
 
@@ -106,22 +134,52 @@ export default function ContactPage() {
               </Reveal>
 
               <Reveal direction="right" className="lg:col-span-7">
-                <div className="grid gap-4 sm:grid-cols-3">
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                   {contactDetails.map((item) => {
-                    const Icon = item.icon;
+                    const LucideIcon = item.lucideIcon;
+                    const content = (
+                      <>
+                        <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-accent-subtle text-accent-strong">
+                          {LucideIcon ? (
+                            <LucideIcon className="h-4 w-4" />
+                          ) : (
+                            <SocialGlyph
+                              name={item.socialGlyph!}
+                              className="h-4 w-4"
+                            />
+                          )}
+                        </div>
+                        <h3 className="text-sm font-semibold text-foreground">
+                          {item.title}
+                        </h3>
+                        <p className="mt-1 text-sm text-foreground-muted">
+                          {item.body}
+                        </p>
+                      </>
+                    );
+
                     return (
                       <motion.div
                         key={item.title}
                         {...cardHover}
                         className="rounded-2xl border border-border/70 bg-surface p-5 card-glow-brown"
                       >
-                        <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-accent-subtle text-accent-strong">
-                          <Icon className="h-4 w-4" />
-                        </div>
-                        <h3 className="text-sm font-semibold text-foreground">
-                          {item.title}
-                        </h3>
-                        <p className="mt-1 text-sm text-foreground-muted">{item.body}</p>
+                        {item.href ? (
+                          <a
+                            href={item.href}
+                            {...(item.external
+                              ? {
+                                  target: "_blank",
+                                  rel: "noopener noreferrer",
+                                }
+                              : {})}
+                            className="block transition-colors hover:text-accent"
+                          >
+                            {content}
+                          </a>
+                        ) : (
+                          content
+                        )}
                       </motion.div>
                     );
                   })}

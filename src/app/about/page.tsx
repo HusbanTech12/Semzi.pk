@@ -345,23 +345,86 @@ export default function AboutPage() {
                 <Reveal direction="right">
                   <motion.div
                     {...cardHover}
-                    className="space-y-6 rounded-2xl border border-border/70 bg-surface p-6 card-glow-brown sm:p-10"
+                    className="relative space-y-6 overflow-hidden rounded-2xl border border-white/10 bg-footer p-6 shadow-[0_24px_60px_-20px_rgba(20,53,40,0.55)] sm:p-10"
                   >
-                    <p className="text-base leading-relaxed text-foreground-muted sm:text-lg">
-                      There&apos;s a lot of &ldquo;100% natural&rdquo; on shelves today. Most of it isn&apos;t quite true &mdash; and we&apos;d rather tell you the truth than sell you a fantasy.
-                    </p>
-                    <p className="text-base leading-relaxed text-foreground-muted sm:text-lg">
-                      Semzi formulas are built on naturally-derived, coconut-based surfactants &mdash; gentle cleansing agents &mdash; the kind that lift away dirt and oil without the harshness of sulfates like SLS or SLES. We pair these with real botanical actives: rosemary, green tea, and licorice root extract, chosen for what they actually do for skin and scalp, not for how they look on a label.
-                    </p>
-                    <p className="text-base leading-relaxed text-foreground-muted sm:text-lg">
-                      Where we use a synthetic ingredient &mdash; a mild preservative to keep a water-based formula safe, or a conditioning polymer to help detangle hair &mdash; it&apos;s there for a reason, in the smallest amount that does the job. Never to cut costs. Never to fill space.
-                    </p>
-                    <p className="text-base leading-relaxed text-foreground-muted sm:text-lg">
-                      About fragrances we use fragrance oil at a carefully measured concentration of just 0.6% &mdash; well within safety limits for wash-off products. Because our products are rinsed off within a single wash, this low concentration never gets the chance to penetrate the skin barrier. That&apos;s what makes our fragrance genuinely safe, unlike leave-on products such as perfumes, creams, and lotions, which often contain far higher fragrance concentrations &mdash; levels that can exceed safe limits and are linked to hormone disruption. We believe safety shouldn&apos;t be an afterthought; it&apos;s built into every formulation choice we make.
-                    </p>
-                    <p className="border-t border-border/60 pt-6 text-base font-medium leading-relaxed text-foreground sm:text-lg">
-                      This is what we mean by clean formulation: not the absence of every synthetic ingredient, but the presence of intention behind every one we choose. Every ingredient earns its place. Nothing is hidden, and nothing is there by accident.
-                    </p>
+                    <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_30%_0%,rgba(255,255,255,0.12),transparent_55%),linear-gradient(160deg,rgba(201,163,107,0.14)_0%,transparent_45%)]" />
+                    <div className="relative z-10 space-y-6">
+                      <p className="text-base leading-relaxed text-white/80 sm:text-lg">
+                        There&apos;s a lot of{" "}
+                        <em className="font-serif italic text-accent-subtle">
+                          &ldquo;100% natural&rdquo;
+                        </em>{" "}
+                        on shelves today. Most of it isn&apos;t quite true &mdash; and we&apos;d
+                        rather{" "}
+                        <strong className="font-semibold text-white">
+                          tell you the truth
+                        </strong>{" "}
+                        than sell you a fantasy.
+                      </p>
+                      <p className="text-base leading-relaxed text-white/80 sm:text-lg">
+                        Semzi formulas are built on{" "}
+                        <strong className="font-semibold text-white">
+                          naturally-derived, coconut-based surfactants
+                        </strong>{" "}
+                        &mdash;{" "}
+                        <em className="italic text-white/90">gentle cleansing agents</em>{" "}
+                        &mdash; the kind that lift away dirt and oil without the harshness of
+                        sulfates like{" "}
+                        <strong className="font-semibold text-white">SLS or SLES</strong>. We
+                        pair these with{" "}
+                        <strong className="font-semibold text-white">
+                          real botanical actives
+                        </strong>
+                        :{" "}
+                        <em className="italic text-accent-subtle">
+                          rosemary, green tea, and licorice root extract
+                        </em>
+                        , chosen for what they actually do for skin and scalp, not for how
+                        they look on a label.
+                      </p>
+                      <p className="text-base leading-relaxed text-white/80 sm:text-lg">
+                        Where we use a{" "}
+                        <em className="italic text-white/90">synthetic ingredient</em> &mdash;
+                        a mild preservative to keep a water-based formula safe, or a
+                        conditioning polymer to help detangle hair &mdash; it&apos;s there{" "}
+                        <strong className="font-semibold text-white">for a reason</strong>, in
+                        the smallest amount that does the job.{" "}
+                        <strong className="font-semibold text-white">
+                          Never to cut costs. Never to fill space.
+                        </strong>
+                      </p>
+                      <p className="text-base leading-relaxed text-white/80 sm:text-lg">
+                        About fragrances we use fragrance oil at a carefully measured
+                        concentration of just{" "}
+                        <strong className="font-semibold text-accent-subtle">0.6%</strong>{" "}
+                        &mdash; well within safety limits for{" "}
+                        <em className="italic text-white/90">wash-off products</em>. Because
+                        our products are rinsed off within a single wash, this low
+                        concentration never gets the chance to penetrate the skin barrier.
+                        That&apos;s what makes our fragrance{" "}
+                        <strong className="font-semibold text-white">genuinely safe</strong>,
+                        unlike leave-on products such as perfumes, creams, and lotions, which
+                        often contain far higher fragrance concentrations &mdash; levels that
+                        can exceed safe limits and are linked to hormone disruption. We
+                        believe{" "}
+                        <em className="italic text-accent-subtle">
+                          safety shouldn&apos;t be an afterthought
+                        </em>
+                        ; it&apos;s built into every formulation choice we make.
+                      </p>
+                      <p className="border-t border-white/15 pt-6 text-base leading-relaxed text-white/90 sm:text-lg">
+                        This is what we mean by{" "}
+                        <strong className="font-semibold text-white">
+                          clean formulation
+                        </strong>
+                        : not the absence of every synthetic ingredient, but{" "}
+                        <em className="font-serif italic text-accent-subtle">
+                          the presence of intention behind every one we choose
+                        </em>
+                        . Every ingredient earns its place. Nothing is hidden, and nothing is
+                        there by accident.
+                      </p>
+                    </div>
                   </motion.div>
                 </Reveal>
               </div>

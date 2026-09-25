@@ -8,6 +8,7 @@ import Navbar from "@/components/Header";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
 import SocialGlyph from "@/components/SocialGlyph";
+import { contactInfo, contactLinks } from "@/lib/contact";
 import { socialPlatforms } from "@/lib/social";
 import { useAnimations } from "@/lib/animations";
 
@@ -30,6 +31,21 @@ export default function SocialPage() {
               <p className="text-foreground-muted font-medium">
                 Follow the pour, ask about a bar, or share a ritual. Every link
                 opens in a new tab.
+              </p>
+              <p className="text-sm font-medium text-foreground-muted">
+                <a
+                  href={contactLinks.phone}
+                  className="text-accent-strong transition-colors hover:text-accent"
+                >
+                  {contactInfo.phoneDisplay}
+                </a>
+                {" · "}
+                <a
+                  href={contactLinks.email}
+                  className="text-accent-strong transition-colors hover:text-accent"
+                >
+                  {contactInfo.email}
+                </a>
               </p>
             </Reveal>
 
@@ -74,8 +90,7 @@ export default function SocialPage() {
                 Share this page
               </h2>
               <p className="text-sm font-medium text-foreground-muted">
-                Opens the Semzi social page — Instagram, Facebook, X, WhatsApp,
-                and more.
+                Opens the Semzi social page — Instagram, Facebook, and WhatsApp.
               </p>
               <div className="mx-auto w-fit rounded-2xl border border-border bg-surface p-6">
                 <Image

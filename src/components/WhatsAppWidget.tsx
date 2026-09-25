@@ -3,10 +3,16 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import SocialGlyph from "@/components/SocialGlyph";
+import { contactLinks } from "@/lib/contact";
 import { socialPlatforms } from "@/lib/social";
 
 const whatsapp =
-  socialPlatforms.find((p) => p.name === "WhatsApp") ?? socialPlatforms[3];
+  socialPlatforms.find((p) => p.name === "WhatsApp") ?? {
+    name: "WhatsApp",
+    handle: "",
+    href: contactLinks.whatsapp,
+    description: "",
+  };
 
 const DEFAULT_MESSAGE = "Hi Semzi — I’d like to ask about your soaps.";
 
