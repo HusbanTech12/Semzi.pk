@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, Instagram, Mail, MapPin, Phone } from "lucide-react";
+import { ChevronDown, Mail, MapPin, Phone } from "lucide-react";
 import Navbar from "@/components/Header";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
@@ -11,6 +11,7 @@ import GlowFrame from "@/components/GlowFrame";
 import SocialGlyph from "@/components/SocialGlyph";
 import { useAnimations } from "@/lib/animations";
 import { contactInfo, contactLinks } from "@/lib/contact";
+import type { SocialPlatformName } from "@/lib/social";
 import { cn } from "@/lib/utils";
 
 const faqs = [
@@ -46,7 +47,7 @@ type ContactDetail = {
   href?: string;
   external?: boolean;
   lucideIcon?: typeof Phone;
-  socialGlyph?: "Facebook";
+  socialGlyph?: SocialPlatformName;
 };
 
 const contactDetails: ContactDetail[] = [
@@ -69,7 +70,7 @@ const contactDetails: ContactDetail[] = [
     body: contactInfo.studio,
   },
   {
-    lucideIcon: Instagram,
+    socialGlyph: "Instagram",
     title: "Instagram",
     body: "@semzipk",
     href: contactLinks.instagram,
