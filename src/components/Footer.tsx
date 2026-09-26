@@ -36,8 +36,11 @@ export default function Footer() {
 
   return (
     <footer className="relative overflow-hidden bg-footer pt-16 text-white lg:pt-24">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,rgba(201,163,107,0.22),transparent_65%)]" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(255,255,255,0.06),transparent_45%)]" />
+      {/* Depth + lacquer shine on forest green */}
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,#1a4634_0%,#143528_42%,#0e2a1f_100%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_28%,rgba(201,163,107,0.32),transparent_58%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_18%,rgba(255,255,255,0.14),transparent_42%)]" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-accent/50 to-transparent" />
       <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
         <motion.div
           {...fadeUp}
