@@ -98,7 +98,7 @@ export default function BrandStory() {
                 href="/about"
                 className="group inline-flex items-center gap-3 rounded-xl bg-foreground px-6 py-3.5 font-mono text-xs font-bold uppercase tracking-wider text-background hover:bg-accent hover:text-foreground transition-all duration-300 shadow-md shadow-foreground/5"
               >
-                <span>Read Our Full Story & Ethos</span>
+                <span>Read Our Ethos</span>
                 <motion.svg
                   className="w-4 h-4"
                   fill="none"

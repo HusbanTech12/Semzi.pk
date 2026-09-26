@@ -347,7 +347,7 @@ export default function AboutPage() {
                     {...cardHover}
                     className="relative space-y-6 overflow-hidden rounded-2xl border border-white/10 bg-footer p-6 shadow-[0_24px_60px_-20px_rgba(20,53,40,0.55)] sm:p-10"
                   >
-                    <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_30%_0%,rgba(255,255,255,0.12),transparent_55%),linear-gradient(160deg,rgba(201,163,107,0.14)_0%,transparent_45%)]" />
+                    <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,rgba(201,163,107,0.26),transparent_65%),radial-gradient(ellipse_at_50%_0%,rgba(255,255,255,0.08),transparent_45%)]" />
                     <div className="relative z-10 space-y-6">
                       <p className="text-base leading-relaxed text-white/80 sm:text-lg">
                         There&apos;s a lot of{" "}
@@ -480,23 +480,24 @@ export default function AboutPage() {
         </section>
 
         {/* Closing Invitation CTA */}
-        <section className="py-24 bg-foreground text-background text-center relative overflow-hidden">
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(201,163,107,0.18),transparent_70%)]" />
-          <div className="max-w-3xl mx-auto px-6 lg:px-8 relative z-10 space-y-6">
+        <section className="relative overflow-hidden bg-footer py-24 text-center text-background">
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(201,163,107,0.28),transparent_68%)]" />
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_40%,rgba(255,255,255,0.06),transparent_50%)]" />
+          <div className="relative z-10 mx-auto max-w-3xl space-y-6 px-6 lg:px-8">
             <Reveal>
               <span className="font-mono text-xs uppercase tracking-[0.25em] text-accent">
                 Carry the Ritual Home
               </span>
-              <h2 className="mt-3 font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-[#FAF3E7]">
+              <h2 className="mt-3 font-serif text-3xl font-normal text-[#FAF3E7] sm:text-4xl lg:text-5xl">
                 Experience Soap the Way It Was Meant to Be Made
               </h2>
-              <p className="mt-4 text-sm sm:text-base text-foreground-muted max-w-xl mx-auto leading-relaxed">
+              <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-white/70 sm:text-base">
                 One product, one batch, one honest ingredients list at a time. Natural soap. Nothing harsh.
               </p>
               <div className="pt-6">
                 <Link
                   href="/shop"
-                  className="inline-flex items-center justify-center rounded-xl bg-accent px-8 py-3.5 font-mono text-xs uppercase tracking-wider text-background font-bold hover:bg-accent-strong transition-colors shadow-lg shadow-accent/20"
+                  className="inline-flex items-center justify-center rounded-xl bg-accent px-8 py-3.5 font-mono text-xs font-bold uppercase tracking-wider text-background shadow-lg shadow-accent/25 transition-colors hover:bg-accent-strong"
                 >
                   Shop All
                 </Link>

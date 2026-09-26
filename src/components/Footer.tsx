@@ -35,8 +35,10 @@ export default function Footer() {
   const { fadeUp } = useAnimations();
 
   return (
-    <footer className="bg-footer pt-16 text-white lg:pt-24">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+    <footer className="relative overflow-hidden bg-footer pt-16 text-white lg:pt-24">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,rgba(201,163,107,0.22),transparent_65%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(255,255,255,0.06),transparent_45%)]" />
+      <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
         <motion.div
           {...fadeUp}
           className="grid gap-12 sm:grid-cols-2 lg:grid-cols-6"

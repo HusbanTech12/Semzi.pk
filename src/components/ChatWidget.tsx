@@ -121,7 +121,7 @@ export default function ChatWidget() {
   }
 
   return (
-    <div className="pointer-events-none fixed bottom-4 right-4 z-50 sm:bottom-6 sm:right-6">
+    <div className="pointer-events-none fixed bottom-[max(0.75rem,env(safe-area-inset-bottom))] right-4 z-[100] sm:bottom-[max(1.25rem,env(safe-area-inset-bottom))] sm:right-6">
       <AnimatePresence>
         {open && (
           <motion.div

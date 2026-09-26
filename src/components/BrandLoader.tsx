@@ -37,7 +37,7 @@ export default function BrandLoader({
             height={183}
             priority
             unoptimized
-            className="h-16 w-auto bg-transparent object-contain sm:h-20"
+            className="logo-tint-footer h-16 w-auto bg-transparent object-contain sm:h-20"
           />
         </motion.div>
 

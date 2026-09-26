@@ -68,7 +68,7 @@ export default function RootLayout({
       >
         <body className="min-h-full">
           <CartProvider>
-            {children}
+            <div className="page-shell">{children}</div>
             <WhatsAppWidget />
             <ChatWidget />
           </CartProvider>
