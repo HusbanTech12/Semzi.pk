@@ -480,9 +480,8 @@ export default function AboutPage() {
         </section>
 
         {/* Closing Invitation CTA */}
-        <section className="relative overflow-hidden bg-footer py-24 text-center text-background">
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(201,163,107,0.28),transparent_68%)]" />
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_40%,rgba(255,255,255,0.06),transparent_50%)]" />
+        <section className="relative overflow-hidden bg-foreground py-24 text-center text-background">
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(201,163,107,0.18),transparent_70%)]" />
           <div className="relative z-10 mx-auto max-w-3xl space-y-6 px-6 lg:px-8">
             <Reveal>
               <span className="font-mono text-xs uppercase tracking-[0.25em] text-accent">
@@ -491,13 +490,13 @@ export default function AboutPage() {
               <h2 className="mt-3 font-serif text-3xl font-normal text-[#FAF3E7] sm:text-4xl lg:text-5xl">
                 Experience Soap the Way It Was Meant to Be Made
               </h2>
-              <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-white/70 sm:text-base">
+              <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-foreground-muted sm:text-base">
                 One product, one batch, one honest ingredients list at a time. Natural soap. Nothing harsh.
               </p>
               <div className="pt-6">
                 <Link
                   href="/shop"
-                  className="inline-flex items-center justify-center rounded-xl bg-accent px-8 py-3.5 font-mono text-xs font-bold uppercase tracking-wider text-background shadow-lg shadow-accent/25 transition-colors hover:bg-accent-strong"
+                  className="inline-flex items-center justify-center rounded-xl bg-accent px-8 py-3.5 font-mono text-xs font-bold uppercase tracking-wider text-background shadow-lg shadow-accent/20 transition-colors hover:bg-accent-strong"
                 >
                   Shop All
                 </Link>
