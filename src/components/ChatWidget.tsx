@@ -6,6 +6,7 @@ import { MessageCircle, Send, X, Loader2 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import SemziLogo from "@/components/SemziLogo";
+import { toast } from "@/lib/toast";
 
 type UiMessage = {
   id: string;
@@ -109,7 +110,10 @@ export default function ChatWidget() {
         },
       ]);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong.");
+      const message =
+        err instanceof Error ? err.message : "Something went wrong.";
+      setError(message);
+      toast.error("Assistant unavailable", message);
     } finally {
       setLoading(false);
     }

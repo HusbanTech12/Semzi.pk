@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Mail, MapPin, Phone } from "lucide-react";
@@ -9,9 +9,19 @@ import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
 import GlowFrame from "@/components/GlowFrame";
 import SocialGlyph from "@/components/SocialGlyph";
+import { FormField, fieldClassName } from "@/components/FormField";
 import { useAnimations } from "@/lib/animations";
 import { contactInfo, contactLinks } from "@/lib/contact";
 import type { SocialPlatformName } from "@/lib/social";
+import {
+  collectErrors,
+  firstError,
+  validateEmail,
+  validateMessage,
+  validateName,
+  type FieldErrors,
+} from "@/lib/form-validation";
+import { toast } from "@/lib/toast";
 import { cn } from "@/lib/utils";
 
 const faqs = [
@@ -85,9 +95,54 @@ const contactDetails: ContactDetail[] = [
   },
 ];
 
+type ContactForm = {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+};
+
+const initialContactForm: ContactForm = {
+  name: "",
+  email: "",
+  subject: "",
+  message: "",
+};
+
 export default function ContactPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [form, setForm] = useState<ContactForm>(initialContactForm);
+  const [errors, setErrors] = useState<FieldErrors>({});
   const { cardHover } = useAnimations();
+
+  function setField<K extends keyof ContactForm>(key: K, value: ContactForm[K]) {
+    setForm((prev) => ({ ...prev, [key]: value }));
+    if (errors[key]) {
+      setErrors((prev) => {
+        const next = { ...prev };
+        delete next[key];
+        return next;
+      });
+    }
+  }
+
+  function handleContactSubmit(e: FormEvent) {
+    e.preventDefault();
+    const nextErrors = collectErrors([
+      ["name", validateName(form.name, "Name")],
+      ["email", validateEmail(form.email)],
+      ["message", validateMessage(form.message)],
+    ]);
+    setErrors(nextErrors);
+    const message = firstError(nextErrors);
+    if (message) {
+      toast.error("Check the form", message);
+      return;
+    }
+    setForm(initialContactForm);
+    setErrors({});
+    toast.success("Message sent", "We'll reply within 24 hours.");
+  }
 
   return (
     <>
@@ -192,49 +247,73 @@ export default function ContactPage() {
               <Reveal direction="left">
                 <motion.form
                   {...cardHover}
+                  noValidate
                   className="space-y-4 rounded-2xl border border-border/70 bg-surface p-6 card-glow-brown sm:p-8"
-                  onSubmit={(e) => e.preventDefault()}
+                  onSubmit={handleContactSubmit}
                 >
-                  <div>
-                    <label className="mb-2 block text-xs uppercase tracking-wider text-foreground-muted">
-                      Name
-                    </label>
+                  <FormField id="contact-name" label="Name" error={errors.name}>
                     <input
+                      id="contact-name"
                       type="text"
+                      name="name"
+                      autoComplete="name"
+                      value={form.name}
+                      onChange={(e) => setField("name", e.target.value)}
+                      aria-invalid={!!errors.name}
+                      aria-describedby={errors.name ? "contact-name-error" : undefined}
                       placeholder="Your name"
-                      className="w-full rounded-lg border border-border bg-background px-4 py-3 text-sm transition-shadow focus:border-accent focus:outline-none focus:shadow-[0_0_0_3px_rgba(201,163,107,0.18)]"
+                      className={fieldClassName(errors.name, "bg-background")}
                     />
-                  </div>
-                  <div>
-                    <label className="mb-2 block text-xs uppercase tracking-wider text-foreground-muted">
-                      Email
-                    </label>
+                  </FormField>
+                  <FormField id="contact-email" label="Email" error={errors.email}>
                     <input
+                      id="contact-email"
                       type="email"
+                      name="email"
+                      autoComplete="email"
+                      value={form.email}
+                      onChange={(e) => setField("email", e.target.value)}
+                      aria-invalid={!!errors.email}
+                      aria-describedby={
+                        errors.email ? "contact-email-error" : undefined
+                      }
                       placeholder="your@email.com"
-                      className="w-full rounded-lg border border-border bg-background px-4 py-3 text-sm transition-shadow focus:border-accent focus:outline-none focus:shadow-[0_0_0_3px_rgba(201,163,107,0.18)]"
+                      className={fieldClassName(errors.email, "bg-background")}
                     />
-                  </div>
-                  <div>
-                    <label className="mb-2 block text-xs uppercase tracking-wider text-foreground-muted">
-                      Subject
-                    </label>
+                  </FormField>
+                  <FormField id="contact-subject" label="Subject">
                     <input
+                      id="contact-subject"
                       type="text"
+                      name="subject"
+                      value={form.subject}
+                      onChange={(e) => setField("subject", e.target.value)}
                       placeholder="How can we help?"
-                      className="w-full rounded-lg border border-border bg-background px-4 py-3 text-sm transition-shadow focus:border-accent focus:outline-none focus:shadow-[0_0_0_3px_rgba(201,163,107,0.18)]"
+                      className={fieldClassName(undefined, "bg-background")}
                     />
-                  </div>
-                  <div>
-                    <label className="mb-2 block text-xs uppercase tracking-wider text-foreground-muted">
-                      Message
-                    </label>
+                  </FormField>
+                  <FormField
+                    id="contact-message"
+                    label="Message"
+                    error={errors.message}
+                  >
                     <textarea
+                      id="contact-message"
+                      name="message"
                       rows={5}
+                      value={form.message}
+                      onChange={(e) => setField("message", e.target.value)}
+                      aria-invalid={!!errors.message}
+                      aria-describedby={
+                        errors.message ? "contact-message-error" : undefined
+                      }
                       placeholder="Write your message..."
-                      className="w-full resize-none rounded-lg border border-border bg-background px-4 py-3 text-sm transition-shadow focus:border-accent focus:outline-none focus:shadow-[0_0_0_3px_rgba(201,163,107,0.18)]"
+                      className={fieldClassName(
+                        errors.message,
+                        "resize-none bg-background"
+                      )}
                     />
-                  </div>
+                  </FormField>
                   <motion.button
                     type="submit"
                     whileHover={{ scale: 1.01 }}

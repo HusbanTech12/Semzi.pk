@@ -6,6 +6,7 @@ import { ChevronRight, Mail, Phone } from "lucide-react";
 import { useAnimations } from "@/lib/animations";
 import { contactInfo, contactLinks } from "@/lib/contact";
 import { socialPlatforms } from "@/lib/social";
+import { toast } from "@/lib/toast";
 import SocialGlyph from "@/components/SocialGlyph";
 import SemziLogo from "@/components/SemziLogo";
 
@@ -85,7 +86,20 @@ export default function Footer() {
               </p>
               <form
                 className="flex max-w-sm gap-2"
-                onSubmit={(e) => e.preventDefault()}
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  const form = e.currentTarget;
+                  const email = new FormData(form).get("email");
+                  if (typeof email !== "string" || !email.trim()) {
+                    toast.error("Email required", "Enter your email to join the journal.");
+                    return;
+                  }
+                  form.reset();
+                  toast.success(
+                    "You're on the list",
+                    "Welcome to the Semzi journal."
+                  );
+                }}
               >
                 <label htmlFor="footer-newsletter-email" className="sr-only">
                   Email address
@@ -95,6 +109,7 @@ export default function Footer() {
                   type="email"
                   name="email"
                   autoComplete="email"
+                  required
                   placeholder="Enter your email"
                   className="flex-1 rounded-sm border border-white/25 bg-white/10 px-4 py-2.5 text-sm text-white placeholder:text-white/50 transition-all duration-300 focus:border-accent focus:outline-none focus:shadow-[0_0_20px_-4px_rgba(199,154,86,0.25)]"
                 />

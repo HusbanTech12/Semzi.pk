@@ -4,9 +4,11 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { X } from "lucide-react";
+import { ShoppingBag, X } from "lucide-react";
 import { useUser } from "@clerk/nextjs";
 import { useAnimations } from "@/lib/animations";
+import { useCart } from "@/context/cart-context";
+import CartDrawer from "@/components/CartDrawer";
 import SemziLogo from "@/components/SemziLogo";
 
 const navLinks = [
@@ -25,6 +27,7 @@ export default function Navbar() {
   const isHome = pathname === "/";
   const { fadeUp } = useAnimations();
   const { isSignedIn } = useUser();
+  const { totalItems, openCart, hydrated } = useCart();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -95,6 +98,27 @@ export default function Navbar() {
             >
               Get Started
             </Link>
+            <button
+              type="button"
+              onClick={openCart}
+              aria-label={
+                totalItems > 0
+                  ? `Open cart, ${totalItems} items`
+                  : "Open cart"
+              }
+              className={`relative inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-all duration-300 ${
+                transparent
+                  ? "text-white hover:bg-white/15"
+                  : "text-foreground hover:bg-accent/10"
+              }`}
+            >
+              <ShoppingBag className="h-[18px] w-[18px]" />
+              {hydrated && totalItems > 0 && (
+                <span className="absolute -right-0.5 -top-0.5 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-accent px-1 font-mono text-[10px] font-bold leading-none text-background">
+                  {totalItems > 99 ? "99+" : totalItems}
+                </span>
+              )}
+            </button>
             <button
               type="button"
               onClick={() => setMobileOpen(true)}
@@ -199,6 +223,8 @@ export default function Navbar() {
           </>
         )}
       </AnimatePresence>
+
+      <CartDrawer />
     </>
   );
 }

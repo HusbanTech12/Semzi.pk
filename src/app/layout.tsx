@@ -4,6 +4,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { CartProvider } from "@/context/cart-context";
 import ChatWidget from "@/components/ChatWidget";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
+import Toaster from "@/components/Toaster";
 import "./globals.css";
 
 const dmSans = DM_Sans({
@@ -71,6 +72,7 @@ export default function RootLayout({
             <div className="page-shell">{children}</div>
             <WhatsAppWidget />
             <ChatWidget />
+            <Toaster />
           </CartProvider>
         </body>
       </html>

@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { toast } from "@/lib/toast";
 import Reveal from "./Reveal";
 
 export default function CTA() {
@@ -38,13 +39,35 @@ export default function CTA() {
               </Reveal>
 
               <Reveal delay={0.15} className="flex justify-center lg:justify-start">
-                <div className="flex gap-2 max-w-md w-full">
+                <form
+                  className="flex gap-2 max-w-md w-full"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    const form = e.currentTarget;
+                    const email = new FormData(form).get("email");
+                    if (typeof email !== "string" || !email.trim()) {
+                      toast.error(
+                        "Email required",
+                        "Enter your email to subscribe."
+                      );
+                      return;
+                    }
+                    form.reset();
+                    toast.success(
+                      "Welcome to Semzi",
+                      "You're subscribed — 10% off is on the way."
+                    );
+                  }}
+                >
                   <input
                     type="email"
+                    name="email"
+                    required
                     placeholder="Enter your email"
                     className="flex-1 px-5 py-3.5 bg-white/5 border border-white/10 rounded-lg text-sm text-background placeholder:text-foreground-muted/50 focus:outline-none focus:border-accent/50 focus:shadow-[0_0_20px_-4px_rgba(199,154,86,0.3)] transition-all duration-300"
                   />
                   <motion.button
+                    type="submit"
                     whileHover={{ scale: 1.03 }}
                     whileTap={{ scale: 0.97 }}
                     className="px-6 py-3.5 bg-accent text-background text-sm tracking-wider uppercase rounded-lg font-medium shrink-0 relative overflow-hidden group"
@@ -52,7 +75,7 @@ export default function CTA() {
                     <span className="relative z-10">Subscribe</span>
                     <div className="absolute inset-0 bg-gradient-to-r from-accent-strong to-accent-strong opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   </motion.button>
-                </div>
+                </form>
               </Reveal>
             </div>
 

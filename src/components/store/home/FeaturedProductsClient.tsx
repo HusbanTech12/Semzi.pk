@@ -1,78 +1,15 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { useAnimations } from "@/lib/animations";
-import PriceDisplay from "@/components/PriceDisplay";
+import ProductCard from "@/components/ProductCard";
 import type { Product } from "@/lib/products";
 
 interface FeaturedProductsClientProps {
   featured: Product[];
   newArrivals?: Product[];
-}
-
-function ProductCard({ product, index }: { product: Product; index: number }) {
-  const { scaleInView, cardHover } = useAnimations();
-
-  return (
-    <motion.article
-      {...scaleInView}
-      transition={{
-        ...(scaleInView.transition ?? {}),
-        delay: index * 0.08,
-      }}
-      {...cardHover}
-      className="group flex flex-col"
-    >
-      <Link
-        href={`/product/${product.slug}`}
-        className="relative mb-4 block overflow-hidden rounded-2xl bg-surface-muted"
-      >
-        <div className="relative aspect-4/5">
-          <Image
-            src={product.images[0]}
-            alt={product.name}
-            fill
-            className="object-cover transition-all duration-700 group-hover:scale-105"
-            sizes="(max-width: 1024px) 50vw, 25vw"
-            priority={index < 4}
-          />
-          <div className="absolute inset-0 bg-linear-to-t from-foreground/20 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-        </div>
-        <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-border/0 transition-all duration-500 group-hover:ring-border/50" />
-      </Link>
-
-      <div className="flex flex-col gap-1.5 px-0.5">
-        <span className="truncate text-[10px] font-bold uppercase tracking-[0.2em] text-accent/70">
-          {product.collection
-            ? `【${product.collection}】`
-            : `【${product.category}】`}
-        </span>
-
-        <Link href={`/product/${product.slug}`}>
-          <h3 className="font-serif text-base font-bold leading-snug text-foreground transition-colors duration-300 group-hover:text-accent-strong">
-            {product.name}
-          </h3>
-        </Link>
-
-        <PriceDisplay
-          priceCents={product.priceCents}
-          compareAtCents={product.compareAtPriceCents}
-          className="mt-1"
-        />
-
-        <Link
-          href={`/product/${product.slug}`}
-          className="mt-2 inline-flex items-center gap-1 text-[11px] font-semibold uppercase tracking-[0.15em] text-foreground-muted/60 transition-colors duration-300 hover:text-accent"
-        >
-          Shop Now
-          <ArrowRight className="h-3 w-3" />
-        </Link>
-      </div>
-    </motion.article>
-  );
 }
 
 export default function FeaturedProductsClient({
@@ -81,26 +18,27 @@ export default function FeaturedProductsClient({
   const { fadeUpView } = useAnimations();
 
   return (
-    <section className="bg-background py-24">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <motion.div
-          {...fadeUpView}
-          className="mb-16 space-y-3 text-center"
-        >
+    <section className="bg-surface-muted/40 py-24 lg:py-28">
+      <div className="mx-auto max-w-[92rem] px-5 sm:px-8 lg:px-10">
+        <motion.div {...fadeUpView} className="mb-14 space-y-3 text-center sm:mb-16">
           <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-accent">
-            Best Sellers
+            Customer Favorites
           </span>
           <h2 className="font-serif text-3xl font-bold text-heading-gradient sm:text-4xl">
-            Our Favorites
+            Best Selling Products
           </h2>
           <p className="mx-auto max-w-xl text-sm font-medium leading-relaxed text-foreground-muted">
-            Handpicked soaps our community can&apos;t stop raving about.
+            The bars and rituals our community reaches for again and again.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-2 gap-4 sm:gap-6 md:gap-8 lg:grid-cols-4">
+        <div className="mx-auto grid max-w-[84rem] grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-7 lg:grid-cols-4 lg:gap-8">
           {featured.map((product, i) => (
-            <ProductCard key={product.id} product={product} index={i} />
+            <ProductCard
+              key={product.id}
+              product={product}
+              priority={i < 4}
+            />
           ))}
         </div>
 
