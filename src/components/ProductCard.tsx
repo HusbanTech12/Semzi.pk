@@ -31,6 +31,14 @@ export default function ProductCard({ product, priority }: ProductCardProps) {
   }, [justAdded]);
 
   const hasMultipleImages = product.images.length > 1;
+  const blurb =
+    product.tagline?.trim() ||
+    (() => {
+      const first = product.description.split(/[.!?]/).find((part) => part.trim());
+      if (!first) return product.description.slice(0, 90);
+      const sentence = first.trim();
+      return sentence.length > 96 ? `${sentence.slice(0, 93)}…` : `${sentence}.`;
+    })();
 
   function handleAddToCart(e: React.MouseEvent) {
     e.preventDefault();
@@ -128,8 +136,8 @@ export default function ProductCard({ product, priority }: ProductCardProps) {
           </h3>
         </Link>
 
-        <p className="mb-4 hidden text-[11px] font-medium leading-relaxed tracking-[0.06em] text-foreground-muted/60 line-clamp-2 sm:block">
-          {product.description}
+        <p className="mb-4 hidden text-[11px] font-medium leading-snug tracking-[0.04em] text-foreground-muted/70 line-clamp-2 sm:block">
+          {blurb}
         </p>
 
         <div className="mt-auto space-y-3 border-t border-border/50 pt-3">

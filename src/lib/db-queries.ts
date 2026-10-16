@@ -243,18 +243,72 @@ export async function getOrdersByUser(userId: string): Promise<OrderResult[]> {
   return Array.from(map.values());
 }
 
+async function resolveVariantId(item: {
+  variantId: number;
+  productId?: number;
+  priceCents: number;
+}): Promise<number> {
+  const byVariant = await db
+    .select({ id: productVariants.id })
+    .from(productVariants)
+    .where(eq(productVariants.id, item.variantId))
+    .limit(1);
+  if (byVariant[0]) return byVariant[0].id;
+
+  const productId = item.productId ?? item.variantId;
+  const byProduct = await db
+    .select({ id: productVariants.id })
+    .from(productVariants)
+    .where(eq(productVariants.productId, productId))
+    .limit(1);
+  if (byProduct[0]) return byProduct[0].id;
+
+  const product = await db
+    .select({ id: products.id, name: products.name, slug: products.slug })
+    .from(products)
+    .where(eq(products.id, productId))
+    .limit(1);
+
+  if (!product[0]) {
+    throw new Error(`No product/variant found for id ${item.variantId}`);
+  }
+
+  const [created] = await db
+    .insert(productVariants)
+    .values({
+      productId: product[0].id,
+      name: "Default",
+      sku: `${product[0].slug}-default-${product[0].id}`,
+      priceCents: item.priceCents,
+      inventoryCount: 100,
+    })
+    .returning({ id: productVariants.id });
+
+  return created.id;
+}
+
 export async function createOrder(data: {
   userId?: string;
   subtotalCents: number;
   shippingCents: number;
   totalCents: number;
   shippingAddress?: Record<string, unknown>;
-  items: { variantId: number; quantity: number; priceCents: number }[];
+  items: {
+    variantId: number;
+    productId?: number;
+    quantity: number;
+    priceCents: number;
+  }[];
 }): Promise<number> {
+  if (!data.items.length) {
+    throw new Error("Order must include at least one item");
+  }
+
   const [order] = await db
     .insert(orders)
     .values({
-      userId: data.userId,
+      userId: data.userId ?? null,
+      status: "confirmed",
       subtotalCents: data.subtotalCents,
       shippingCents: data.shippingCents,
       totalCents: data.totalCents,
@@ -263,9 +317,10 @@ export async function createOrder(data: {
     .returning({ id: orders.id });
 
   for (const item of data.items) {
+    const variantId = await resolveVariantId(item);
     await db.insert(orderItems).values({
       orderId: order.id,
-      variantId: item.variantId,
+      variantId,
       quantity: item.quantity,
       priceCentsAtPurchase: item.priceCents,
     });
